@@ -110,4 +110,13 @@ public class TestAlphaCiv {
     assertThat(city.getOwner(), is(Player.RED));
   }
 
+  // Blue has a city at position (4, 1)
+  @Test
+  public void blueHasACityAtPosition14() {
+    City city = game.getCityAt(new Position(4, 1));
+    assertThat(city, is(notNullValue()));
+
+    assertThat(city.getOwner(), is(Player.BLUE));
+  }
+
 }

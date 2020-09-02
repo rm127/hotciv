@@ -12,7 +12,7 @@
 - [ ] Tile (1,0) is Ocean
 - [ ] Tile (0,1) is Hills
 - [ ] Tile (2,2) is Mountains
-- [ ] At tile (1,1) a Red city exists
+- [x] At tile (1,1) a Red city exists
 - [ ] At tile (4,1) a Blue city exists
 - [ ] At game start A Red Archer is at (2,0)
 - [ ] At game start A Blue Legion is at (3,2)
