@@ -133,7 +133,8 @@ public class TestAlphaCiv {
 
   @Test
   public void testForException() throws NullPointerException {
-    assertThrows(NullPointerException.class, () -> myMethod());
+     NullPointerException e = assertThrows(NullPointerException.class, () -> myMethod());
+     assertThat(e.getMessage(), containsString("Illegal value: value causing error"));
   }
   */
 
