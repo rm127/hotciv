@@ -81,8 +81,23 @@ public class TestAlphaCiv {
   @Test
   public void gameAgeIncreasesAtEveryRoundEnd() {
     int startAge = game.getAge();
+    // advance a round
     game.endOfTurn();
     game.endOfTurn();
     assertThat(game.getAge(), is(startAge + 100));
+    // advance another round
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getAge(), is(startAge + 200));
+  }
+
+  // Red wins at year 3000 BC
+  @Test
+  public void redWinsAtYear3000BC() {
+    while (game.getAge() < -3000) {
+      game.endOfTurn();
+      game.endOfTurn();
+    }
+    assertThat(game.getWinner(), is(Player.RED));
   }
 }
