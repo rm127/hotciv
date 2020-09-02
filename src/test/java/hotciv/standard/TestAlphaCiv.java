@@ -119,4 +119,12 @@ public class TestAlphaCiv {
     assertThat(city.getOwner(), is(Player.BLUE));
   }
 
+  // Cities have population of 1
+  @Test
+  public void citiesHavePopulation1() {
+    City city = new CityImpl(Player.RED);
+
+    assertThat(city.getSize(), is(1));
+  }
+
 }
