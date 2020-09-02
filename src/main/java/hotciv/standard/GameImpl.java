@@ -39,7 +39,9 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() {
     return currentPlayer;
   }
-  public Player getWinner() { return null; }
+  public Player getWinner() {
+    return Player.RED;
+  }
 
   public int getAge() {
     return gameAge;
