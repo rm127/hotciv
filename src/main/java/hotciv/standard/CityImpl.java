@@ -15,7 +15,7 @@ public class CityImpl implements City {
     }
 
     public int getSize() {
-        return 0;
+        return 1;
     }
 
     public int getTreasury() {
