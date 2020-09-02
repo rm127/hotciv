@@ -127,4 +127,14 @@ public class TestAlphaCiv {
     assertThat(city.getSize(), is(1));
   }
 
+
+  /*
+  import static org.junit.jupiter.api.Assertions.assertThrows;
+
+  @Test
+  public void testForException() throws NullPointerException {
+    assertThrows(NullPointerException.class, () -> myMethod());
+  }
+  */
+
 }
