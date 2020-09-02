@@ -61,4 +61,15 @@ public class TestAlphaCiv {
     game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
+
+  // The two players (red and blue) alternates taking turns
+  @Test
+  public void playersShouldAlternateTakingTurns() {
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+  }
 }
