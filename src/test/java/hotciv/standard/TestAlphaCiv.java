@@ -72,4 +72,10 @@ public class TestAlphaCiv {
     game.endOfTurn();
     assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
+
+  // The game starts at age 4000 BC
+  @Test
+  public void gameStartsAt4000BC() {
+    assertThat(game.getAge(), is(-4000));
+  }
 }
