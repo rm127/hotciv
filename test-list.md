@@ -17,7 +17,7 @@
 - [ ] At game start A Red Archer is at (2,0)
 - [ ] At game start A Blue Legion is at (3,2)
 - [ ] At game start A Red Settler is at (4,3)
-- [ ] Any city has a population of 1
+- [x] Any city has a population of 1
 - [x] The game starts at age 4000 BC
     - [x] Game age increases at every round end
 - [x] Red wins at year 3000 BC
