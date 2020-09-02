@@ -18,7 +18,8 @@
 - [ ] At game start A Blue Legion is at (3,2)
 - [ ] At game start A Red Settler is at (4,3)
 - [ ] Any city has a population of 1
-- [ ] The game starts at age 4000 BC
+- [x] The game starts at age 4000 BC
+    - [ ] Game age increases at every round end
 - [ ] Red wins at year 3000 BC
 - [x] Red player starts the game
     - [x] After the player red has taken their turn, it shall be player blue's turn

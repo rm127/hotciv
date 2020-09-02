@@ -7,8 +7,6 @@ import org.junit.jupiter.api.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.*;
-
 /** Skeleton class for AlphaCiv test cases
 
    Updated Aug 2020 for JUnit 5 includes
@@ -77,5 +75,14 @@ public class TestAlphaCiv {
   @Test
   public void gameStartsAt4000BC() {
     assertThat(game.getAge(), is(-4000));
+  }
+
+  // Game age increases at every round end
+  @Test
+  public void gameAgeIncreasesAtEveryRoundEnd() {
+    int startAge = game.getAge();
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getAge(), is(startAge - 100));
   }
 }
