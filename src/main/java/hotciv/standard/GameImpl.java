@@ -35,7 +35,15 @@ public class GameImpl implements Game {
 
   public Tile getTileAt( Position p ) { return null; }
   public Unit getUnitAt( Position p ) { return null; }
-  public City getCityAt( Position p ) { return null; }
+
+  public City getCityAt( Position p ) {
+    if (p.getColumn() == 1 && p.getRow() == 1) {
+      City city = new CityImpl();
+      return city;
+    }
+    return null;
+  }
+
   public Player getPlayerInTurn() {
     return currentPlayer;
   }
