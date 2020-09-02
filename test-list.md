@@ -20,7 +20,7 @@
 - Any city has a population of 1
 - The game starts at age 4000 BC
 - Red wins at year 3000 BC
-- Red player starts the game
+    - Red player starts the game
 - Red cannot move Blue's units
 - Producing a unit in a city that already has a unit stationed in it will place the new unit above the city, placing more moving clockwise around the city
 - Producing a unit in a city without a unit already there, will place the unit in the city
