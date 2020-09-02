@@ -21,7 +21,8 @@
 - [ ] The game starts at age 4000 BC
 - [ ] Red wins at year 3000 BC
 - [x] Red player starts the game
-- [ ] After the player red has taken their turn, it shall be player blue's turn
+- [x] After the player red has taken their turn, it shall be player blue's turn
+- [ ] The two players (red and blue) alternates taking turns
 - [ ] Red cannot move Blue's units
 - [ ] Producing a unit in a city that already has a unit stationed in it will place the new unit above the city, placing more moving clockwise around the city
 - [ ] Producing a unit in a city without a unit already there, will place the unit in the city
