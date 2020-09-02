@@ -83,6 +83,6 @@ public class TestAlphaCiv {
     int startAge = game.getAge();
     game.endOfTurn();
     game.endOfTurn();
-    assertThat(game.getAge(), is(startAge - 100));
+    assertThat(game.getAge(), is(startAge + 100));
   }
 }
