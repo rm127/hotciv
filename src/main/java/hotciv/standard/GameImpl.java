@@ -38,8 +38,11 @@ public class GameImpl implements Game {
 
   public City getCityAt( Position p ) {
     if (p.getColumn() == 1 && p.getRow() == 1) {
-      City city = new CityImpl();
-      return city;
+      return new CityImpl(Player.RED);
+    }
+    if (p.getColumn() == 1 && p.getRow() == 4) {
+      return new CityImpl(Player.BLUE
+      );
     }
     return null;
   }

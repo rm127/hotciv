@@ -4,9 +4,14 @@ import hotciv.framework.City;
 import hotciv.framework.Player;
 
 public class CityImpl implements City {
+    Player owner;
+
+    CityImpl(Player owner) {
+        this.owner = owner;
+    }
 
     public Player getOwner() {
-        return Player.RED;
+        return owner;
     }
 
     public int getSize() {
