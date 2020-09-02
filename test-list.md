@@ -13,14 +13,14 @@
 - [ ] Tile (0,1) is Hills
 - [ ] Tile (2,2) is Mountains
 - [x] At tile (1,1) a Red city exists
-- [ ] At tile (4,1) a Blue city exists
+- [x] At tile (4,1) a Blue city exists
 - [ ] At game start A Red Archer is at (2,0)
 - [ ] At game start A Blue Legion is at (3,2)
 - [ ] At game start A Red Settler is at (4,3)
 - [ ] Any city has a population of 1
 - [x] The game starts at age 4000 BC
     - [x] Game age increases at every round end
-- [ ] Red wins at year 3000 BC
+- [x] Red wins at year 3000 BC
 - [x] Red player starts the game
     - [x] After the player red has taken their turn, it shall be player blue's turn
     - [x] The two players (red and blue) alternates taking turns
