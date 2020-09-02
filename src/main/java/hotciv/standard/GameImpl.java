@@ -39,10 +39,15 @@ public class GameImpl implements Game {
     return currentPlayer;
   }
   public Player getWinner() { return null; }
-  public int getAge() { return 0; }
+
+  public int getAge() {
+    return -4000;
+  }
+
   public boolean moveUnit( Position from, Position to ) {
     return false;
   }
+
   public void endOfTurn() {
     if (currentPlayer == Player.RED) {
       currentPlayer = Player.BLUE;
@@ -50,6 +55,7 @@ public class GameImpl implements Game {
       currentPlayer = Player.RED;
     }
   }
+
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}
