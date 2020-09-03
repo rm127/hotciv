@@ -127,6 +127,18 @@ public class TestAlphaCiv {
     assertThat(city.getSize(), is(1));
   }
 
+  // A city gets 6 production each round
+  @Test
+  public void citiesGet6ProductionPerRound() {
+    City city = new CityImpl(Player.RED);
+    int startTreasury = city.getTreasury();
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(city.getTreasury(), is(startTreasury + 6));
+  }
+
+
+
 
   /*
   import static org.junit.jupiter.api.Assertions.assertThrows;

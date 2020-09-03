@@ -70,6 +70,12 @@ public class GameImpl implements Game {
       currentPlayer = Player.RED;
       // increase the age of the game
       gameAge += 100;
+      /*
+      City cityRed = this.getCityAt(new Position(1, 1));
+      City cityBlue = this.getCityAt(new Position(4, 1));
+      cityRed.getTreasury()
+      */
+
     }
   }
 

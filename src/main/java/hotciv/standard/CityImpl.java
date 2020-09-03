@@ -18,9 +18,7 @@ public class CityImpl implements City {
         return 1;
     }
 
-    public int getTreasury() {
-        return 0;
-    }
+    public int getTreasury() { return 0; }
 
     public String getProduction() {
         return null;

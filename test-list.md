@@ -6,7 +6,8 @@
 - [ ] Distance between tile (0,0) and (1,1) is 1
 - [ ] Distance between tile (0,1) and (0,4) is 3
 - [ ] Moving unit A onto tile of unit B kills unit B and A moves to tile
-- [ ] A city produces 6 production per round
+- [ ] A city starts with 0 production
+- [ ] A city produces 6 production per round - increase
 - [ ] Exactly two players are present
 - [ ] Tile (0,0) is Planes
 - [ ] Tile (1,0) is Ocean
