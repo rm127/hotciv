@@ -41,3 +41,18 @@
 - [ ] Moving a unit from the same team to a tile with a unit of the same team
 - [ ] Moving a unit to/over an Ocean tile
 - [ ] Moving a unit to/over a Mountain tile
+
+
+### iteration-1 handin video
+
+- Rød spiller starter spillet
+    - Test fejler
+    - Tilføj fake code
+    - Tilføj ny test: Efter rød er det blå.
+    - Tilføj kode og tilføj ny test: Spillerne skal skiftes
+    
+- Byer har altid indbyggertal = 1
+    - Test fejler
+    - Mangler City implementation
+    - Test fejler
+    - Ret til
