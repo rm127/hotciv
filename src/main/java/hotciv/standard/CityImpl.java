@@ -3,8 +3,10 @@ package hotciv.standard;
 import hotciv.framework.City;
 import hotciv.framework.Player;
 
+import static hotciv.framework.GameConstants.LEGION;
+
 public class CityImpl implements City {
-    Player owner;
+    private final Player owner;
 
     CityImpl(Player owner) {
         this.owner = owner;
@@ -21,7 +23,7 @@ public class CityImpl implements City {
     public int getTreasury() { return 0; }
 
     public String getProduction() {
-        return null;
+        return LEGION;
     }
 
     public String getWorkforceFocus() {
