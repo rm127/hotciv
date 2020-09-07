@@ -37,6 +37,7 @@
 - [ ] When having enough production to produce a unit the treasury will be emptied and a unit produced
 - [ ] Setting a city's production to a Settler will result in a Settler being produced when the city reaches 30 production in the treasury
 - [ ] A city's _workforce balance_ can only be set to _production_ 
+- [x] A city produces 6 production per round - increase
 
 #### Units
 - [x] At game start A Red Archer is at (2,0)
@@ -56,7 +57,6 @@
 - [ ] Moving a unit diagonally reduces moveCount by correct amount
 
 ### Unsure about
-- [ ] A city produces 6 production per round - increase
 - [ ] It is possible to change the production of a city
 - [ ] Moving a unit decreases it's moveCount by the distance moved
 

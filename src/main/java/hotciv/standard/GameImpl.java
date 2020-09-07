@@ -115,8 +115,8 @@ public class GameImpl implements Game {
       // increase the age of the game
       gameAge += 100;
       // update production in cities
-//      this.getCityAt(new Position(1, 1)).increaseTreasury();
-//      this.getCityAt(new Position(4, 1)).increaseTreasury();
+      ((CityImpl) this.getCityAt(new Position(1, 1))).increaseTreasury();
+      ((CityImpl) this.getCityAt(new Position(4, 1))).increaseTreasury();
     }
   }
 

@@ -132,14 +132,14 @@ public class TestAlphaCiv {
   }
 
   // A city gets 6 production each round
-//  @Test
-//  public void citiesGet6ProductionPerRound() {
-//    City city = game.getCityAt(new Position(1,1));
-//    int startTreasury = city.getTreasury();
-//    game.endOfTurn();
-//    game.endOfTurn();
-//    assertThat(city.getTreasury(), is(startTreasury + 6));
-//  }
+  @Test
+  public void citiesGet6ProductionPerRound() {
+    City city = game.getCityAt(new Position(1,1));
+    int startTreasury = city.getTreasury();
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(city.getTreasury(), is(startTreasury + 6));
+  }
 
   // At game start A Red Archer is at (2,0)
   @Test
