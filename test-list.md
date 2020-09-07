@@ -38,6 +38,8 @@
 - [ ] Setting a city's production to a Settler will result in a Settler being produced when the city reaches 30 production in the treasury
 - [ ] A city's _workforce balance_ can only be set to _production_ 
 - [x] A city produces 6 production per round - increase
+- [x] A city's production can be changed
+
 
 #### Units
 - [x] At game start A Red Archer is at (2,0)
@@ -52,12 +54,6 @@
 - [ ] Unit cannot be moved to an invalid tile (ocean and mountain)
 - [ ] Moving unit A onto tile of unit B kills unit B and A moves to tile
 - [ ] Moving a unit to a city owned by an opponent will change the city's ownership
-
-**waiting for Unsure about**
-- [ ] Moving a unit diagonally reduces moveCount by correct amount
-
-### Unsure about
-- [ ] It is possible to change the production of a city
-- [ ] Moving a unit decreases it's moveCount by the distance moved
-
-**We're not allowed to add mutator methods to the interfaces?**
+- [x] Moving a unit decreases it's moveCount by the distance moved
+- [x] Reset move count of all units after each round 
+- [x] Moving a unit diagonally reduces moveCount by correct amount

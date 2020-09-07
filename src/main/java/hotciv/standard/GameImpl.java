@@ -87,12 +87,14 @@ public class GameImpl implements Game {
     }
 
     // trying to move more than moveCount allows
-    if (getUnitAt(from).getMoveCount() < distanceBetween(from, to)) {
+    if (unit.getMoveCount() < distanceBetween(from, to)) {
       return false;
     }
 
     unitMap.put(to, unit);
     unitMap.remove(from);
+    // decrease move count
+    ((UnitImpl) unit).decreaseMoveCount();
     return true;
   }
 
@@ -117,12 +119,16 @@ public class GameImpl implements Game {
       // update production in cities
       ((CityImpl) this.getCityAt(new Position(1, 1))).increaseTreasury();
       ((CityImpl) this.getCityAt(new Position(4, 1))).increaseTreasury();
+      // reset move count
+      unitMap.forEach((position, unit) -> ((UnitImpl) unit).resetMoveCount());
     }
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
 
-  public void changeProductionInCityAt( Position p, String unitType ) {}
+  public void changeProductionInCityAt( Position p, String unitType ) {
+    ((CityImpl) this.getCityAt(p)).setProduction(unitType);
+  }
 
   public void performUnitActionAt( Position p ) {}
 }

@@ -185,14 +185,14 @@ public class TestAlphaCiv {
   }
 
   // It is possible to change the production of a city
-//  @Test
-//  public void possibleToChangeProductionInCity() {
-//    Position cityPosition = new Position(1,1);
-//    City city = game.getCityAt(cityPosition);
-//    game.changeProductionInCityAt(cityPosition, LEGION);
-//    game.changeProductionInCityAt(cityPosition, SETTLER);
-//    assertThat(city.getProduction(), is(SETTLER));
-//  }
+  @Test
+  public void possibleToChangeProductionInCity() {
+    Position cityPosition = new Position(1,1);
+    City city = game.getCityAt(cityPosition);
+    game.changeProductionInCityAt(cityPosition, LEGION);
+    game.changeProductionInCityAt(cityPosition, SETTLER);
+    assertThat(city.getProduction(), is(SETTLER));
+  }
 
   // A city should be the same one (ref) between different turns (storing cities after creation)
   @Test
@@ -271,23 +271,32 @@ public class TestAlphaCiv {
   }
 
   // Moving a unit diagonally reduces moveCount by correct amount
-//  @Test
-//  void movingUnitDiagonallyReducesMoveCountByCorrectAmount() {
-//    Unit unit = game.getUnitAt(new Position(4,3));
-//    int prevMoveCount = unit.getMoveCount();
-//    game.moveUnit(new Position(4,3), new Position(5,4));
-//    assertThat(unit.getMoveCount(), is(prevMoveCount - 1));
-//  }
+  @Test
+  void movingUnitDiagonallyReducesMoveCountByCorrectAmount() {
+    Unit unit = game.getUnitAt(new Position(4,3));
+    int prevMoveCount = unit.getMoveCount();
+    game.moveUnit(new Position(4,3), new Position(5,4));
+    assertThat(unit.getMoveCount(), is(prevMoveCount - 1));
+  }
 
   // Moving a unit decreases it's moveCount by the distance moved
-//  @Test
-//  void movingUnitDecreasesMoveCountByDistanceMoved() {
-//    Position unitPosition = new Position(4,3);
-//    Unit unit = game.getUnitAt(unitPosition);
-//    int origMoveCount = unit.getMoveCount();
-//    game.moveUnit(unitPosition, new Position(4,4));
-//    assertThat(unit.getMoveCount(), is(origMoveCount - 1));
-//  }
+  @Test
+  void movingUnitDecreasesMoveCountByDistanceMoved() {
+    Position unitPosition = new Position(4,3);
+    Unit unit = game.getUnitAt(unitPosition);
+    int origMoveCount = unit.getMoveCount();
+    game.moveUnit(unitPosition, new Position(4,4));
+    assertThat(unit.getMoveCount(), is(origMoveCount - 1));
+  }
+
+  @Test
+  void moveCountIsResetEachRound() {
+    Position unitPosition = new Position(4,3);
+    Unit unit = game.getUnitAt(unitPosition);
+    int moveCount = unit.getMoveCount();
+    skipOtherPlayersTurn();
+    assertThat(moveCount, is(unit.getMoveCount()));
+  }
 
 
 

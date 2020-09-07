@@ -8,6 +8,7 @@ import static hotciv.framework.GameConstants.LEGION;
 public class CityImpl implements City {
     private final Player owner;
     private int treasury = 0;
+    private String currentlyProducing = LEGION;
 
     CityImpl(Player owner) {
         this.owner = owner;
@@ -24,7 +25,7 @@ public class CityImpl implements City {
     public int getTreasury() { return treasury; }
 
     public String getProduction() {
-        return LEGION;
+        return currentlyProducing;
     }
 
     public String getWorkforceFocus() {
@@ -35,4 +36,7 @@ public class CityImpl implements City {
         treasury += 6;
     }
 
+    public void setProduction(String unitType) {
+        this.currentlyProducing = unitType;
+    }
 }

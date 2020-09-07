@@ -7,6 +7,7 @@ public class UnitImpl implements Unit {
 
     private final Player owner;
     private final String type;
+    private int moveCount = 1;
 
     UnitImpl(Player owner, String type) {
         this.owner = owner;
@@ -22,7 +23,7 @@ public class UnitImpl implements Unit {
     }
 
     public int getMoveCount() {
-        return 1;
+        return moveCount;
     }
 
     public int getDefensiveStrength() {
@@ -31,5 +32,13 @@ public class UnitImpl implements Unit {
 
     public int getAttackingStrength() {
         return 0;
+    }
+
+    public void decreaseMoveCount() {
+        moveCount -= 1;
+    }
+
+    public void resetMoveCount() {
+        moveCount = 1;
     }
 }
