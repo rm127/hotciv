@@ -1,7 +1,6 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import java.util.HashMap;
 

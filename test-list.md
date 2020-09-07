@@ -8,6 +8,7 @@
 - [x] The game starts at age 4000 BC
 - [x] Game age increases by 100 at every round end
 - [x] Red wins at year 3000 BC
+- [ ] The winner is found when the game is over
 - [x] Red player starts the game
 - [x] After the player red has taken their turn, it shall be player blue's turn
 - [x] The two players (red and blue) alternates taking turns
