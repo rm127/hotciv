@@ -1,9 +1,6 @@
 # Test list
 ---
 
-
-### Allowed
-
 #### Game
 - [x] The game starts at age 4000 BC
 - [x] Game age increases by 100 at every round end
@@ -12,7 +9,7 @@
 - [x] Red player starts the game
 - [x] After the player red has taken their turn, it shall be player blue's turn
 - [x] The two players (red and blue) alternates taking turns
-- [ ] All players have to take their turns before a round ends
+- [x] All players have to take their turns before a round ends
 - [ ] Exactly two players are present
 
 
