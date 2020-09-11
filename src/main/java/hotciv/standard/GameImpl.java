@@ -96,6 +96,12 @@ public class GameImpl implements Game {
       return false;
     }
 
+    // trying to move to ocean or mountain tile
+    String destinationTileType = this.getTileAt(to).getTypeString();
+    if (destinationTileType.equals(OCEANS) || destinationTileType.equals(MOUNTAINS)) {
+      return false;
+    }
+
     // trying to move more than moveCount allows
     if (unit.getMoveCount() < distanceBetween(from, to)) {
       return false;
