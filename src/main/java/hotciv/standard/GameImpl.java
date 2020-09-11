@@ -55,6 +55,8 @@ public class GameImpl implements Game {
     String tileType = PLAINS;
     if (p.getColumn() == 2 && p.getRow() == 2) {
       tileType = MOUNTAINS;
+    } else if (p.getColumn() == 0 && p.getRow() == 1) {
+      tileType = OCEANS;
     }
     return new TileImpl(tileType);
   }
