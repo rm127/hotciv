@@ -117,8 +117,7 @@ public class GameImpl implements Game {
       // increase the age of the game
       gameAge += 100;
       // update production in cities
-      ((CityImpl) this.getCityAt(new Position(1, 1))).increaseTreasury();
-      ((CityImpl) this.getCityAt(new Position(4, 1))).increaseTreasury();
+      cityMap.forEach((position, city) -> ((CityImpl) city).increaseTreasury());
       // reset move count
       unitMap.forEach((position, unit) -> ((UnitImpl) unit).resetMoveCount());
     }
