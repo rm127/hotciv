@@ -289,6 +289,7 @@ public class TestAlphaCiv {
     assertThat(unit.getMoveCount(), is(origMoveCount - 1));
   }
 
+  // MoveCount is reset every round
   @Test
   void moveCountIsResetEachRound() {
     Position unitPosition = new Position(4,3);
@@ -296,6 +297,13 @@ public class TestAlphaCiv {
     int moveCount = unit.getMoveCount();
     skipOtherPlayersTurn();
     assertThat(moveCount, is(unit.getMoveCount()));
+  }
+
+  // Tile (2,2) is Mountains
+  @Test
+  void Tile22IsMountains() {
+    Tile tile = game.getTileAt(new Position(2,2));
+    assertThat(tile.getTypeString(), is(MOUNTAINS));
   }
 
 
