@@ -4,6 +4,7 @@ import hotciv.framework.City;
 import hotciv.framework.Player;
 
 import static hotciv.framework.GameConstants.LEGION;
+import static hotciv.framework.GameConstants.productionFocus;
 
 public class CityImpl implements City {
     private Player owner;
@@ -29,7 +30,7 @@ public class CityImpl implements City {
     }
 
     public String getWorkforceFocus() {
-        return null;
+        return productionFocus;
     }
 
     public void increaseTreasury() {
