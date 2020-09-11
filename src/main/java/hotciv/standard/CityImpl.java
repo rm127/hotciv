@@ -6,7 +6,7 @@ import hotciv.framework.Player;
 import static hotciv.framework.GameConstants.LEGION;
 
 public class CityImpl implements City {
-    private final Player owner;
+    private Player owner;
     private int treasury = 0;
     private String currentlyProducing = LEGION;
 
@@ -38,5 +38,9 @@ public class CityImpl implements City {
 
     public void setProduction(String unitType) {
         this.currentlyProducing = unitType;
+    }
+
+    public void changeOwner(Player owner) {
+        this.owner = owner;
     }
 }

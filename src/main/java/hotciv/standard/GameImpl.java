@@ -112,6 +112,12 @@ public class GameImpl implements Game {
       unitMap.remove(to);
     }
 
+    // take over city
+    City destinationCity = this.getCityAt(to);
+    if (destinationCity != null && destinationCity.getOwner() != currentPlayer) {
+      ((CityImpl) destinationCity).changeOwner(currentPlayer);
+    }
+
     unitMap.put(to, unit);
     unitMap.remove(from);
     // decrease move count
