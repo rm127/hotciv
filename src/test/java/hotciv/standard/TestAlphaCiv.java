@@ -4,10 +4,9 @@ import hotciv.framework.*;
 
 import org.junit.jupiter.api.*;
 
+import static hotciv.framework.GameConstants.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.util.*;
 
 /** Skeleton class for AlphaCiv test cases
 
@@ -41,42 +40,281 @@ import java.util.*;
 public class TestAlphaCiv {
   private Game game;
 
-  /** Fixture for alphaciv testing. */
+  /**
+   * Fixture for alphaciv testing.
+   */
   @BeforeEach
   public void setUp() {
     game = new GameImpl();
+    // remember to create the test world (like the one given at iteration-1 if we ever have a map that's not fixed with units, cities etc. at start
   }
 
-  // FRS p. 455 states that 'Red is the first player to take a turn'.
+  // Red player starts the game
   @Test
   public void shouldBeRedAsStartingPlayer() {
-    // TODO: reenable the assert below to get started...
-    // assertThat(game.getPlayerInTurn(), is(Player.RED));
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
-  /** REMOVE ME. Not a test of HotCiv, just an example of the
-      matchers that the hamcrest library has... */
+  // After the player red has taken their turn, it shall be player blue's turn
   @Test
-  public void shouldDefinetelyBeRemoved() {
-    // Matching null and not null values
-    // 'is' require an exact match
-    String s = null;
-    assertThat(s, is(nullValue()));
-    s = "Ok";
-    assertThat(s, is(notNullValue()));
-    assertThat(s, is("Ok"));
-
-    // If you only validate substrings, use containsString
-    assertThat("This is a dummy test", containsString("dummy"));
-
-    // Match contents of Lists
-    List<String> l = new ArrayList<String>();
-    l.add("Bimse");
-    l.add("Bumse");
-    // Note - ordering is ignored when matching using hasItems
-    assertThat(l, hasItems(new String[] {"Bumse","Bimse"}));
-
-    // Matchers may be combined, like is-not
-    assertThat(l.get(0), is(not("Bumse")));
+  public void shouldBePlayerBlueAfterPlayerRed() {
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
+
+  // The two players (red and blue) alternates taking turns
+  @Test
+  public void playersShouldAlternateTakingTurns() {
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.RED));
+    game.endOfTurn();
+    assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+  }
+
+  // The game starts at age 4000 BC
+  @Test
+  public void gameStartsAt4000BC() {
+    assertThat(game.getAge(), is(-4000));
+  }
+
+  // Game age increases at every round end
+  @Test
+  public void gameAgeIncreasesAtEveryRoundEnd() {
+    int startAge = game.getAge();
+    // advance a round
+    skipOtherPlayersTurn();
+    assertThat(game.getAge(), is(startAge + 100));
+    int newAge = game.getAge();
+    // advance another round
+    skipOtherPlayersTurn();
+    assertThat(game.getAge(), is(newAge + 100));
+  }
+
+  // Red wins at year 3000 BC
+  @Test
+  public void redWinsAtYear3000BC() {
+    while (game.getAge() < -3000) {
+      skipOtherPlayersTurn();
+    }
+    assertThat(game.getWinner(), is(Player.RED));
+  }
+
+  // Red has a city at position (1, 1)
+  @Test
+  public void redHasACityAtPosition11() {
+    City city = game.getCityAt(new Position(1, 1));
+    assertThat(city, is(notNullValue()));
+    assertThat(city.getOwner(), is(Player.RED));
+  }
+
+  // Blue has a city at position (4, 1)
+  @Test
+  public void blueHasACityAtPosition14() {
+    City city = game.getCityAt(new Position(4, 1));
+    assertThat(city, is(notNullValue()));
+    assertThat(city.getOwner(), is(Player.BLUE));
+  }
+
+  // Cities have population of 1
+  @Test
+  public void citiesHavePopulation1() {
+    City city = game.getCityAt(new Position(4, 1));
+    assertThat(city.getSize(), is(1));
+  }
+
+  // A city starts with 0 production in the treasury
+  @Test
+  public void cityStartsWith0Production() {
+    City city = game.getCityAt(new Position(1,1));
+    assertThat(city.getTreasury(), is(0));
+  }
+
+  // A city gets 6 production each round
+  @Test
+  public void citiesGet6ProductionPerRound() {
+    City city = game.getCityAt(new Position(1,1));
+    int startTreasury = city.getTreasury();
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(city.getTreasury(), is(startTreasury + 6));
+  }
+
+  // At game start A Red Archer is at (2,0)
+  @Test
+  public void redHasArcherAtPosition() {
+    Unit unit1 = game.getUnitAt(new Position(2,0));
+    assertThat(unit1, is(notNullValue()));
+    assertThat(unit1.getTypeString(), is(ARCHER));
+    assertThat(unit1.getOwner(), is(Player.RED));
+  }
+
+  // At game start A Blue Legion is at (3,2)
+  @Test
+  public void blueHasArcherAtPosition() {
+    Unit unit1 = game.getUnitAt(new Position(3,2));
+    assertThat(unit1, is(notNullValue()));
+    assertThat(unit1.getTypeString(), is(ARCHER));
+    assertThat(unit1.getOwner(), is(Player.BLUE));
+  }
+
+  // At game start A Red Settler is at (4,3)
+  @Test
+  public void redHasSettlerAtPosition() {
+    Unit unit1 = game.getUnitAt(new Position(4,3));
+    assertThat(unit1, is(notNullValue()));
+    assertThat(unit1.getTypeString(), is(SETTLER));
+    assertThat(unit1.getOwner(), is(Player.RED));
+  }
+
+  // All units can move a maximum of 1 in distance
+  @Test
+  public void unitsHaveMaxMovingDistanceOf1() {
+    Unit unit = game.getUnitAt(new Position(2,0));
+    assertThat(unit.getMoveCount(), is(1));
+  }
+
+  // A city must always be producing something
+  @Test
+  public void cityShouldAlwaysBeProducingSomething() {
+    City city = game.getCityAt(new Position(1,1));
+    String currentlyProducing = city.getProduction();
+    assertThat(currentlyProducing, is(notNullValue()));
+    assertThat(currentlyProducing, anyOf(is(ARCHER), is(SETTLER), is(LEGION)));
+  }
+
+  // It is possible to change the production of a city
+  @Test
+  public void possibleToChangeProductionInCity() {
+    Position cityPosition = new Position(1,1);
+    City city = game.getCityAt(cityPosition);
+    game.changeProductionInCityAt(cityPosition, LEGION);
+    game.changeProductionInCityAt(cityPosition, SETTLER);
+    assertThat(city.getProduction(), is(SETTLER));
+  }
+
+  // A city should be the same one (ref) between different turns (storing cities after creation)
+  @Test
+  public void sameCityShouldBeTheSame() {
+    City city1 = game.getCityAt(new Position(1,1));
+    City city2 = game.getCityAt(new Position(1,1));
+    assertThat(city1, is(city2));
+  }
+
+  // A unit should be the same one (ref) between different turns (storing units after creation)
+  @Test
+  public void sameUnitShouldBeTheSame() {
+    Unit unit1 = game.getUnitAt(new Position(2,0));
+    Unit unit2 = game.getUnitAt(new Position(2,0));
+    assertThat(unit1, is(unit2));
+  }
+
+  // Units can be moved
+  @Test
+  public void unitsCanBeMoved() {
+    // unit owned by red. Red starts the game
+    Position oldPosition = new Position(2,0);
+    Position newPosition = new Position(2,1);
+    Unit unit = game.getUnitAt(oldPosition);
+    game.moveUnit(oldPosition, newPosition);
+    assertThat(game.getUnitAt(newPosition), is(unit));
+    assertThat(game.getUnitAt(oldPosition), is(nullValue()));
+  }
+
+// Red cannot move Blue's units
+  @Test
+  public void redCannotMoveBlueUnits() {
+    // unit at position (2,3) is owned by blue
+    boolean invalidMove = game.moveUnit(new Position(3,2), new Position(3,3));
+    assertThat(invalidMove, is(false));
+  }
+
+  // Cannot stack two units with same owner at the same position
+  @Test
+  public void cannotStackUnitsOfSameOwner() {
+    /*
+     * Info: both units are red
+     * Setup: Move a red unit close to another red unit and make the test
+     */
+
+    // move down past blue city
+    game.moveUnit(new Position(2,0), new Position(3,0));
+    skipOtherPlayersTurn();
+    game.moveUnit(new Position(3,0), new Position(4,0));
+    skipOtherPlayersTurn();
+    game.moveUnit(new Position(4,0), new Position(5,0));
+    skipOtherPlayersTurn();
+    // move across
+    game.moveUnit(new Position(5,0), new Position(5,1));
+    skipOtherPlayersTurn();
+    game.moveUnit(new Position(5,1), new Position(5,2));
+    skipOtherPlayersTurn();
+    game.moveUnit(new Position(5,2), new Position(5,3));
+    skipOtherPlayersTurn();
+    // move up
+    boolean invalidMove = game.moveUnit(new Position(5,3), new Position(4,3));
+    assertThat(invalidMove, is(false));
+  }
+
+  // Unit can only be moved a maximum of tiles equal moveCount
+  @Test
+  void unitOnlyAllowedToMoveAMaxOfMoveCount() {
+    int startColumn = 3;
+    int row = 4;
+    Position startPosition = new Position(row,startColumn);
+    int moveCount = game.getUnitAt(startPosition).getMoveCount();
+    boolean invalidMove = game.moveUnit(startPosition, new Position(row,startColumn + moveCount + 1));
+    assertThat(invalidMove, is(false));
+    boolean validMove = game.moveUnit(startPosition, new Position(row,startColumn + moveCount));
+    assertThat(validMove, is(true));
+  }
+
+  // Moving a unit diagonally reduces moveCount by correct amount
+  @Test
+  void movingUnitDiagonallyReducesMoveCountByCorrectAmount() {
+    Unit unit = game.getUnitAt(new Position(4,3));
+    int prevMoveCount = unit.getMoveCount();
+    game.moveUnit(new Position(4,3), new Position(5,4));
+    assertThat(unit.getMoveCount(), is(prevMoveCount - 1));
+  }
+
+  // Moving a unit decreases it's moveCount by the distance moved
+  @Test
+  void movingUnitDecreasesMoveCountByDistanceMoved() {
+    Position unitPosition = new Position(4,3);
+    Unit unit = game.getUnitAt(unitPosition);
+    int origMoveCount = unit.getMoveCount();
+    game.moveUnit(unitPosition, new Position(4,4));
+    assertThat(unit.getMoveCount(), is(origMoveCount - 1));
+  }
+
+  @Test
+  void moveCountIsResetEachRound() {
+    Position unitPosition = new Position(4,3);
+    Unit unit = game.getUnitAt(unitPosition);
+    int moveCount = unit.getMoveCount();
+    skipOtherPlayersTurn();
+    assertThat(moveCount, is(unit.getMoveCount()));
+  }
+
+
+
+
+
+  /*
+  import static org.junit.jupiter.api.Assertions.assertThrows;
+
+  @Test
+  public void testForException() throws NullPointerException {
+     NullPointerException e = assertThrows(NullPointerException.class, () -> myMethod());
+     assertThat(e.getMessage(), containsString("Illegal value: value causing error"));
+  }
+  */
+
+  private void skipOtherPlayersTurn() {
+    game.endOfTurn();
+    game.endOfTurn();
+  }
+
 }
