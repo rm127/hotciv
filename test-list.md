@@ -54,3 +54,4 @@
 - [x] Moving a unit decreases it's moveCount by the distance moved
 - [x] Reset move count of all units after each round 
 - [x] Moving a unit diagonally reduces moveCount by correct amount
+- [ ] Moving a unit from (0,0) to (1,2) takes 2 distance since we move diagonally first

@@ -120,7 +120,7 @@ public class TestAlphaCiv {
   // Cities have population of 1
   @Test
   public void citiesHavePopulation1() {
-    City city = new CityImpl(Player.RED);
+    City city = game.getCityAt(new Position(4, 1));
     assertThat(city.getSize(), is(1));
   }
 
