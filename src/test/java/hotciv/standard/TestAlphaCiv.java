@@ -305,6 +305,16 @@ public class TestAlphaCiv {
     Tile tile = game.getTileAt(new Position(2,2));
     assertThat(tile.getTypeString(), is(MOUNTAINS));
   }
+  // All Tiles are default Planes
+  @Test
+  void AllTilesAreDefaultPlanes() {
+    Tile tile = game.getTileAt(new Position(0,0));
+    assertThat(tile.getTypeString(), is(PLAINS));
+    tile = game.getTileAt(new Position(1,1));
+    assertThat(tile.getTypeString(), is(PLAINS));
+    tile = game.getTileAt(new Position(3,3));
+    assertThat(tile.getTypeString(), is(PLAINS));
+  }
 
 
 
