@@ -4,8 +4,7 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 
-import static hotciv.framework.GameConstants.ARCHER;
-import static hotciv.framework.GameConstants.SETTLER;
+import static hotciv.framework.GameConstants.*;
 
 /** Skeleton implementation of HotCiv.
  
@@ -53,7 +52,11 @@ public class GameImpl implements Game {
   }
 
   public Tile getTileAt( Position p ) {
-    return new TileImpl();
+    String tileType = PLAINS;
+    if (p.getColumn() == 2 && p.getRow() == 2) {
+      tileType = MOUNTAINS;
+    }
+    return new TileImpl(tileType);
   }
 
   public Unit getUnitAt( Position p ) {
