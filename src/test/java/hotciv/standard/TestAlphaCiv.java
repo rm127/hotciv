@@ -349,9 +349,12 @@ public class TestAlphaCiv {
   void movingUnitAOntoTileOfUnitBKillsUnitB() {
     Position unitAPosition = new Position(4,3);
     Position unitBPosition = new Position(3,2);
+    Unit attackingUnit = game.getUnitAt(unitAPosition);
     game.moveUnit(unitAPosition, unitBPosition);
-    assertThat(game.getUnitAt(unitBPosition), is(nullValue()));
+    assertThat(game.getUnitAt(unitBPosition), is(attackingUnit));
   }
+
+
 
 
 
