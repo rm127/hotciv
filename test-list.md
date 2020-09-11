@@ -52,4 +52,5 @@
 - [x] Unit cannot be moved to an invalid tile (ocean and mountain)
 - [x] Moving unit A onto tile of unit B kills unit B and A moves to tile
 - [ ] Moving a unit to a city owned by an opponent will change the city's ownership
+
 - [ ] **CANNOT BE TESTED WITH MOVECOUNT OF 1** Moving a unit from (0,0) to (1,2) takes 2 distance since we move diagonally first

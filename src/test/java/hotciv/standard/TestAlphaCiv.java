@@ -354,6 +354,19 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(unitBPosition), is(attackingUnit));
   }
 
+  // Moving a unit to a city owned by an opponent will change the city's ownership
+  @Test
+  void movingUnitToOpponentCityWillConvertCityToCurrentPlayer() {
+    Position cityPosition = new Position(4,1);
+    // move unit since we can only move one tile a time
+    game.moveUnit(new Position(2, 0), new Position(3,0));
+    skipOtherPlayersTurn();
+
+    game.moveUnit(new Position(3, 0), cityPosition);
+    assertThat(game.getCityAt(cityPosition).getOwner(), is(Player.RED));
+  }
+
+
 
 
 
