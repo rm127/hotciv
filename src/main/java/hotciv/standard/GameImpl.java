@@ -52,7 +52,10 @@ public class GameImpl implements Game {
     unitMap.put(new Position(4,3), new UnitImpl(Player.RED, SETTLER));
   }
 
-  public Tile getTileAt( Position p ) { return null; }
+  public Tile getTileAt( Position p ) {
+    return new TileImpl();
+  }
+
   public Unit getUnitAt( Position p ) {
     return unitMap.get(p);
   }
