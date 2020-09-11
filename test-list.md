@@ -14,10 +14,10 @@
 
 
 #### Tiles
-- [ ] All Tiles are default Planes
+- [x] All Tiles are default Planes
 - [ ] Tile (1,0) is Ocean
 - [ ] Tile (0,1) is Hills
-- [ ] Tile (2,2) is Mountains
+- [x] Tile (2,2) is Mountains
 
 #### Cities
 - [x] At tile (1,1) a Red city exists

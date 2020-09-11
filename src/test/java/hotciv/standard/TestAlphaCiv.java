@@ -316,6 +316,14 @@ public class TestAlphaCiv {
     assertThat(tile.getTypeString(), is(PLAINS));
   }
 
+  // Tile (1,0) is Ocean
+  @Test
+  void Tile10IsOcean() {
+    Tile tile = game.getTileAt(new Position(1,0));
+    assertThat(tile.getTypeString(), is(OCEANS));
+  }
+
+
 
 
 
