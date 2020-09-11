@@ -107,6 +107,11 @@ public class GameImpl implements Game {
       return false;
     }
 
+    // kills another unit
+    if (this.getUnitAt(to) != null) {
+      unitMap.remove(to);
+    }
+
     unitMap.put(to, unit);
     unitMap.remove(from);
     // decrease move count
