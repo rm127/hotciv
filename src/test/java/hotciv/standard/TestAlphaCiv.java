@@ -366,6 +366,11 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(cityPosition).getOwner(), is(Player.RED));
   }
 
+  // A city's workforce balance can only be set to production
+  @Test
+  void cityWorkforceFocusShouldBeProduction() {
+    assertThat(game.getCityAt(new Position(1,1)).getWorkforceFocus(), is(productionFocus));
+  }
 
 
 
