@@ -330,6 +330,14 @@ public class TestAlphaCiv {
     assertThat(tile.getTypeString(), is(HILLS));
   }
 
+  // Unit cannot be moved to an invalid tile (ocean and mountain)
+  @Test
+  void movingUnitToMountainIsNotPossible() {
+    // change turn to player blue to move blue unit at pos (2,3)
+    game.endOfTurn();
+    assertThat(game.moveUnit(new Position(3, 2), new Position(2, 2)), is(false));
+  }
+
 
 
 
