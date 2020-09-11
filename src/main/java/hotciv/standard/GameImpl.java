@@ -57,6 +57,8 @@ public class GameImpl implements Game {
       tileType = MOUNTAINS;
     } else if (p.getColumn() == 0 && p.getRow() == 1) {
       tileType = OCEANS;
+    } else if (p.getColumn() == 1 && p.getRow() == 0) {
+      tileType = HILLS;
     }
     return new TileImpl(tileType);
   }

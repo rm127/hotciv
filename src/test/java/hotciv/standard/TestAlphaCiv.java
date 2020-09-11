@@ -323,7 +323,7 @@ public class TestAlphaCiv {
     assertThat(tile.getTypeString(), is(OCEANS));
   }
 
-  // Tile (0,1) is Ocean
+  // Tile (0,1) is Hills
   @Test
   void Tile01IsHills() {
     Tile tile = game.getTileAt(new Position(0,1));
