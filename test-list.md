@@ -16,7 +16,7 @@
 #### Tiles
 - [x] All Tiles are default Planes
 - [x] Tile (1,0) is Ocean
-- [ ] Tile (0,1) is Hills
+- [x] Tile (0,1) is Hills
 - [x] Tile (2,2) is Mountains
 
 #### Cities

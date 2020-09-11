@@ -344,6 +344,16 @@ public class TestAlphaCiv {
     assertThat(game.moveUnit(new Position(2, 0), new Position(1, 0)), is(false));
   }
 
+  // Moving unit A onto tile of unit B kills unit
+  @Test
+  void movingUnitAOntoTileOfUnitBKillsUnitB() {
+    Position unitAPosition = new Position(4,3);
+    Position unitBPosition = new Position(3,2);
+    game.moveUnit(unitAPosition, unitBPosition);
+    assertThat(game.getUnitAt(unitBPosition), is(nullValue()));
+  }
+
+
 
 
 
