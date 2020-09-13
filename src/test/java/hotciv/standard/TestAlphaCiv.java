@@ -396,13 +396,36 @@ public class TestAlphaCiv {
 
   // After producing a unit, the treasury will be reduced by the cost of the unit
   @Test
-  void treasuryIsReducedByUnitCostAfterProduction() {
+  void treasuryIsReducedByLegionCostAfterLegionProduction() {
     City city = game.getCityAt(new Position(1, 1));
     skipOtherPlayersTurn();
     skipOtherPlayersTurn();
     skipOtherPlayersTurn();
     // Treasury is increased by 6 each round. Legion costs 15
     assertThat(city.getTreasury(), is(3));
+  }
+
+  @Test
+  void treasuryIsReducedByArcherCostAfterArcherProduction() {
+    City city = game.getCityAt(new Position(1, 1));
+    ((CityImpl) city).setProduction(ARCHER);
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    // Treasury is increased by 6 each round. Archer costs 10
+    assertThat(city.getTreasury(), is(2));
+  }
+
+  @Test
+  void treasuryIsReducedBySettlerCostAfterSettlerProduction() {
+    City city = game.getCityAt(new Position(1, 1));
+    ((CityImpl) city).setProduction(SETTLER);
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    // Treasury is increased by 6 each round. Settler costs 30
+    assertThat(city.getTreasury(), is(0));
   }
 
 
