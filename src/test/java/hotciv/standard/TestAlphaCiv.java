@@ -430,6 +430,27 @@ public class TestAlphaCiv {
   }
 
 
+  // Producing a unit in a city that already has a unit stationed in it will place the new unit above the city,
+  // placing more moving clockwise around the city
+  @Test
+  void producingAUnitInACityWithUnitAlreadyInCityPlacesUnitsAroundCity() {
+    City city = game.getCityAt(new Position(1,1));
+
+    // produce new unit
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+
+    assertThat(game.getUnitAt(new Position(1, 1)), is(notNullValue()));
+
+    // produce new unit
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    assertThat(game.getUnitAt(new Position(0, 1)), is(notNullValue()));
+  }
+
+
 
 
 

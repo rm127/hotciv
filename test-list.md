@@ -30,7 +30,7 @@
 - [x] A city produces 6 production per round - increase
 - [x] A city's production can be changed
 - [ ] Producing a unit in a city that already has a unit stationed in it will place the new unit above the city, placing more moving clockwise around the city
-- [ ] Producing a unit in a city without a unit already there, will place the unit in the city
+- [x] Producing a unit in a city without a unit already there, will place the unit in the city
 - [x] When having enough production to produce a unit the unit is produced 
 - [x] The correct unit type is produced
 - [x] The units have correct production prices
