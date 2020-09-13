@@ -153,7 +153,7 @@ public class GameImpl implements Game {
   private void updateCity(Position position, City city) {
     ((CityImpl) city).increaseTreasury();
     if (city.getTreasury() >= 15) {
-      unitMap.put(position, new UnitImpl(currentPlayer, LEGION));
+      unitMap.put(position, new UnitImpl(currentPlayer, city.getProduction()));
     }
   }
 

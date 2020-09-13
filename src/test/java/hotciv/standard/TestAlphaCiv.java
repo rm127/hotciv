@@ -386,6 +386,11 @@ public class TestAlphaCiv {
   void correctUnitTypeIsProducedFromCity() {
     City city = game.getCityAt(new Position(1, 1));
     ((CityImpl) city).setProduction(SETTLER);
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
     assertThat(game.getUnitAt(new Position(1, 1)).getTypeString(), is(SETTLER));
   }
 
