@@ -33,7 +33,8 @@
 - [ ] Producing a unit in a city without a unit already there, will place the unit in the city
 - [x] When having enough production to produce a unit the unit is produced 
 - [x] The correct unit type is produced
-- [ ] After producing a unit, the treasury will be emptied
+- [ ] The units have correct production prices
+- [ ] After producing a unit, the treasury will be reduced by the cost of the unit
 - [ ] Setting a city's production to a Settler will result in a Settler being produced when the city reaches 30 production in the treasury
 - [ ] A city's _workforce balance_ can only be set to _production_
 
@@ -56,3 +57,7 @@
 - [x] Moving a unit to a city owned by an opponent will change the city's ownership
 
 - [ ] **CANNOT BE TESTED WITH MOVECOUNT OF 1** Moving a unit from (0,0) to (1,2) takes 2 distance since we move diagonally first
+
+
+#### Improvements
+- [ ] Set red and blue city as variables in the setup method (test file)

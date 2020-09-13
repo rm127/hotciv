@@ -394,6 +394,36 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(1, 1)).getTypeString(), is(SETTLER));
   }
 
+  // After producing a unit, the treasury will be reduced by the cost of the unit
+  @Test
+  void treasuryIsReducedByUnitCostAfterProduction() {
+    City city = game.getCityAt(new Position(1, 1));
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    // Treasury is increased by 6 each round. Legion costs 15
+    assertThat(city.getTreasury(), is(3));
+  }
+
+
+//   The units have correct production prices
+//   Archer costs 10
+//  @Test
+//  void archerHasCorrectPrice() {
+//    City city = game.getCityAt(new Position(1, 1));
+//    ((CityImpl) city).setProduction(ARCHER);
+//    assertThat(game.getUnitAt(new Position(1, 1)), is(nullValue()));
+//    skipOtherPlayersTurn();
+//    assertThat(game.getUnitAt(new Position(1, 1)), is(nullValue()));
+//    skipOtherPlayersTurn();
+//    assertThat(game.getUnitAt(new Position(1, 1)), is(notNullValue()));
+//    assertThat(game.getUnitAt(new Position(1, 1)).getTypeString(), is(ARCHER));
+//  }
+
+
+
+
+
 
 
 
