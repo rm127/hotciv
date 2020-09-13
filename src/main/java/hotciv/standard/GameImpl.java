@@ -151,13 +151,13 @@ public class GameImpl implements Game {
       // increase the age of the game
       gameAge += 100;
       // update production in cities
-      cityMap.forEach(this::updateCity);
+      cityMap.forEach(this::handleCityProduction);
       // reset move count
       unitMap.forEach((position, unit) -> ((UnitImpl) unit).resetMoveCount());
     }
   }
 
-  private void updateCity(Position position, City city) {
+  private void handleCityProduction(Position position, City city) {
     ((CityImpl) city).increaseTreasury();
     if (city.getTreasury() >= ((CityImpl) city).getProductionPrice()) {
 
