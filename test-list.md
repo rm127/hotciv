@@ -9,7 +9,7 @@
 - [x] After the player red has taken their turn, it shall be player blue's turn
 - [x] The two players (red and blue) alternates taking turns
 - [x] All players have to take their turns before a round ends
-- [ ] Exactly two players are present
+- [x] Exactly two players are present
 - [ ] The winner is found when the game is over
 
 
@@ -35,7 +35,7 @@
 - [x] The correct unit type is produced
 - [x] The units have correct production prices
 - [x] After producing a unit, the treasury will be reduced by the cost of the unit
-- [ ] A city's _workforce balance_ can only be set to _production_
+- [x] A city's _workforce balance_ can only be set to _production_
 
 
 #### Units

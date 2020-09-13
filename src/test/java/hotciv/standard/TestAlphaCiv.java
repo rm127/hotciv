@@ -92,10 +92,11 @@ public class TestAlphaCiv {
     assertThat(game.getAge(), is(newAge + 100));
   }
 
-  // Red wins at year 3000 BC
+  // Red wins at year 3000 BC and winner is not found until game is over
   @Test
   public void redWinsAtYear3000BC() {
     while (game.getAge() < -3000) {
+      assertThat(game.getWinner(), is(nullValue()));
       skipOtherPlayersTurn();
     }
     assertThat(game.getWinner(), is(Player.RED));
@@ -427,7 +428,6 @@ public class TestAlphaCiv {
     // Treasury is increased by 6 each round. Settler costs 30
     assertThat(city.getTreasury(), is(0));
   }
-
 
 
 
