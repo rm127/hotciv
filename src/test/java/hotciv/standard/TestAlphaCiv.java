@@ -381,6 +381,16 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(1, 1)).getTypeString(), is(LEGION));
   }
 
+  // The correct unit type is produced
+  @Test
+  void correctUnitTypeIsProducedFromCity() {
+    City city = game.getCityAt(new Position(1, 1));
+    ((CityImpl) city).setProduction(SETTLER);
+    assertThat(game.getUnitAt(new Position(1, 1)).getTypeString(), is(SETTLER));
+  }
+
+
+
 
 
 
