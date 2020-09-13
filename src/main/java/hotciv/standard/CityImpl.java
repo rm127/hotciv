@@ -41,13 +41,17 @@ public class CityImpl implements City {
     }
 
     public int getProductionPrice() {
-        return switch (currentlyProducing) {
-            case ARCHER -> 10;
-            case LEGION -> 15;
-            case SETTLER -> 30;
+        switch (currentlyProducing) {
+            case ARCHER:
+                return 10;
+            case LEGION:
+                return 15;
+            case SETTLER:
+                return 30;
             // not used due to preconditions
-            default -> 0;
-        };
+            default:
+                return 0;
+        }
     }
 
     public void changeOwner(Player owner) {
