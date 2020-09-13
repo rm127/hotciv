@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 
 import static hotciv.framework.GameConstants.*;
@@ -436,22 +437,22 @@ public class TestAlphaCiv {
   void producingAUnitInACityWithUnitAlreadyInCityPlacesUnitsAroundCity() {
     City city = game.getCityAt(new Position(1,1));
     // check all positions clockwise around the city
-    ProduceNewUnitAndCheckPosition(1, 1);
-    ProduceNewUnitAndCheckPosition(0, 1);
-    ProduceNewUnitAndCheckPosition(0, 2);
-    ProduceNewUnitAndCheckPosition(1, 2);
-    ProduceNewUnitAndCheckPosition(2, 2);
-    ProduceNewUnitAndCheckPosition(2, 1);
-    ProduceNewUnitAndCheckPosition(2, 0);
-    ProduceNewUnitAndCheckPosition(1, 0);
-    ProduceNewUnitAndCheckPosition(0, 0);
+    ProduceNewUnitAndCheckPosition(1, 1, notNullValue());
+    ProduceNewUnitAndCheckPosition(0, 1, notNullValue());
+    ProduceNewUnitAndCheckPosition(0, 2, notNullValue());
+    ProduceNewUnitAndCheckPosition(1, 2, notNullValue());
+    ProduceNewUnitAndCheckPosition(2, 2, nullValue());
+    ProduceNewUnitAndCheckPosition(2, 1, notNullValue());
+    ProduceNewUnitAndCheckPosition(2, 0, notNullValue());
+    ProduceNewUnitAndCheckPosition(1, 0, nullValue());
+    ProduceNewUnitAndCheckPosition(0, 0, notNullValue());
   }
 
-  private void ProduceNewUnitAndCheckPosition(int i, int i2) {
+  private void ProduceNewUnitAndCheckPosition(int i, int i2, Matcher<Object> test) {
     skipOtherPlayersTurn();
     skipOtherPlayersTurn();
     skipOtherPlayersTurn();
-    assertThat(game.getUnitAt(new Position(i, i2)), is(notNullValue()));
+    assertThat(game.getUnitAt(new Position(i, i2)), is(test));
   }
 
 
