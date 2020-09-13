@@ -29,13 +29,15 @@
 - [x] A city should be the same one (ref) between different turns (storing cities after creation)
 - [x] A city produces 6 production per round - increase
 - [x] A city's production can be changed
-- [ ] Producing a unit in a city that already has a unit stationed in it will place the new unit above the city, placing more moving clockwise around the city
+- [x] Producing a unit in a city that already has a unit stationed in it will place the new unit above the city, placing more moving clockwise around the city
 - [x] Producing a unit in a city without a unit already there, will place the unit in the city
 - [x] When having enough production to produce a unit the unit is produced 
 - [x] The correct unit type is produced
 - [x] The units have correct production prices
 - [x] After producing a unit, the treasury will be reduced by the cost of the unit
 - [x] A city's _workforce balance_ can only be set to _production_
+
+- [ ] **CANNOT BE TESTED WITH NO CITY ON WORLD EDGE** Producing a unit in a city with a unit already in the city, will place the unit on the nearest available tile moving clockwise
 
 
 #### Units

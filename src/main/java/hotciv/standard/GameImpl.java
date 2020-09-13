@@ -155,9 +155,27 @@ public class GameImpl implements Game {
   private void updateCity(Position position, City city) {
     ((CityImpl) city).increaseTreasury();
     if (city.getTreasury() >= ((CityImpl) city).getProductionPrice()) {
-      unitMap.put(position, new UnitImpl(currentPlayer, city.getProduction()));
+
+      unitMap.put(nextValidUnitPosition(position), new UnitImpl(currentPlayer, city.getProduction()));
       ((CityImpl) city).decreaseTreasury();
     }
+  }
+
+  private Position nextValidUnitPosition(Position position) {
+    int currentRow = position.getRow();
+    int currentColumn = position.getColumn();
+    int[] columns = new int[] {0, 0, 1, 1, 1, 0, -1, -1, -1};
+    int[] rows    = new int[] {0, -1, -1, 0, 1, 1, 1, 0, -1};
+
+    for (int i = 0; i < 9; i++) {
+      Position newPosition = new Position(currentRow + rows[i],
+                                          currentColumn + columns[i]);
+      if (getUnitAt(newPosition) == null) {
+        return newPosition;
+      }
+    }
+
+    return null;
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
