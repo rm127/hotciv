@@ -98,9 +98,8 @@ public class GameImpl implements Game {
       return false;
     }
 
-    // trying to move to ocean or mountain tile
-    String destinationTileType = this.getTileAt(to).getTypeString();
-    if (destinationTileType.equals(OCEANS) || destinationTileType.equals(MOUNTAINS)) {
+    // trying to move to invalid tile (ocean or mountain)
+    if (isInvalidTile(to)) {
       return false;
     }
 
@@ -125,6 +124,12 @@ public class GameImpl implements Game {
     // decrease move count
     ((UnitImpl) unit).decreaseMoveCount();
     return true;
+  }
+
+  // validate if tile is ocean or mountain
+  private boolean isInvalidTile(Position position) {
+    String destinationTileType = this.getTileAt(position).getTypeString();
+    return destinationTileType.equals(OCEANS) || destinationTileType.equals(MOUNTAINS);
   }
 
   private int distanceBetween(Position from, Position to) {
@@ -164,13 +169,13 @@ public class GameImpl implements Game {
   private Position nextValidUnitPosition(Position position) {
     int currentRow = position.getRow();
     int currentColumn = position.getColumn();
+    // list of modifiers to current position
     int[] columns = new int[] {0, 0, 1, 1, 1, 0, -1, -1, -1};
     int[] rows    = new int[] {0, -1, -1, 0, 1, 1, 1, 0, -1};
 
     for (int i = 0; i < 9; i++) {
-      Position newPosition = new Position(currentRow + rows[i],
-                                          currentColumn + columns[i]);
-      if (getUnitAt(newPosition) == null) {
+      Position newPosition = new Position(currentRow + rows[i], currentColumn + columns[i]);
+      if (getUnitAt(newPosition) == null && !isInvalidTile(newPosition)) {
         return newPosition;
       }
     }
