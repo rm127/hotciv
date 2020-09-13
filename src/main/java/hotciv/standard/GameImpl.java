@@ -154,6 +154,7 @@ public class GameImpl implements Game {
     ((CityImpl) city).increaseTreasury();
     if (city.getTreasury() >= 15) {
       unitMap.put(position, new UnitImpl(currentPlayer, city.getProduction()));
+      ((CityImpl) city).decreaseTreasury();
     }
   }
 

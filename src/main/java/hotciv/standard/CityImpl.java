@@ -3,8 +3,7 @@ package hotciv.standard;
 import hotciv.framework.City;
 import hotciv.framework.Player;
 
-import static hotciv.framework.GameConstants.LEGION;
-import static hotciv.framework.GameConstants.productionFocus;
+import static hotciv.framework.GameConstants.*;
 
 public class CityImpl implements City {
     private Player owner;
@@ -41,7 +40,21 @@ public class CityImpl implements City {
         this.currentlyProducing = unitType;
     }
 
+    public int getProductionPrice() {
+        return switch (currentlyProducing) {
+            case ARCHER -> 10;
+            case LEGION -> 15;
+            case SETTLER -> 30;
+            // not used due to preconditions
+            default -> 0;
+        };
+    }
+
     public void changeOwner(Player owner) {
         this.owner = owner;
+    }
+
+    public void decreaseTreasury() {
+        treasury -= getProductionPrice();
     }
 }
