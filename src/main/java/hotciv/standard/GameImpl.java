@@ -161,8 +161,12 @@ public class GameImpl implements Game {
     ((CityImpl) city).increaseTreasury();
     if (city.getTreasury() >= ((CityImpl) city).getProductionPrice()) {
 
-      unitMap.put(nextValidUnitPosition(position), new UnitImpl(currentPlayer, city.getProduction()));
-      ((CityImpl) city).decreaseTreasury();
+      Position newPosition = nextValidUnitPosition(position);
+      // to avoid NullPointerException
+      if (newPosition != null) {
+        unitMap.put(newPosition, new UnitImpl(currentPlayer, city.getProduction()));
+        ((CityImpl) city).decreaseTreasury();
+      }
     }
   }
 
@@ -179,7 +183,6 @@ public class GameImpl implements Game {
         return newPosition;
       }
     }
-
     return null;
   }
 
