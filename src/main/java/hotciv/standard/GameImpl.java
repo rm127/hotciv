@@ -39,7 +39,6 @@ public class GameImpl implements Game {
   private final HashMap<Position, City> cityMap = new HashMap<>();
   private final HashMap<Position, Unit> unitMap = new HashMap<>();
 
-
   GameImpl() {
     // cities
     cityMap.put(new Position(1,1), new CityImpl(Player.RED));
@@ -75,7 +74,10 @@ public class GameImpl implements Game {
     return currentPlayer;
   }
   public Player getWinner() {
-    return Player.RED;
+    if (gameAge >= -3000) {
+      return Player.RED;
+    }
+    return null;
   }
 
   public int getAge() {

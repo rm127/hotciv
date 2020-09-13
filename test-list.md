@@ -10,7 +10,7 @@
 - [x] The two players (red and blue) alternates taking turns
 - [x] All players have to take their turns before a round ends
 - [x] Exactly two players are present
-- [ ] The winner is found when the game is over
+- [x] The winner is found when the game is over
 
 
 #### Tiles
