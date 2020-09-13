@@ -31,7 +31,8 @@
 - [x] A city's production can be changed
 - [ ] Producing a unit in a city that already has a unit stationed in it will place the new unit above the city, placing more moving clockwise around the city
 - [ ] Producing a unit in a city without a unit already there, will place the unit in the city
-- [ ] When having enough production to produce a unit the treasury will be emptied and a unit produced
+    - [ ] When having enough production to produce a unit the unit is produced 
+- [ ] After producing a unit, the treasury will be emptied
 - [ ] Setting a city's production to a Settler will result in a Settler being produced when the city reaches 30 production in the treasury
 - [ ] A city's _workforce balance_ can only be set to _production_
 

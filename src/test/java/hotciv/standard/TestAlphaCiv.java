@@ -372,6 +372,20 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(1,1)).getWorkforceFocus(), is(productionFocus));
   }
 
+  // When having enough production to produce a unit, the unit is produced
+  @Test
+  void shouldProduceUnitWhenTreasuryIsHighEnough() {
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    assertThat(game.getUnitAt(new Position(1, 1)).getTypeString(), is(LEGION));
+  }
+
+
+
+
+
+
 
 
 
