@@ -429,22 +429,6 @@ public class TestAlphaCiv {
   }
 
 
-//   The units have correct production prices
-//   Archer costs 10
-//  @Test
-//  void archerHasCorrectPrice() {
-//    City city = game.getCityAt(new Position(1, 1));
-//    ((CityImpl) city).setProduction(ARCHER);
-//    assertThat(game.getUnitAt(new Position(1, 1)), is(nullValue()));
-//    skipOtherPlayersTurn();
-//    assertThat(game.getUnitAt(new Position(1, 1)), is(nullValue()));
-//    skipOtherPlayersTurn();
-//    assertThat(game.getUnitAt(new Position(1, 1)), is(notNullValue()));
-//    assertThat(game.getUnitAt(new Position(1, 1)).getTypeString(), is(ARCHER));
-//  }
-
-
-
 
 
 

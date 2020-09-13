@@ -33,9 +33,8 @@
 - [ ] Producing a unit in a city without a unit already there, will place the unit in the city
 - [x] When having enough production to produce a unit the unit is produced 
 - [x] The correct unit type is produced
-- [ ] The units have correct production prices
+- [x] The units have correct production prices
 - [x] After producing a unit, the treasury will be reduced by the cost of the unit
-- [ ] Setting a city's production to a Settler will result in a Settler being produced when the city reaches 30 production in the treasury
 - [ ] A city's _workforce balance_ can only be set to _production_
 
 
