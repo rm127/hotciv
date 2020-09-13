@@ -435,32 +435,24 @@ public class TestAlphaCiv {
   @Test
   void producingAUnitInACityWithUnitAlreadyInCityPlacesUnitsAroundCity() {
     City city = game.getCityAt(new Position(1,1));
-
-    // produce new unit
-    skipOtherPlayersTurn();
-    skipOtherPlayersTurn();
-    skipOtherPlayersTurn();
-
-    assertThat(game.getUnitAt(new Position(1, 1)), is(notNullValue()));
-
-    // produce new unit
-    skipOtherPlayersTurn();
-    skipOtherPlayersTurn();
-    skipOtherPlayersTurn();
-    assertThat(game.getUnitAt(new Position(0, 1)), is(notNullValue()));
+    // check all positions clockwise around the city
+    ProduceNewUnitAndCheckPosition(1, 1);
+    ProduceNewUnitAndCheckPosition(0, 1);
+    ProduceNewUnitAndCheckPosition(0, 2);
+    ProduceNewUnitAndCheckPosition(1, 2);
+    ProduceNewUnitAndCheckPosition(2, 2);
+    ProduceNewUnitAndCheckPosition(2, 1);
+    ProduceNewUnitAndCheckPosition(2, 0);
+    ProduceNewUnitAndCheckPosition(1, 0);
+    ProduceNewUnitAndCheckPosition(0, 0);
   }
 
-
-
-
-
-
-
-
-
-
-
-
+  private void ProduceNewUnitAndCheckPosition(int i, int i2) {
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    assertThat(game.getUnitAt(new Position(i, i2)), is(notNullValue()));
+  }
 
 
 
