@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 
 import static hotciv.framework.GameConstants.*;
@@ -92,10 +93,11 @@ public class TestAlphaCiv {
     assertThat(game.getAge(), is(newAge + 100));
   }
 
-  // Red wins at year 3000 BC
+  // Red wins at year 3000 BC and winner is not found until game is over
   @Test
   public void redWinsAtYear3000BC() {
     while (game.getAge() < -3000) {
+      assertThat(game.getWinner(), is(nullValue()));
       skipOtherPlayersTurn();
     }
     assertThat(game.getWinner(), is(Player.RED));
@@ -289,6 +291,7 @@ public class TestAlphaCiv {
     assertThat(unit.getMoveCount(), is(origMoveCount - 1));
   }
 
+  // MoveCount is reset every round
   @Test
   void moveCountIsResetEachRound() {
     Position unitPosition = new Position(4,3);
@@ -297,6 +300,161 @@ public class TestAlphaCiv {
     skipOtherPlayersTurn();
     assertThat(moveCount, is(unit.getMoveCount()));
   }
+
+  // Tile (2,2) is Mountains
+  @Test
+  void Tile22IsMountains() {
+    Tile tile = game.getTileAt(new Position(2,2));
+    assertThat(tile.getTypeString(), is(MOUNTAINS));
+  }
+  // All Tiles are default Planes
+  @Test
+  void AllTilesAreDefaultPlanes() {
+    Tile tile = game.getTileAt(new Position(0,0));
+    assertThat(tile.getTypeString(), is(PLAINS));
+    tile = game.getTileAt(new Position(1,1));
+    assertThat(tile.getTypeString(), is(PLAINS));
+    tile = game.getTileAt(new Position(3,3));
+    assertThat(tile.getTypeString(), is(PLAINS));
+  }
+
+  // Tile (1,0) is Ocean
+  @Test
+  void Tile10IsOcean() {
+    Tile tile = game.getTileAt(new Position(1,0));
+    assertThat(tile.getTypeString(), is(OCEANS));
+  }
+
+  // Tile (0,1) is Hills
+  @Test
+  void Tile01IsHills() {
+    Tile tile = game.getTileAt(new Position(0,1));
+    assertThat(tile.getTypeString(), is(HILLS));
+  }
+
+  // Unit cannot be moved to a mountain tile
+  @Test
+  void movingUnitToMountainIsNotPossible() {
+    // change turn to player blue to move blue unit at pos (2,3)
+    game.endOfTurn();
+    assertThat(game.moveUnit(new Position(3, 2), new Position(2, 2)), is(false));
+  }
+
+  // Unit cannot be moved to an ocean tile
+  @Test
+  void movingUnitToOceanIsNotPossible() {
+    assertThat(game.moveUnit(new Position(2, 0), new Position(1, 0)), is(false));
+  }
+
+  // Moving unit A onto tile of unit B kills unit
+  @Test
+  void movingUnitAOntoTileOfUnitBKillsUnitB() {
+    Position unitAPosition = new Position(4,3);
+    Position unitBPosition = new Position(3,2);
+    Unit attackingUnit = game.getUnitAt(unitAPosition);
+    game.moveUnit(unitAPosition, unitBPosition);
+    assertThat(game.getUnitAt(unitBPosition), is(attackingUnit));
+  }
+
+  // Moving a unit to a city owned by an opponent will change the city's ownership
+  @Test
+  void movingUnitToOpponentCityWillConvertCityToCurrentPlayer() {
+    Position cityPosition = new Position(4,1);
+    // move unit since we can only move one tile a time
+    game.moveUnit(new Position(2, 0), new Position(3,0));
+    skipOtherPlayersTurn();
+
+    game.moveUnit(new Position(3, 0), cityPosition);
+    assertThat(game.getCityAt(cityPosition).getOwner(), is(Player.RED));
+  }
+
+  // A city's workforce balance can only be set to production
+  @Test
+  void cityWorkforceFocusShouldBeProduction() {
+    assertThat(game.getCityAt(new Position(1,1)).getWorkforceFocus(), is(productionFocus));
+  }
+
+  // When having enough production to produce a unit, the unit is produced
+  @Test
+  void shouldProduceUnitWhenTreasuryIsHighEnough() {
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    assertThat(game.getUnitAt(new Position(1, 1)).getTypeString(), is(LEGION));
+  }
+
+  // The correct unit type is produced
+  @Test
+  void correctUnitTypeIsProducedFromCity() {
+    City city = game.getCityAt(new Position(1, 1));
+    ((CityImpl) city).setProduction(SETTLER);
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    assertThat(game.getUnitAt(new Position(1, 1)).getTypeString(), is(SETTLER));
+  }
+
+  // After producing a unit, the treasury will be reduced by the cost of the unit
+  @Test
+  void treasuryIsReducedByLegionCostAfterLegionProduction() {
+    City city = game.getCityAt(new Position(1, 1));
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    // Treasury is increased by 6 each round. Legion costs 15
+    assertThat(city.getTreasury(), is(3));
+  }
+
+  @Test
+  void treasuryIsReducedByArcherCostAfterArcherProduction() {
+    City city = game.getCityAt(new Position(1, 1));
+    ((CityImpl) city).setProduction(ARCHER);
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    // Treasury is increased by 6 each round. Archer costs 10
+    assertThat(city.getTreasury(), is(2));
+  }
+
+  @Test
+  void treasuryIsReducedBySettlerCostAfterSettlerProduction() {
+    City city = game.getCityAt(new Position(1, 1));
+    ((CityImpl) city).setProduction(SETTLER);
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    // Treasury is increased by 6 each round. Settler costs 30
+    assertThat(city.getTreasury(), is(0));
+  }
+
+
+  // Producing a unit in a city that already has a unit stationed in it will place the new unit above the city,
+  // placing more moving clockwise around the city
+  @Test
+  void producingAUnitInACityWithUnitAlreadyInCityPlacesUnitsAroundCity() {
+    City city = game.getCityAt(new Position(1,1));
+    // check all positions clockwise around the city
+    ProduceNewUnitAndCheckPosition(1, 1, notNullValue());
+    ProduceNewUnitAndCheckPosition(0, 1, notNullValue());
+    ProduceNewUnitAndCheckPosition(0, 2, notNullValue());
+    ProduceNewUnitAndCheckPosition(1, 2, notNullValue());
+    ProduceNewUnitAndCheckPosition(2, 2, nullValue());
+    ProduceNewUnitAndCheckPosition(2, 1, notNullValue());
+    ProduceNewUnitAndCheckPosition(2, 0, notNullValue());
+    ProduceNewUnitAndCheckPosition(1, 0, nullValue());
+    ProduceNewUnitAndCheckPosition(0, 0, notNullValue());
+  }
+
+  private void ProduceNewUnitAndCheckPosition(int i, int i2, Matcher<Object> test) {
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    skipOtherPlayersTurn();
+    assertThat(game.getUnitAt(new Position(i, i2)), is(test));
+  }
+
 
 
 

@@ -4,8 +4,7 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 
-import static hotciv.framework.GameConstants.ARCHER;
-import static hotciv.framework.GameConstants.SETTLER;
+import static hotciv.framework.GameConstants.*;
 
 /** Skeleton implementation of HotCiv.
  
@@ -40,7 +39,6 @@ public class GameImpl implements Game {
   private final HashMap<Position, City> cityMap = new HashMap<>();
   private final HashMap<Position, Unit> unitMap = new HashMap<>();
 
-
   GameImpl() {
     // cities
     cityMap.put(new Position(1,1), new CityImpl(Player.RED));
@@ -52,7 +50,18 @@ public class GameImpl implements Game {
     unitMap.put(new Position(4,3), new UnitImpl(Player.RED, SETTLER));
   }
 
-  public Tile getTileAt( Position p ) { return null; }
+  public Tile getTileAt( Position p ) {
+    String tileType = PLAINS;
+    if (p.getColumn() == 2 && p.getRow() == 2) {
+      tileType = MOUNTAINS;
+    } else if (p.getColumn() == 0 && p.getRow() == 1) {
+      tileType = OCEANS;
+    } else if (p.getColumn() == 1 && p.getRow() == 0) {
+      tileType = HILLS;
+    }
+    return new TileImpl(tileType);
+  }
+
   public Unit getUnitAt( Position p ) {
     return unitMap.get(p);
   }
@@ -65,7 +74,10 @@ public class GameImpl implements Game {
     return currentPlayer;
   }
   public Player getWinner() {
-    return Player.RED;
+    if (gameAge >= -3000) {
+      return Player.RED;
+    }
+    return null;
   }
 
   public int getAge() {
@@ -86,9 +98,25 @@ public class GameImpl implements Game {
       return false;
     }
 
+    // trying to move to invalid tile (ocean or mountain)
+    if (isInvalidTile(to)) {
+      return false;
+    }
+
     // trying to move more than moveCount allows
     if (unit.getMoveCount() < distanceBetween(from, to)) {
       return false;
+    }
+
+    // kills another unit
+    if (this.getUnitAt(to) != null) {
+      unitMap.remove(to);
+    }
+
+    // take over city
+    City destinationCity = this.getCityAt(to);
+    if (destinationCity != null && destinationCity.getOwner() != currentPlayer) {
+      ((CityImpl) destinationCity).changeOwner(currentPlayer);
     }
 
     unitMap.put(to, unit);
@@ -96,6 +124,12 @@ public class GameImpl implements Game {
     // decrease move count
     ((UnitImpl) unit).decreaseMoveCount();
     return true;
+  }
+
+  // validate if tile is ocean or mountain
+  private boolean isInvalidTile(Position position) {
+    String destinationTileType = this.getTileAt(position).getTypeString();
+    return destinationTileType.equals(OCEANS) || destinationTileType.equals(MOUNTAINS);
   }
 
   private int distanceBetween(Position from, Position to) {
@@ -117,10 +151,39 @@ public class GameImpl implements Game {
       // increase the age of the game
       gameAge += 100;
       // update production in cities
-      cityMap.forEach((position, city) -> ((CityImpl) city).increaseTreasury());
+      cityMap.forEach(this::handleCityProduction);
       // reset move count
       unitMap.forEach((position, unit) -> ((UnitImpl) unit).resetMoveCount());
     }
+  }
+
+  private void handleCityProduction(Position position, City city) {
+    ((CityImpl) city).increaseTreasury();
+    if (city.getTreasury() >= ((CityImpl) city).getProductionPrice()) {
+
+      Position newPosition = nextValidUnitPosition(position);
+      // to avoid NullPointerException
+      if (newPosition != null) {
+        unitMap.put(newPosition, new UnitImpl(currentPlayer, city.getProduction()));
+        ((CityImpl) city).decreaseTreasury();
+      }
+    }
+  }
+
+  private Position nextValidUnitPosition(Position position) {
+    int currentRow = position.getRow();
+    int currentColumn = position.getColumn();
+    // list of modifiers to current position
+    int[] columns = new int[] {0, 0, 1, 1, 1, 0, -1, -1, -1};
+    int[] rows    = new int[] {0, -1, -1, 0, 1, 1, 1, 0, -1};
+
+    for (int i = 0; i < 9; i++) {
+      Position newPosition = new Position(currentRow + rows[i], currentColumn + columns[i]);
+      if (getUnitAt(newPosition) == null && !isInvalidTile(newPosition)) {
+        return newPosition;
+      }
+    }
+    return null;
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
