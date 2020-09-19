@@ -41,8 +41,8 @@ public class GameImpl implements Game {
   private final HashMap<Position, Unit> unitMap = new HashMap<>();
   private final GameAgingStrategy gameAgingStrategy;
 
-  GameImpl() {
-    gameAgingStrategy = new LinearGameAgingStrategy();
+  GameImpl(GameAgingStrategy gameAgingStrategy) {
+    this.gameAgingStrategy = gameAgingStrategy;
     // cities
     cityMap.put(new Position(1,1), new CityImpl(Player.RED));
     cityMap.put(new Position(4,1), new CityImpl(Player.BLUE));
