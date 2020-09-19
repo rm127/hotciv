@@ -6,7 +6,7 @@ import org.junit.jupiter.api.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TestProgressiveGameAging {
+public class TestProgressiveGameAgingStrategy {
     GameAgingStrategy gas;
 
     @BeforeEach
