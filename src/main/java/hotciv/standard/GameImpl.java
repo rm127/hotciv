@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.variants.LinearGameAgingStrategy;
 
 import java.util.HashMap;
 
@@ -38,8 +39,10 @@ public class GameImpl implements Game {
   private int gameAge = -4000; // game starts at 4000 BC
   private final HashMap<Position, City> cityMap = new HashMap<>();
   private final HashMap<Position, Unit> unitMap = new HashMap<>();
+  private final GameAgingStrategy gameAgingStrategy;
 
   GameImpl() {
+    gameAgingStrategy = new LinearGameAgingStrategy();
     // cities
     cityMap.put(new Position(1,1), new CityImpl(Player.RED));
     cityMap.put(new Position(4,1), new CityImpl(Player.BLUE));
@@ -149,7 +152,7 @@ public class GameImpl implements Game {
     } else {
       currentPlayer = Player.RED;
       // increase the age of the game
-      gameAge += 100;
+      gameAge += gameAgingStrategy.calculateAgeJump();
       // update production in cities
       cityMap.forEach(this::handleCityProduction);
       // reset move count
