@@ -1,4 +1,4 @@
-package hotciv.standard;
+package hotciv.common;
 
 /**
  * The strategy for calculating game age.
@@ -8,6 +8,7 @@ public interface GameAgingStrategy {
     /**
      * Return the amount of time to increase the game age with.
      * @return years to increase this time.
+     * @param currentAge the current age of the game.
      */
-    int calculateAgeJump();
+    int calculateAgeIncrease(int currentAge);
 }

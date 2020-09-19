@@ -1,4 +1,4 @@
-package hotciv.standard;
+package hotciv.common;
 
 import hotciv.framework.*;
 import hotciv.variants.LinearGameAgingStrategy;
@@ -152,7 +152,7 @@ public class GameImpl implements Game {
     } else {
       currentPlayer = Player.RED;
       // increase the age of the game
-      gameAge += gameAgingStrategy.calculateAgeJump();
+      gameAge += gameAgingStrategy.calculateAgeIncrease(gameAge);
       // update production in cities
       cityMap.forEach(this::handleCityProduction);
       // reset move count
