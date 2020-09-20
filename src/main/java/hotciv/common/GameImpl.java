@@ -40,9 +40,11 @@ public class GameImpl implements Game {
   private final HashMap<Position, City> cityMap = new HashMap<>();
   private final HashMap<Position, Unit> unitMap = new HashMap<>();
   private final GameAgingStrategy gameAgingStrategy;
+  private final GameWinStrategy gameWinStrategy;
 
-  GameImpl(GameAgingStrategy gameAgingStrategy) {
+  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy) {
     this.gameAgingStrategy = gameAgingStrategy;
+    this.gameWinStrategy = gameWinStrategy;
     // cities
     cityMap.put(new Position(1,1), new CityImpl(Player.RED));
     cityMap.put(new Position(4,1), new CityImpl(Player.BLUE));
@@ -77,10 +79,7 @@ public class GameImpl implements Game {
     return currentPlayer;
   }
   public Player getWinner() {
-    if (gameAge >= -3000) {
-      return Player.RED;
-    }
-    return null;
+    return gameWinStrategy.getWinner(gameAge);
   }
 
   public int getAge() {

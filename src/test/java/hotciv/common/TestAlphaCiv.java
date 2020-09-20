@@ -2,6 +2,7 @@ package hotciv.common;
 
 import hotciv.framework.*;
 
+import hotciv.variants.AlwaysRedWinStrategy;
 import hotciv.variants.LinearGameAgingStrategy;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
@@ -47,7 +48,7 @@ public class TestAlphaCiv {
    */
   @BeforeEach
   public void setUp() {
-    game = new GameImpl(new LinearGameAgingStrategy());
+    game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy());
     // remember to create the test world (like the one given at iteration-1 if we ever have a map that's not fixed with units, cities etc. at start
   }
 
