@@ -10,7 +10,7 @@ public class CityImpl implements City {
     private int treasury = 0;
     private String currentlyProducing = LEGION;
 
-    CityImpl(Player owner) {
+    public CityImpl(Player owner) {
         this.owner = owner;
     }
 

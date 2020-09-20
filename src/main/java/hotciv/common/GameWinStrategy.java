@@ -15,6 +15,7 @@ public interface GameWinStrategy {
      * Returns the Player who has won the game if there is a winner.
      * @return the Player who has won the game.
      * @param gameAge the age of the game.
+     * @param cityMap a map of the cities in the world.
      */
-    Player getWinner(int gameAge);
+    Player getWinner(int gameAge, HashMap<Position, City> cityMap);
 }
