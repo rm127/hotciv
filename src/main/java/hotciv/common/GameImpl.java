@@ -43,13 +43,10 @@ public class GameImpl implements Game {
   private final GameWinStrategy gameWinStrategy;
   private final UnitActionStrategy unitActionStrategy;
 
-  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy) {
+  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy, WorldLayoutStrategy worldLayoutStrategy) {
     this.gameAgingStrategy = gameAgingStrategy;
     this.gameWinStrategy = gameWinStrategy;
     this.unitActionStrategy = unitActionStrategy;
-    // cities
-    cityMap.put(new Position(1,1), new CityImpl(Player.RED));
-    cityMap.put(new Position(4,1), new CityImpl(Player.BLUE));
 
     cityMap = worldLayoutStrategy.getCityMap();
     unitMap = worldLayoutStrategy.getUnitMap();

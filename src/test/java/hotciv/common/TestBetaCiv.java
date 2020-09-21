@@ -20,7 +20,7 @@ public class TestBetaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new ProgressiveGameAgingStrategy(), new CityDominationGameWinStrategy(), new DoNothingUnitActionStrategy());
+        game = new GameImpl(new ProgressiveGameAgingStrategy(), new CityDominationGameWinStrategy(), new DoNothingUnitActionStrategy(), new AlphaWorldLayoutStrategy());
     }
 
     // No winner when cities have different owners.
