@@ -1,4 +1,4 @@
-package hotciv.standard;
+package hotciv.common;
 
 import hotciv.framework.City;
 import hotciv.framework.Player;
@@ -10,7 +10,7 @@ public class CityImpl implements City {
     private int treasury = 0;
     private String currentlyProducing = LEGION;
 
-    CityImpl(Player owner) {
+    public CityImpl(Player owner) {
         this.owner = owner;
     }
 

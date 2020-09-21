@@ -1,7 +1,11 @@
-package hotciv.standard;
+package hotciv.common;
 
 import hotciv.framework.*;
 
+import hotciv.variants.AlphaWorldLayoutStrategy;
+import hotciv.variants.AlwaysRedWinStrategy;
+import hotciv.variants.DoNothingUnitActionStrategy;
+import hotciv.variants.LinearGameAgingStrategy;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 
@@ -42,11 +46,11 @@ public class TestAlphaCiv {
   private Game game;
 
   /**
-   * Fixture for alphaciv testing.
+   * Fixture for AlphaCiv testing.
    */
   @BeforeEach
   public void setUp() {
-    game = new GameImpl();
+    game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new DoNothingUnitActionStrategy(), new AlphaWorldLayoutStrategy());
     // remember to create the test world (like the one given at iteration-1 if we ever have a map that's not fixed with units, cities etc. at start
   }
 
@@ -435,7 +439,6 @@ public class TestAlphaCiv {
   // placing more moving clockwise around the city
   @Test
   void producingAUnitInACityWithUnitAlreadyInCityPlacesUnitsAroundCity() {
-    City city = game.getCityAt(new Position(1,1));
     // check all positions clockwise around the city
     ProduceNewUnitAndCheckPosition(1, 1, notNullValue());
     ProduceNewUnitAndCheckPosition(0, 1, notNullValue());

@@ -1,7 +1,6 @@
-package hotciv.standard;
+package hotciv.common;
 
 import hotciv.framework.*;
-
 import java.util.HashMap;
 
 import static hotciv.framework.GameConstants.*;
@@ -36,30 +35,26 @@ import static hotciv.framework.GameConstants.*;
 public class GameImpl implements Game {
   private Player currentPlayer = Player.RED; // red always starts
   private int gameAge = -4000; // game starts at 4000 BC
-  private final HashMap<Position, City> cityMap = new HashMap<>();
-  private final HashMap<Position, Unit> unitMap = new HashMap<>();
+  private final HashMap<Position, City> cityMap;
+  private final HashMap<Position, Unit> unitMap;
+  private final HashMap<Position, Tile> tileMap;
 
-  GameImpl() {
-    // cities
-    cityMap.put(new Position(1,1), new CityImpl(Player.RED));
-    cityMap.put(new Position(4,1), new CityImpl(Player.BLUE));
+  private final GameAgingStrategy gameAgingStrategy;
+  private final GameWinStrategy gameWinStrategy;
+  private final UnitActionStrategy unitActionStrategy;
 
-    // units
-    unitMap.put(new Position(2,0), new UnitImpl(Player.RED, ARCHER));
-    unitMap.put(new Position(3,2), new UnitImpl(Player.BLUE, ARCHER));
-    unitMap.put(new Position(4,3), new UnitImpl(Player.RED, SETTLER));
+  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy, WorldLayoutStrategy worldLayoutStrategy) {
+    this.gameAgingStrategy = gameAgingStrategy;
+    this.gameWinStrategy = gameWinStrategy;
+    this.unitActionStrategy = unitActionStrategy;
+
+    cityMap = worldLayoutStrategy.getCityMap();
+    unitMap = worldLayoutStrategy.getUnitMap();
+    tileMap = worldLayoutStrategy.getTileMap();
   }
 
   public Tile getTileAt( Position p ) {
-    String tileType = PLAINS;
-    if (p.getColumn() == 2 && p.getRow() == 2) {
-      tileType = MOUNTAINS;
-    } else if (p.getColumn() == 0 && p.getRow() == 1) {
-      tileType = OCEANS;
-    } else if (p.getColumn() == 1 && p.getRow() == 0) {
-      tileType = HILLS;
-    }
-    return new TileImpl(tileType);
+    return tileMap.get(p);
   }
 
   public Unit getUnitAt( Position p ) {
@@ -73,11 +68,9 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() {
     return currentPlayer;
   }
+
   public Player getWinner() {
-    if (gameAge >= -3000) {
-      return Player.RED;
-    }
-    return null;
+    return gameWinStrategy.getWinner(gameAge, cityMap);
   }
 
   public int getAge() {
@@ -105,6 +98,11 @@ public class GameImpl implements Game {
 
     // trying to move more than moveCount allows
     if (unit.getMoveCount() < distanceBetween(from, to)) {
+      return false;
+    }
+
+    // trying to move when fortified
+    if (((UnitImpl) unit).isFortified()) {
       return false;
     }
 
@@ -149,7 +147,7 @@ public class GameImpl implements Game {
     } else {
       currentPlayer = Player.RED;
       // increase the age of the game
-      gameAge += 100;
+      gameAge += gameAgingStrategy.calculateAgeIncrease(gameAge);
       // update production in cities
       cityMap.forEach(this::handleCityProduction);
       // reset move count
@@ -192,5 +190,15 @@ public class GameImpl implements Game {
     ((CityImpl) this.getCityAt(p)).setProduction(unitType);
   }
 
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt( Position p ) {
+    unitActionStrategy.performAction(p, this);
+  }
+
+  public void addCityAt(Position p, City city) {
+    cityMap.put(p, city);
+  }
+
+  public void removeUnitAt(Position p) {
+    unitMap.remove(p);
+  }
 }
