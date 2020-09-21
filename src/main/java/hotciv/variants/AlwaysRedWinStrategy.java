@@ -2,7 +2,6 @@ package hotciv.variants;
 
 import hotciv.common.GameWinStrategy;
 import hotciv.framework.City;
-import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 

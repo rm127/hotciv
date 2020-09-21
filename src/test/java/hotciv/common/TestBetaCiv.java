@@ -3,6 +3,7 @@ package hotciv.common;
 import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
+import hotciv.variants.AlphaWorldLayoutStrategy;
 import hotciv.variants.CityDominationGameWinStrategy;
 import hotciv.variants.DoNothingUnitActionStrategy;
 import hotciv.variants.ProgressiveGameAgingStrategy;
@@ -19,7 +20,7 @@ public class TestBetaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new ProgressiveGameAgingStrategy(), new CityDominationGameWinStrategy(), new DoNothingUnitActionStrategy());
+        game = new GameImpl(new ProgressiveGameAgingStrategy(), new CityDominationGameWinStrategy(), new DoNothingUnitActionStrategy(), new AlphaWorldLayoutStrategy());
     }
 
     // No winner when cities have different owners.
@@ -94,9 +95,9 @@ Test-list
     - No winner when cities have different owners.
     - Taking over all cities results in winning the game.
     - Between 4000BC and 100BC 100 years pass per round.
-- Around birth of Christ the sequence is -100, -1, +1, +50.
-- Between 50AD and 1750 50 years pass per round.
-- Between 1750 and 1900 25 years pass per round.
-- Between 1900 and 1970 5 years per round.
-- After 1970 1 year per round.
+    - Around birth of Christ the sequence is -100, -1, +1, +50.
+    - Between 50AD and 1750 50 years pass per round.
+    - Between 1750 and 1900 25 years pass per round.
+    - Between 1900 and 1970 5 years per round.
+    - After 1970 1 year per round.
  */
