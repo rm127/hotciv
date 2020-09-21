@@ -8,6 +8,8 @@ public class UnitImpl implements Unit {
     private final Player owner;
     private final String type;
     private int moveCount = 1;
+    private int defensiveStrength = 3;
+    private boolean isFortified = false;
 
     public UnitImpl(Player owner, String type) {
         this.owner = owner;
@@ -27,7 +29,11 @@ public class UnitImpl implements Unit {
     }
 
     public int getDefensiveStrength() {
-        return 3;
+        return defensiveStrength;
+    }
+
+    public void setDefensiveStrength(int newStrength) {
+        defensiveStrength = newStrength;
     }
 
     public int getAttackingStrength() {
@@ -40,5 +46,13 @@ public class UnitImpl implements Unit {
 
     public void resetMoveCount() {
         moveCount = 1;
+    }
+
+    public void setFortified(boolean fortified) {
+        isFortified = fortified;
+    }
+
+    public boolean isFortified() {
+        return isFortified;
     }
 }

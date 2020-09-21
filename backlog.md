@@ -7,3 +7,4 @@
 - Implement defense strength for legion
 - Implement attack strengths 
 - Unit test all unit actions strategies 
+- Archers' defense doubles each round it is fortified

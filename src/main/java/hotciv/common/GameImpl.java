@@ -110,6 +110,11 @@ public class GameImpl implements Game {
       return false;
     }
 
+    // trying to move when fortified
+    if (((UnitImpl) unit).isFortified()) {
+      return false;
+    }
+
     // kills another unit
     if (this.getUnitAt(to) != null) {
       unitMap.remove(to);
@@ -200,5 +205,9 @@ public class GameImpl implements Game {
 
   public void addCityAt(Position p, City city) {
     cityMap.put(p, city);
+  }
+
+  public void removeUnitAt(Position p) {
+    unitMap.remove(p);
   }
 }
