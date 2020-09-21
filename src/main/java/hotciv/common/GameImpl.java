@@ -41,10 +41,15 @@ public class GameImpl implements Game {
 
   private final GameAgingStrategy gameAgingStrategy;
   private final GameWinStrategy gameWinStrategy;
+  private final UnitActionStrategy unitActionStrategy;
 
-  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, WorldLayoutStrategy worldLayoutStrategy) {
+  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy) {
     this.gameAgingStrategy = gameAgingStrategy;
     this.gameWinStrategy = gameWinStrategy;
+    this.unitActionStrategy = unitActionStrategy;
+    // cities
+    cityMap.put(new Position(1,1), new CityImpl(Player.RED));
+    cityMap.put(new Position(4,1), new CityImpl(Player.BLUE));
 
     cityMap = worldLayoutStrategy.getCityMap();
     unitMap = worldLayoutStrategy.getUnitMap();
@@ -96,6 +101,11 @@ public class GameImpl implements Game {
 
     // trying to move more than moveCount allows
     if (unit.getMoveCount() < distanceBetween(from, to)) {
+      return false;
+    }
+
+    // trying to move when fortified
+    if (((UnitImpl) unit).isFortified()) {
       return false;
     }
 
@@ -183,5 +193,15 @@ public class GameImpl implements Game {
     ((CityImpl) this.getCityAt(p)).setProduction(unitType);
   }
 
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt( Position p ) {
+    unitActionStrategy.performAction(p, this);
+  }
+
+  public void addCityAt(Position p, City city) {
+    cityMap.put(p, city);
+  }
+
+  public void removeUnitAt(Position p) {
+    unitMap.remove(p);
+  }
 }
