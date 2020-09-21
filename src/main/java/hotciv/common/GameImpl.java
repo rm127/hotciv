@@ -1,8 +1,6 @@
 package hotciv.common;
 
 import hotciv.framework.*;
-import hotciv.variants.LinearGameAgingStrategy;
-
 import java.util.HashMap;
 
 import static hotciv.framework.GameConstants.*;
