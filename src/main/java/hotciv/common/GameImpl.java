@@ -39,7 +39,7 @@ public class GameImpl implements Game {
   private final HashMap<Position, Unit> unitMap = new HashMap<>();
   private final GameAgingStrategy gameAgingStrategy;
   private final GameWinStrategy gameWinStrategy;
-  private UnitActionStrategy unitActionStrategy;
+  private final UnitActionStrategy unitActionStrategy;
 
   GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy) {
     this.gameAgingStrategy = gameAgingStrategy;
@@ -195,6 +195,10 @@ public class GameImpl implements Game {
   }
 
   public void performUnitActionAt( Position p ) {
-    unitActionStrategy.performAction(getUnitAt(p));
+    unitActionStrategy.performAction(p, this);
+  }
+
+  public void addCityAt(Position p, City city) {
+    cityMap.put(p, city);
   }
 }

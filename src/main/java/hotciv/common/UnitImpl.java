@@ -9,7 +9,7 @@ public class UnitImpl implements Unit {
     private final String type;
     private int moveCount = 1;
 
-    UnitImpl(Player owner, String type) {
+    public UnitImpl(Player owner, String type) {
         this.owner = owner;
         this.type = type;
     }

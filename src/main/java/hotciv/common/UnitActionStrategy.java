@@ -1,5 +1,7 @@
 package hotciv.common;
 
+import hotciv.framework.Game;
+import hotciv.framework.Position;
 import hotciv.framework.Unit;
 
 /**
@@ -9,7 +11,8 @@ import hotciv.framework.Unit;
 public interface UnitActionStrategy {
     /**
      * Performs the action of the passed unit.
-     * @param unit the unit which action to perform.
+     * @param position the position of the unit to perform action.
+     * @param game the game.
      */
-    void performAction(Unit unit);
+    void performAction(Position position, Game game);
 }

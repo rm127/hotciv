@@ -6,3 +6,4 @@
 - Producing units in a city places them clockwise around the city. Shall not return positions outside the world. Cannot be tested with only 2 fixed cities.
 - Implement defense strength for legion
 - Implement attack strengths 
+- Unit test all unit actions strategies 

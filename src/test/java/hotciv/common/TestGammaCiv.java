@@ -17,7 +17,7 @@ public class TestGammaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new DoNothingUnitActionStrategy());
+        game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new GammaUnitActionStrategy());
     }
 
     // Archer has defense of 3
@@ -31,10 +31,20 @@ public class TestGammaCiv {
     void settlerHasDefenseOf3() {
         assertThat(game.getUnitAt(new Position(4, 3)).getDefensiveStrength(), is(3));
     }
+
+    // Settler action founds a city
+    @Test
+    void SettlersActionFoundsCity() {
+        // There is a settler at position 4,3
+        Position position = new Position(4,3);
+        game.performUnitActionAt(position);
+        assertThat(game.getCityAt(position), is(notNullValue()));
+    }
 }
 
 /*
 Test-list
 - Archer has defense of 3
 - Settler has defense of 3
+- Settlers can found a city when performing action.
  */
