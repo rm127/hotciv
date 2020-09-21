@@ -437,7 +437,6 @@ public class TestAlphaCiv {
   // placing more moving clockwise around the city
   @Test
   void producingAUnitInACityWithUnitAlreadyInCityPlacesUnitsAroundCity() {
-    City city = game.getCityAt(new Position(1,1));
     // check all positions clockwise around the city
     ProduceNewUnitAndCheckPosition(1, 1, notNullValue());
     ProduceNewUnitAndCheckPosition(0, 1, notNullValue());
