@@ -7,7 +7,7 @@ import hotciv.framework.Tile;
 import java.util.HashMap;
 
 public class Utilities {
-    public HashMap<Position, Tile> convertStringsToMap(String[] strings) {
+    public static HashMap<Position, Tile> convertStringsToMap(String[] strings) {
         final HashMap<Position, Tile> tileMap = new HashMap<>();
 
         String line;
