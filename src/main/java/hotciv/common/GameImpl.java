@@ -81,41 +81,31 @@ public class GameImpl implements Game {
     Unit unit = this.getUnitAt(from);
 
     // trying to move a unit that's not yours
-    if (unit.getOwner() != currentPlayer) {
-      // possibly throw InvalidMoveException at later stage to differentiate between errors?
-      return false;
-    }
+    boolean isCurrentPlayersUnit = unit.getOwner() == currentPlayer;
+    if (!isCurrentPlayersUnit) return false;
 
     // trying to stack your units
-    if (getUnitAt(to) != null && getUnitAt(to).getOwner() == unit.getOwner()) {
-      return false;
-    }
+    boolean destinationHasUnitOfCurrentPlayer = getUnitAt(to) != null && getUnitAt(to).getOwner() == unit.getOwner();
+    if (destinationHasUnitOfCurrentPlayer) return false;
 
     // trying to move to invalid tile (ocean or mountain)
-    if (isInvalidTile(to)) {
-      return false;
-    }
+    if (isInvalidTile(to)) return false;
 
     // trying to move more than moveCount allows
-    if (unit.getMoveCount() < distanceBetween(from, to)) {
-      return false;
-    }
+    boolean unitHasEnoughMovesLeft = unit.getMoveCount() >= distanceBetween(from, to);
+    if (!unitHasEnoughMovesLeft) return false;
 
-    // trying to move when fortified
-    if (((UnitImpl) unit).isFortified()) {
-      return false;
-    }
+    // trying to move when unit is fortified
+    if (((UnitImpl) unit).isFortified()) return false;
 
     // kills another unit
-    if (this.getUnitAt(to) != null) {
-      unitMap.remove(to);
-    }
+    boolean destinationHasEnemyUnit = this.getUnitAt(to) != null;
+    if (destinationHasEnemyUnit) unitMap.remove(to);
 
-    // take over city
+    // takes over city
     City destinationCity = this.getCityAt(to);
-    if (destinationCity != null && destinationCity.getOwner() != currentPlayer) {
-      ((CityImpl) destinationCity).changeOwner(currentPlayer);
-    }
+    boolean destinationHasEnemyCity = destinationCity != null && destinationCity.getOwner() != currentPlayer;
+    if (destinationHasEnemyCity) ((CityImpl) destinationCity).changeOwner(currentPlayer);
 
     unitMap.put(to, unit);
     unitMap.remove(from);
