@@ -80,6 +80,27 @@ public class GameImpl implements Game {
   public boolean moveUnit(Position from, Position to) {
     Unit unit = this.getUnitAt(from);
 
+    // is valid move
+    if (!isValidMove(from, to)) return false;
+
+    // kills another unit
+    boolean destinationHasEnemyUnit = this.getUnitAt(to) != null;
+    if (destinationHasEnemyUnit) unitMap.remove(to);
+
+    // takes over city
+    City destinationCity = this.getCityAt(to);
+    boolean destinationHasEnemyCity = destinationCity != null && destinationCity.getOwner() != currentPlayer;
+    if (destinationHasEnemyCity) ((CityImpl) destinationCity).changeOwner(currentPlayer);
+
+    unitMap.put(to, unit);
+    unitMap.remove(from);
+    // decrease move count
+    ((UnitImpl) unit).decreaseMoveCount();
+    return true;
+  }
+
+  private boolean isValidMove(Position from, Position to) {
+    Unit unit = this.getUnitAt(from);
     // trying to move a unit that's not yours
     boolean isCurrentPlayersUnit = unit.getOwner() == currentPlayer;
     if (!isCurrentPlayersUnit) return false;
@@ -97,20 +118,6 @@ public class GameImpl implements Game {
 
     // trying to move when unit is fortified
     if (((UnitImpl) unit).isFortified()) return false;
-
-    // kills another unit
-    boolean destinationHasEnemyUnit = this.getUnitAt(to) != null;
-    if (destinationHasEnemyUnit) unitMap.remove(to);
-
-    // takes over city
-    City destinationCity = this.getCityAt(to);
-    boolean destinationHasEnemyCity = destinationCity != null && destinationCity.getOwner() != currentPlayer;
-    if (destinationHasEnemyCity) ((CityImpl) destinationCity).changeOwner(currentPlayer);
-
-    unitMap.put(to, unit);
-    unitMap.remove(from);
-    // decrease move count
-    ((UnitImpl) unit).decreaseMoveCount();
     return true;
   }
 
