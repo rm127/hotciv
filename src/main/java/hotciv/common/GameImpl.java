@@ -146,13 +146,17 @@ public class GameImpl implements Game {
       currentPlayer = Player.BLUE;
     } else {
       currentPlayer = Player.RED;
-      // increase the age of the game
-      gameAge += gameAgingStrategy.calculateAgeIncrease(gameAge);
-      // update production in cities
-      cityMap.forEach(this::handleCityProduction);
-      // reset move count
-      unitMap.forEach((position, unit) -> ((UnitImpl) unit).resetMoveCount());
+      this.endOfRound();
     }
+  }
+
+  private void endOfRound() {
+    // increase the age of the game
+    gameAge += gameAgingStrategy.calculateAgeIncrease(gameAge);
+    // update production in cities
+    cityMap.forEach(this::handleCityProduction);
+    // reset move count
+    unitMap.forEach((position, unit) -> ((UnitImpl) unit).resetMoveCount());
   }
 
   private void handleCityProduction(Position position, City city) {
