@@ -1,9 +1,12 @@
 package hotciv.common;
 
 import hotciv.framework.*;
-import java.util.HashMap;
 
-import static hotciv.framework.GameConstants.*;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import static hotciv.framework.GameConstants.MOUNTAINS;
+import static hotciv.framework.GameConstants.OCEANS;
 
 /** Skeleton implementation of HotCiv.
  
@@ -182,14 +185,9 @@ public class GameImpl implements Game {
   }
 
   private Position nextValidUnitPosition(Position position) {
-    int currentRow = position.getRow();
-    int currentColumn = position.getColumn();
-    // list of modifiers to current position
-    int[] columns = new int[] {0, 0, 1, 1, 1, 0, -1, -1, -1};
-    int[] rows    = new int[] {0, -1, -1, 0, 1, 1, 1, 0, -1};
-
-    for (int i = 0; i < 9; i++) {
-      Position newPosition = new Position(currentRow + rows[i], currentColumn + columns[i]);
+    Iterator<Position> adjacentPositions = Utilities.getAdjacentPositions(position);
+    while (adjacentPositions.hasNext()) {
+      Position newPosition = adjacentPositions.next();
       if (getUnitAt(newPosition) == null && !isInvalidTile(newPosition)) {
         return newPosition;
       }

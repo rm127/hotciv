@@ -4,7 +4,9 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.Position;
 import hotciv.framework.Tile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Utilities {
     public static HashMap<Position, Tile> convertStringsToMap(String[] strings) {
@@ -26,5 +28,20 @@ public class Utilities {
         }
 
         return tileMap;
+    }
+
+    public static Iterator<Position> getAdjacentPositions(Position position) {
+        ArrayList<Position> list = new ArrayList<>();
+
+        // list of modifiers to current position
+        int[] columns = new int[] {0, 0, 1, 1, 1, 0, -1, -1, -1};
+        int[] rows    = new int[] {0, -1, -1, 0, 1, 1, 1, 0, -1};
+
+        for (int i = 0; i < 9; i++) {
+            Position newPosition = new Position(position.getRow() + rows[i], position.getColumn() + columns[i]);
+            list.add(newPosition);
+        }
+
+        return list.iterator();
     }
 }
