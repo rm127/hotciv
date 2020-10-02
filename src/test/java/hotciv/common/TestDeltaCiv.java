@@ -20,7 +20,7 @@ public class TestDeltaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new DoNothingUnitActionStrategy(), new DeltaWorldLayoutStrategy());
+        game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new DoNothingUnitActionStrategy(), new DeltaWorldLayoutStrategy(), new AttackerWinsAttackStrategy());
     }
 
     // Mountains at tile (3,5)
