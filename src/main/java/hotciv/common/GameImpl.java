@@ -97,7 +97,6 @@ public class GameImpl implements Game {
       playerBattleStats.put(currentPlayer, playerBattleStats.get(currentPlayer)+1);
       // remove killed unit
       attackStrategy.computeWinner(this, from, to);
-      unitMap.remove(to);
     }
 
     // takes over city
@@ -106,7 +105,7 @@ public class GameImpl implements Game {
     if (destinationHasEnemyCity) ((CityImpl) destinationCity).changeOwner(currentPlayer);
 
     unitMap.put(to, unit);
-    unitMap.remove(from);
+    this.removeUnitAt(from);
     // decrease move count
     ((UnitImpl) unit).decreaseMoveCount();
     return true;
