@@ -47,8 +47,7 @@ public class TestAlphaCiv {
    */
   @BeforeEach
   public void setUp() {
-    game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new DoNothingUnitActionStrategy(), new AlphaWorldLayoutStrategy(), new AttackerWinsAttackStrategy());
-    // remember to create the test world (like the one given at iteration-1 if we ever have a map that's not fixed with units, cities etc. at start
+    game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new DoNothingUnitActionStrategy(), new AlphaWorldLayoutStrategy(), new AttackerWinsBattleStrategy());
   }
 
   // Red player starts the game

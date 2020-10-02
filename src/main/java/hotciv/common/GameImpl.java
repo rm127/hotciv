@@ -46,13 +46,13 @@ public class GameImpl implements Game {
   private final GameAgingStrategy gameAgingStrategy;
   private final GameWinStrategy gameWinStrategy;
   private final UnitActionStrategy unitActionStrategy;
-  private final AttackStrategy attackStrategy;
+  private final BattleStrategy battleStrategy;
 
-  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy, WorldLayoutStrategy worldLayoutStrategy, AttackStrategy attackStrategy) {
+  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy, WorldLayoutStrategy worldLayoutStrategy, BattleStrategy battleStrategy) {
     this.gameAgingStrategy = gameAgingStrategy;
     this.gameWinStrategy = gameWinStrategy;
     this.unitActionStrategy = unitActionStrategy;
-    this.attackStrategy = attackStrategy;
+    this.battleStrategy = battleStrategy;
     // create battle stats map and add the two players as 0
     playerBattleStats = new HashMap<>();
     playerBattleStats.put(Player.RED, 0);
@@ -99,7 +99,7 @@ public class GameImpl implements Game {
       // increase won battles counter
       playerBattleStats.put(currentPlayer, playerBattleStats.get(currentPlayer)+1);
       // remove killed unit
-      attackStrategy.computeWinner(this, from, to);
+      battleStrategy.executeBattle(this, from, to);
     }
 
     // takes over city
