@@ -38,3 +38,9 @@ public class TestThreeBattleWinsGameWinStrategy {
         assertThat(gws.getWinner(-4000, cityMap, playerBattleStats), is(nullValue()));
     }
 }
+
+/*
+Test-list
+- When a player reaches 3 battle wins said player should win
+- When no players have reached 3 battle wins there shall be no winner
+ */
