@@ -38,6 +38,7 @@ public class GameImpl implements Game {
   private final HashMap<Position, City> cityMap;
   private final HashMap<Position, Unit> unitMap;
   private final HashMap<Position, Tile> tileMap;
+  private final HashMap<Player, Integer> playerBattleStats;
 
   private final GameAgingStrategy gameAgingStrategy;
   private final GameWinStrategy gameWinStrategy;
@@ -47,6 +48,10 @@ public class GameImpl implements Game {
     this.gameAgingStrategy = gameAgingStrategy;
     this.gameWinStrategy = gameWinStrategy;
     this.unitActionStrategy = unitActionStrategy;
+    // create battle stats map and add the two players as 0
+    playerBattleStats = new HashMap<>();
+    playerBattleStats.put(Player.RED, 0);
+    playerBattleStats.put(Player.BLUE, 0);
 
     cityMap = worldLayoutStrategy.getCityMap();
     unitMap = worldLayoutStrategy.getUnitMap();
@@ -70,7 +75,7 @@ public class GameImpl implements Game {
   }
 
   public Player getWinner() {
-    return gameWinStrategy.getWinner(gameAge, cityMap);
+    return gameWinStrategy.getWinner(gameAge, cityMap, playerBattleStats);
   }
 
   public int getAge() {
@@ -85,7 +90,12 @@ public class GameImpl implements Game {
 
     // kills another unit
     boolean destinationHasEnemyUnit = this.getUnitAt(to) != null;
-    if (destinationHasEnemyUnit) unitMap.remove(to);
+    if (destinationHasEnemyUnit) {
+      // increase won battles counter
+      playerBattleStats.put(currentPlayer, playerBattleStats.get(currentPlayer)+1);
+      // remove killed unit
+      unitMap.remove(to);
+    }
 
     // takes over city
     City destinationCity = this.getCityAt(to);

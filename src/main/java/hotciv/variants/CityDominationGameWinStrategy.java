@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CityDominationGameWinStrategy implements GameWinStrategy {
-    public Player getWinner(int gameAge, HashMap<Position, City> cities) {
+    public Player getWinner(int gameAge, HashMap<Position, City> cities, HashMap<Player, Integer> playerBattleStats) {
         Player dominatingPlayer = null;
 
         // loop through cities in world
