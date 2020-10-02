@@ -14,5 +14,5 @@ public interface AttackStrategy {
      * @param attackerPos The position of the attacking unit.
      * @param defenderPos The position of the defending unit.
      */
-    void computeWinner(Game game, Position attackerPos, Position defenderPos);
+    void computeWinner(GameImpl game, Position attackerPos, Position defenderPos);
 }
