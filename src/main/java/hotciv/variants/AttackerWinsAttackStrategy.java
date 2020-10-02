@@ -6,8 +6,8 @@ import hotciv.framework.Game;
 import hotciv.framework.Position;
 
 public class AttackerWinsAttackStrategy implements AttackStrategy {
-    public void computeWinner(Game game, Position attacker, Position defender) {
-        ((GameImpl) game).removeUnitAt(defender);
-        game.moveUnit(attacker, defender);
+    public void computeWinner(Game game, Position attackerPos, Position defenderPos) {
+        ((GameImpl) game).removeUnitAt(defenderPos);
+        game.moveUnit(attackerPos, defenderPos);
     }
 }
