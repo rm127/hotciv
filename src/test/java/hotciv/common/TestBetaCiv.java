@@ -40,7 +40,6 @@ public class TestBetaCiv {
     }
 
     // Time progresses as it should
-    // TODO: Maybe rewrite to make more sense? It was the best way of writing it I could think of
     @Test
     void timeProgressesAsItShould() {
         int previousGameAge;
