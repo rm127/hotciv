@@ -1,6 +1,5 @@
 package hotciv.common;
 
-import hotciv.framework.Game;
 import hotciv.framework.Position;
 
 /**
@@ -13,6 +12,7 @@ public interface BattleStrategy {
      * @param game Game instance for handling move and deletion of units.
      * @param attackerPos The position of the attacking unit.
      * @param defenderPos The position of the defending unit.
+     * @return whether the attack was successful or not
      */
-    void executeBattle(GameImpl game, Position attackerPos, Position defenderPos);
+    boolean executeBattle(GameImpl game, Position attackerPos, Position defenderPos);
 }

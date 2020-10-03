@@ -34,10 +34,10 @@ public class Utilities {
         ArrayList<Position> list = new ArrayList<>();
 
         // list of modifiers to current position
-        int[] columns = new int[] {0, 0, 1, 1, 1, 0, -1, -1, -1};
-        int[] rows    = new int[] {0, -1, -1, 0, 1, 1, 1, 0, -1};
+        int[] columns = new int[] {0, 1, 1, 1, 0, -1, -1, -1};
+        int[] rows    = new int[] {-1, -1, 0, 1, 1, 1, 0, -1};
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             Position newPosition = new Position(position.getRow() + rows[i], position.getColumn() + columns[i]);
             list.add(newPosition);
         }

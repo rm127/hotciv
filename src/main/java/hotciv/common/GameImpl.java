@@ -5,8 +5,8 @@ import hotciv.framework.*;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import static hotciv.framework.GameConstants.MOUNTAINS;
-import static hotciv.framework.GameConstants.OCEANS;
+import static hotciv.framework.GameConstants.*;
+import static hotciv.framework.GameConstants.FOREST;
 
 /** Skeleton implementation of HotCiv.
  
@@ -98,8 +98,7 @@ public class GameImpl implements Game {
     if (destinationHasEnemyUnit) {
       // increase won battles counter
       playerBattleStats.put(currentPlayer, playerBattleStats.get(currentPlayer)+1);
-      // remove killed unit
-      battleStrategy.executeBattle(this, from, to);
+      return battleStrategy.executeBattle(this, from, to);
     }
 
     // takes over city
@@ -185,6 +184,9 @@ public class GameImpl implements Game {
   }
 
   private Position nextValidUnitPosition(Position position) {
+    if (getUnitAt(position) == null) {
+      return position;
+    }
     Iterator<Position> adjacentPositions = Utilities.getAdjacentPositions(position);
     while (adjacentPositions.hasNext()) {
       Position newPosition = adjacentPositions.next();
@@ -211,5 +213,36 @@ public class GameImpl implements Game {
 
   public void removeUnitAt(Position p) {
     unitMap.remove(p);
+  }
+
+  public int calculateAttackingStrength(Position p) {
+    return calculateUnitStrength(p, getUnitAt(p).getAttackingStrength());
+  }
+  public int calculateDefensiveStrength(Position p) {
+    return calculateUnitStrength(p, getUnitAt(p).getDefensiveStrength());
+  }
+
+
+  private int calculateUnitStrength(Position p, int unitStrength) {
+    int terrainFactor = 1;
+    if (getCityAt(p) != null) {
+      terrainFactor = 3;
+    }
+    String tileType = getTileAt(p).getTypeString();
+    if (tileType.equals(HILLS) || tileType.equals(FOREST)) {
+      terrainFactor = 2;
+    }
+
+    int adjacentUnitSupport = 0;
+    Iterator<Position> adjacentPositions = Utilities.getAdjacentPositions(p);
+    while (adjacentPositions.hasNext()) {
+      Position position = adjacentPositions.next();
+      Unit unit = getUnitAt(position);
+      // if a unit exists and belongs to the same owner as the unit in question
+      if (unit != null && unit.getOwner() == getUnitAt(p).getOwner()) {
+        adjacentUnitSupport++;
+      }
+    }
+    return (unitStrength + adjacentUnitSupport) * terrainFactor;
   }
 }
