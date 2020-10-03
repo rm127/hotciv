@@ -48,7 +48,6 @@ public class DeltaWorldLayoutStrategy implements WorldLayoutStrategy {
             "..ooohhoo.......",
             ".....ooooooooo..",
         };
-        Utilities converter = new Utilities();
-        return converter.convertStringsToMap(map);
+        return Utilities.convertStringsToMap(map);
     }
 }
