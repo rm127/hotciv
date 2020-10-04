@@ -3,7 +3,7 @@ package hotciv.common;
 import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
-import hotciv.stubs.UnitTestWorldLayoutStrategy;
+import hotciv.variants.UnitTestWorldLayoutStrategy;
 import hotciv.variants.*;
 
 import org.junit.jupiter.api.*;
@@ -19,7 +19,7 @@ public class TestZetaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new LinearGameAgingStrategy(), new AlternatingGameWinStrategy(new CityDominationGameWinStrategy(), new ThreeBattleWinsGameWinStrategy()), new DoNothingUnitActionStrategy(), new UnitTestWorldLayoutStrategy(), new AttackerWinsBattleStrategy());
+        game = new GameImpl(new ZetaGameFactory());
     }
 
     // Before round 21 the winner is the player who takes over all cities

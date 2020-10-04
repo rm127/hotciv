@@ -47,7 +47,7 @@ public class TestAlphaCiv {
    */
   @BeforeEach
   public void setUp() {
-    game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new DoNothingUnitActionStrategy(), new AlphaWorldLayoutStrategy(), new AttackerWinsBattleStrategy());
+    game = new GameImpl(new AlphaGameFactory());
   }
 
   // Red player starts the game

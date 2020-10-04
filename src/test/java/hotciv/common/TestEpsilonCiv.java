@@ -3,7 +3,6 @@ package hotciv.common;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.Unit;
-import hotciv.stubs.UnitTestWorldLayoutStrategy;
 import hotciv.framework.Game;
 import hotciv.variants.*;
 import org.junit.jupiter.api.*;
@@ -19,7 +18,7 @@ public class TestEpsilonCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new LinearGameAgingStrategy(), new ThreeBattleWinsGameWinStrategy(), new DoNothingUnitActionStrategy(), new UnitTestWorldLayoutStrategy(), new AlgorithmBattleStrategy());
+        game = new GameImpl(new EpsilonGameFactory());
     }
 
     // Archer has defense of 3 and attack of 2

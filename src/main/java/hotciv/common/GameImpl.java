@@ -49,15 +49,17 @@ public class GameImpl implements Game {
   private final BattleStrategy battleStrategy;
   private int currentRound = 1;
 
-  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy, WorldLayoutStrategy worldLayoutStrategy, BattleStrategy battleStrategy) {
-    this.gameAgingStrategy = gameAgingStrategy;
-    this.gameWinStrategy = gameWinStrategy;
-    this.unitActionStrategy = unitActionStrategy;
-    this.battleStrategy = battleStrategy;
+  GameImpl(GameFactory gameFactory) {
+    this.gameAgingStrategy = gameFactory.createGameAgingStrategy();
+    this.gameWinStrategy = gameFactory.createGameWinStrategy();
+    this.unitActionStrategy = gameFactory.createUnitActionStrategy();
+    this.battleStrategy = gameFactory.createBattleStrategy();
     // create battle stats map and add the two players as 0
     playerBattleStats = new HashMap<>();
     playerBattleStats.put(Player.RED, 0);
     playerBattleStats.put(Player.BLUE, 0);
+
+    WorldLayoutStrategy worldLayoutStrategy = gameFactory.createWorldLayoutStrategy();
 
     cityMap = worldLayoutStrategy.getCityMap();
     unitMap = worldLayoutStrategy.getUnitMap();
