@@ -8,7 +8,7 @@ import hotciv.framework.Position;
 import java.util.HashMap;
 
 public class AlwaysRedWinStrategy implements GameWinStrategy {
-    public Player getWinner(int gameAge, HashMap<Position, City> cityMap, HashMap<Player, Integer> playerBattleStats) {
+    public Player getWinner(int gameAge, HashMap<Position, City> cityMap, HashMap<Player, Integer> playerBattleStats, int currentRound) {
         if (gameAge >= -3000) {
             return Player.RED;
         }

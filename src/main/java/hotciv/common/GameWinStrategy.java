@@ -18,5 +18,5 @@ public interface GameWinStrategy {
      * @param cityMap a map of the cities in the world.
      * @param playerBattleStats the map of player battle wins.
      */
-    Player getWinner(int gameAge, HashMap<Position, City> cityMap, HashMap<Player, Integer> playerBattleStats);
+    Player getWinner(int gameAge, HashMap<Position, City> cityMap, HashMap<Player, Integer> playerBattleStats, int currentRound);
 }

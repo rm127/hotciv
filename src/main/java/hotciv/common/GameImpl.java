@@ -47,6 +47,7 @@ public class GameImpl implements Game {
   private final GameWinStrategy gameWinStrategy;
   private final UnitActionStrategy unitActionStrategy;
   private final BattleStrategy battleStrategy;
+  private int currentRound = 1;
 
   GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy, WorldLayoutStrategy worldLayoutStrategy, BattleStrategy battleStrategy) {
     this.gameAgingStrategy = gameAgingStrategy;
@@ -80,7 +81,7 @@ public class GameImpl implements Game {
   }
 
   public Player getWinner() {
-    return gameWinStrategy.getWinner(gameAge, cityMap, playerBattleStats);
+    return gameWinStrategy.getWinner(gameAge, cityMap, playerBattleStats, currentRound);
   }
 
   public int getAge() {
@@ -162,6 +163,7 @@ public class GameImpl implements Game {
   }
 
   private void endOfRound() {
+    currentRound++;
     // increase the age of the game
     gameAge += gameAgingStrategy.calculateAgeIncrease(gameAge);
     // update production in cities

@@ -29,13 +29,13 @@ public class TestThreeBattleWinsGameWinStrategy {
     @Test
     void playerRedShouldWinAfterWinning3Battles() {
         playerBattleStats.put(Player.RED, 3);
-        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats), is(Player.RED));
+        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats, 0), is(Player.RED));
     }
 
     // No winner when no player have 3 battle wins
     @Test
     void noWinnerWhenNoOneHas3Wins() {
-        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats), is(nullValue()));
+        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats, 0), is(nullValue()));
     }
 }
 

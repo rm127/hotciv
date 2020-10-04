@@ -33,7 +33,7 @@ public class TestCityDominationGameWinStrategy {
         cityMap.put(new Position(0,0), new CityImpl(Player.RED));
         // add a Blue city
         cityMap.put(new Position(0,2), new CityImpl(Player.BLUE));
-        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats), is(nullValue()));
+        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats, 0), is(nullValue()));
     }
 
     // When all cities are owned by the same player, that player has won. Test for player Red.
@@ -45,7 +45,7 @@ public class TestCityDominationGameWinStrategy {
         cityMap.put(new Position(0,0), new CityImpl(Player.RED));
         // add another Red city
         cityMap.put(new Position(0,2), new CityImpl(Player.RED));
-        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats), is(Player.RED));
+        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats, 0), is(Player.RED));
     }
 
     // When all cities are owned by the same player, that player has won. Test for player Blue.
@@ -57,7 +57,7 @@ public class TestCityDominationGameWinStrategy {
         cityMap.put(new Position(0,0), new CityImpl(Player.BLUE));
         // add another Red city
         cityMap.put(new Position(0,2), new CityImpl(Player.BLUE));
-        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats), is(Player.BLUE));
+        assertThat(gws.getWinner(-4000, cityMap, playerBattleStats, 0), is(Player.BLUE));
     }
 }
 

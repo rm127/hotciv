@@ -15,6 +15,7 @@ public class UnitTestWorldLayoutStrategy implements WorldLayoutStrategy {
         final HashMap<Position, City> cityMap = new HashMap<>();
 
         cityMap.put(new Position(1,1), new CityImpl(Player.RED));
+        cityMap.put(new Position(4,1), new CityImpl(Player.BLUE));
 
         return cityMap;
     }
@@ -32,6 +33,8 @@ public class UnitTestWorldLayoutStrategy implements WorldLayoutStrategy {
 
         unitMap.put(new Position(1,9), new UnitImpl(Player.BLUE, SETTLER));
         unitMap.put(new Position(1,8), new UnitImpl(Player.RED, ARCHER));
+
+        unitMap.put(new Position(4,0), new UnitImpl(Player.RED, ARCHER));
 
         return unitMap;
     }
