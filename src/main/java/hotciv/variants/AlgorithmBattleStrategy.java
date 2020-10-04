@@ -10,6 +10,7 @@ public class AlgorithmBattleStrategy implements BattleStrategy {
     }
 
     // TODO: Implement proper random algorithm
+    // TODO: How to test this with proper algorithm?
     private int getRandomNumber() {
         return 1;
     }
