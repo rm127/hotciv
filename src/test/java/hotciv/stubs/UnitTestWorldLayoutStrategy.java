@@ -30,6 +30,9 @@ public class UnitTestWorldLayoutStrategy implements WorldLayoutStrategy {
         unitMap.put(new Position(1,6), new UnitImpl(Player.BLUE, ARCHER));
         unitMap.put(new Position(1,5), new UnitImpl(Player.RED, LEGION));
 
+        unitMap.put(new Position(1,9), new UnitImpl(Player.BLUE, SETTLER));
+        unitMap.put(new Position(1,8), new UnitImpl(Player.RED, ARCHER));
+
         return unitMap;
     }
 

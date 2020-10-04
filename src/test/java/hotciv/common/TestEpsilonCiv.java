@@ -1,5 +1,6 @@
 package hotciv.common;
 
+import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.Unit;
 import hotciv.stubs.UnitTestWorldLayoutStrategy;
@@ -89,6 +90,15 @@ public class TestEpsilonCiv {
         Position defenderPosition = new Position(1,5);
         boolean wonTheBattle = game.moveUnit(attackerPosition, defenderPosition);
         assertThat(wonTheBattle, is(false));
+    }
+
+    // When a player reaches 3 battle wins said player should win
+    @Test
+    void aPlayerWinsWhenHavingWon3Battles() {
+        game.moveUnit(new Position(1,1), new Position(2,1));
+        game.moveUnit(new Position(1,5), new Position(1,6));
+        game.moveUnit(new Position(1,8), new Position(1,9));
+        assertThat(game.getWinner(), is(Player.RED));
     }
 }
 
