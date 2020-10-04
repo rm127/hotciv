@@ -3,7 +3,6 @@ package hotciv.common;
 import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
-import hotciv.variants.UnitTestWorldLayoutStrategy;
 import hotciv.variants.*;
 
 import org.junit.jupiter.api.*;

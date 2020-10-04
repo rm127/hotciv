@@ -16,7 +16,7 @@ public class ZetaGameFactory implements GameFactory {
     }
 
     public WorldLayoutStrategy createWorldLayoutStrategy() {
-        return new AlphaWorldLayoutStrategy();
+        return new UnitTestWorldLayoutStrategy();
     }
 
     public BattleStrategy createBattleStrategy() {
