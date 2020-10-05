@@ -28,4 +28,12 @@ public class CityDominationGameWinStrategy implements GameWinStrategy {
         // if all cities are the same, then the owner will be returned. Else null.
         return dominatingPlayer;
     }
+
+    public void incrementBattleWon(Player p) {
+
+    }
+
+    public void incrementRoundNumber() {
+
+    }
 }

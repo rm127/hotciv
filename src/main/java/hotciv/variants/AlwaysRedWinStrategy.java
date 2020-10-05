@@ -11,4 +11,12 @@ public class AlwaysRedWinStrategy implements GameWinStrategy {
         }
         return null;
     }
+
+    public void incrementBattleWon(Player p) {
+
+    }
+
+    public void incrementRoundNumber() {
+
+    }
 }

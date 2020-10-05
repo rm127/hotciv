@@ -5,32 +5,28 @@ import hotciv.common.GameWinStrategy;
 import hotciv.framework.Player;
 
 public class AlternatingGameWinStrategy implements GameWinStrategy {
-    GameWinStrategy beforeRound21Strategy;
     GameWinStrategy afterRound20Strategy;
     GameWinStrategy currentState;
 
+    private int currentRound = 1;
 
     public AlternatingGameWinStrategy(GameWinStrategy beforeRound21Strategy, GameWinStrategy afterRound20Strategy) {
-        this.beforeRound21Strategy = beforeRound21Strategy;
         this.afterRound20Strategy = afterRound20Strategy;
-        this.currentState = null;
+        this.currentState = beforeRound21Strategy;
     }
 
     public Player getWinner(GameImpl game) {
-        if (game.getCurrentRound() <= 20) {
-            currentState = beforeRound21Strategy;
-        } else {
-            currentState = afterRound20Strategy;
-        }
-        // TODO: Start counting battle wins after round 20
         return currentState.getWinner(game);
     }
 
     public void incrementBattleWon(Player p) {
-
+        currentState.incrementBattleWon(p);
     }
 
     public void incrementRoundNumber() {
-
+        currentRound++;
+        if (currentRound > 20) {
+            currentState = afterRound20Strategy;
+        }
     }
 }

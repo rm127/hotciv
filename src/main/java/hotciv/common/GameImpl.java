@@ -42,23 +42,17 @@ public class GameImpl implements Game {
   private final HashMap<Position, City> cityMap;
   private final HashMap<Position, Unit> unitMap;
   private final HashMap<Position, Tile> tileMap;
-  private final HashMap<Player, Integer> playerBattleStats;
 
   private final GameAgingStrategy gameAgingStrategy;
   private final GameWinStrategy gameWinStrategy;
   private final UnitActionStrategy unitActionStrategy;
   private final BattleStrategy battleStrategy;
-  private int currentRound = 1;
 
   GameImpl(GameFactory gameFactory) {
     this.gameAgingStrategy = gameFactory.createGameAgingStrategy();
     this.gameWinStrategy = gameFactory.createGameWinStrategy();
     this.unitActionStrategy = gameFactory.createUnitActionStrategy();
     this.battleStrategy = gameFactory.createBattleStrategy();
-    // create battle stats map and add the two players as 0
-    playerBattleStats = new HashMap<>();
-    playerBattleStats.put(Player.RED, 0);
-    playerBattleStats.put(Player.BLUE, 0);
 
     WorldLayoutStrategy worldLayoutStrategy = gameFactory.createWorldLayoutStrategy();
 
@@ -101,7 +95,7 @@ public class GameImpl implements Game {
     boolean destinationHasEnemyUnit = this.getUnitAt(to) != null;
     if (destinationHasEnemyUnit) {
       // increase won battles counter
-      playerBattleStats.put(currentPlayer, playerBattleStats.get(currentPlayer)+1);
+      gameWinStrategy.incrementBattleWon(currentPlayer);
       return battleStrategy.executeBattle(this, from, to);
     }
 
@@ -166,7 +160,7 @@ public class GameImpl implements Game {
   }
 
   private void endOfRound() {
-    currentRound++;
+    gameWinStrategy.incrementRoundNumber();
     // increase the age of the game
     gameAge += gameAgingStrategy.calculateAgeIncrease(gameAge);
     // update production in cities
@@ -251,15 +245,7 @@ public class GameImpl implements Game {
     return (unitStrength + adjacentUnitSupport) * terrainFactor;
   }
 
-  public int getCurrentRound() {
-    return currentRound;
-  }
-
   public Map<Position, City> getCities() {
     return cityMap;
-  }
-
-  public Map<Player, Integer> getPlayerBattleStats() {
-    return playerBattleStats;
   }
 }

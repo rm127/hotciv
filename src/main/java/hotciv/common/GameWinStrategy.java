@@ -13,4 +13,15 @@ public interface GameWinStrategy {
      * @param game the GameImpl instance.
      */
     Player getWinner(GameImpl game);
+
+    /**
+     * Increments the number of battles the player has won.
+     * @param p The player in question.
+     */
+    void incrementBattleWon(Player p);
+
+    /**
+     * Increments the count of rounds played.
+     */
+    void incrementRoundNumber();
 }
