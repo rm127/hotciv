@@ -15,9 +15,8 @@ public class EpsilonGameFactory implements GameFactory {
         return new DoNothingUnitActionStrategy();
     }
 
-    // TODO: Are we allowed to use this TestWorldLayout for easier testing or do we have to use the AlphaWorldLayout?
     public WorldLayoutStrategy createWorldLayoutStrategy() {
-        return new UnitTestWorldLayoutStrategy();
+        return new AlphaWorldLayoutStrategy();
     }
 
     public BattleStrategy createBattleStrategy() {

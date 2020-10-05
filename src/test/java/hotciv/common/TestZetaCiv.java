@@ -3,6 +3,7 @@ package hotciv.common;
 import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
+import hotciv.stubs.TestZetaGameFactory;
 import hotciv.variants.*;
 
 import org.junit.jupiter.api.*;
@@ -18,7 +19,7 @@ public class TestZetaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new ZetaGameFactory());
+        game = new GameImpl(new TestZetaGameFactory());
     }
 
     // Before round 21 the winner is the player who takes over all cities

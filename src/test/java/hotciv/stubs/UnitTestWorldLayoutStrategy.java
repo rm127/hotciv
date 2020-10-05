@@ -1,4 +1,4 @@
-package hotciv.variants;
+package hotciv.stubs;
 
 import hotciv.common.CityImpl;
 import hotciv.common.UnitImpl;
