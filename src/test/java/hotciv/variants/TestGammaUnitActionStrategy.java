@@ -1,24 +1,12 @@
 package hotciv.variants;
 
 import hotciv.common.UnitActionStrategy;
-import hotciv.common.UnitImpl;
-import hotciv.framework.City;
-import hotciv.framework.Player;
-import hotciv.framework.Position;
-import hotciv.framework.Unit;
-import org.junit.jupiter.api.*;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static hotciv.framework.GameConstants.SETTLER;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.jupiter.api.BeforeEach;
 
 public class TestGammaUnitActionStrategy {
     UnitActionStrategy uas;
-    Map<Position, Unit> unitMap = new HashMap<>();
-    Map<Position, City> cityMap = new HashMap<>();
+//    Map<Position, Unit> unitMap = new HashMap<>();
+//    Map<Position, City> cityMap = new HashMap<>();
 
     @BeforeEach
     public void setUp() {
