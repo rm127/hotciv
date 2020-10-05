@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import static hotciv.framework.GameConstants.*;
 import static hotciv.framework.GameConstants.FOREST;
@@ -83,7 +84,7 @@ public class GameImpl implements Game {
   }
 
   public Player getWinner() {
-    return gameWinStrategy.getWinner(gameAge, cityMap, playerBattleStats, currentRound);
+    return gameWinStrategy.getWinner(this);
   }
 
   public int getAge() {
@@ -248,5 +249,17 @@ public class GameImpl implements Game {
       }
     }
     return (unitStrength + adjacentUnitSupport) * terrainFactor;
+  }
+
+  public int getCurrentRound() {
+    return currentRound;
+  }
+
+  public Map<Position, City> getCities() {
+    return cityMap;
+  }
+
+  public Map<Player, Integer> getPlayerBattleStats() {
+    return playerBattleStats;
   }
 }

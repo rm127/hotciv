@@ -5,7 +5,6 @@ import hotciv.framework.Position;
 import hotciv.framework.Unit;
 import hotciv.framework.Game;
 import hotciv.stubs.TestEpsilonGameFactory;
-import hotciv.variants.*;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;

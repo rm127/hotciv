@@ -20,6 +20,6 @@ public class EpsilonGameFactory implements GameFactory {
     }
 
     public BattleStrategy createBattleStrategy() {
-        return new AlgorithmBattleStrategy();
+        return new AlgorithmBattleStrategy(new randomModifierStrategy());
     }
 }
