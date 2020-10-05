@@ -1,10 +1,6 @@
 package hotciv.common;
 
-import hotciv.framework.City;
 import hotciv.framework.Player;
-import hotciv.framework.Position;
-
-import java.util.HashMap;
 
 /**
  * The strategy for deciding who has won the game.
@@ -14,8 +10,18 @@ public interface GameWinStrategy {
     /**
      * Returns the Player who has won the game if there is a winner.
      * @return the Player who has won the game.
-     * @param gameAge the age of the game.
-     * @param cityMap a map of the cities in the world.
+     * @param game the GameImpl instance.
      */
-    Player getWinner(int gameAge, HashMap<Position, City> cityMap);
+    Player getWinner(GameImpl game);
+
+    /**
+     * Increments the number of battles the player has won.
+     * @param p The player in question.
+     */
+    void incrementBattleWon(Player p);
+
+    /**
+     * Increments the count of rounds played.
+     */
+    void incrementRoundNumber();
 }

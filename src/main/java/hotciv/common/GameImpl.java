@@ -1,9 +1,13 @@
 package hotciv.common;
 
 import hotciv.framework.*;
+
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import static hotciv.framework.GameConstants.*;
+import static hotciv.framework.GameConstants.FOREST;
 
 /** Skeleton implementation of HotCiv.
  
@@ -42,11 +46,15 @@ public class GameImpl implements Game {
   private final GameAgingStrategy gameAgingStrategy;
   private final GameWinStrategy gameWinStrategy;
   private final UnitActionStrategy unitActionStrategy;
+  private final BattleStrategy battleStrategy;
 
-  GameImpl(GameAgingStrategy gameAgingStrategy, GameWinStrategy gameWinStrategy, UnitActionStrategy unitActionStrategy, WorldLayoutStrategy worldLayoutStrategy) {
-    this.gameAgingStrategy = gameAgingStrategy;
-    this.gameWinStrategy = gameWinStrategy;
-    this.unitActionStrategy = unitActionStrategy;
+  GameImpl(GameFactory gameFactory) {
+    this.gameAgingStrategy = gameFactory.createGameAgingStrategy();
+    this.gameWinStrategy = gameFactory.createGameWinStrategy();
+    this.unitActionStrategy = gameFactory.createUnitActionStrategy();
+    this.battleStrategy = gameFactory.createBattleStrategy();
+
+    WorldLayoutStrategy worldLayoutStrategy = gameFactory.createWorldLayoutStrategy();
 
     cityMap = worldLayoutStrategy.getCityMap();
     unitMap = worldLayoutStrategy.getUnitMap();
@@ -70,7 +78,7 @@ public class GameImpl implements Game {
   }
 
   public Player getWinner() {
-    return gameWinStrategy.getWinner(gameAge, cityMap);
+    return gameWinStrategy.getWinner(this);
   }
 
   public int getAge() {
@@ -85,7 +93,11 @@ public class GameImpl implements Game {
 
     // kills another unit
     boolean destinationHasEnemyUnit = this.getUnitAt(to) != null;
-    if (destinationHasEnemyUnit) unitMap.remove(to);
+    if (destinationHasEnemyUnit) {
+      // increase won battles counter
+      gameWinStrategy.incrementBattleWon(currentPlayer);
+      return battleStrategy.executeBattle(this, from, to);
+    }
 
     // takes over city
     City destinationCity = this.getCityAt(to);
@@ -93,7 +105,7 @@ public class GameImpl implements Game {
     if (destinationHasEnemyCity) ((CityImpl) destinationCity).changeOwner(currentPlayer);
 
     unitMap.put(to, unit);
-    unitMap.remove(from);
+    this.removeUnitAt(from);
     // decrease move count
     ((UnitImpl) unit).decreaseMoveCount();
     return true;
@@ -148,6 +160,7 @@ public class GameImpl implements Game {
   }
 
   private void endOfRound() {
+    gameWinStrategy.incrementRoundNumber();
     // increase the age of the game
     gameAge += gameAgingStrategy.calculateAgeIncrease(gameAge);
     // update production in cities
@@ -170,14 +183,12 @@ public class GameImpl implements Game {
   }
 
   private Position nextValidUnitPosition(Position position) {
-    int currentRow = position.getRow();
-    int currentColumn = position.getColumn();
-    // list of modifiers to current position
-    int[] columns = new int[] {0, 0, 1, 1, 1, 0, -1, -1, -1};
-    int[] rows    = new int[] {0, -1, -1, 0, 1, 1, 1, 0, -1};
-
-    for (int i = 0; i < 9; i++) {
-      Position newPosition = new Position(currentRow + rows[i], currentColumn + columns[i]);
+    if (getUnitAt(position) == null) {
+      return position;
+    }
+    Iterator<Position> adjacentPositions = Utilities.getAdjacentPositions(position);
+    while (adjacentPositions.hasNext()) {
+      Position newPosition = adjacentPositions.next();
       if (getUnitAt(newPosition) == null && !isInvalidTile(newPosition)) {
         return newPosition;
       }
@@ -201,5 +212,40 @@ public class GameImpl implements Game {
 
   public void removeUnitAt(Position p) {
     unitMap.remove(p);
+  }
+
+  public int calculateAttackingStrength(Position p) {
+    return calculateUnitStrength(p, getUnitAt(p).getAttackingStrength());
+  }
+  public int calculateDefensiveStrength(Position p) {
+    return calculateUnitStrength(p, getUnitAt(p).getDefensiveStrength());
+  }
+
+
+  private int calculateUnitStrength(Position p, int unitStrength) {
+    int terrainFactor = 1;
+    if (getCityAt(p) != null) {
+      terrainFactor = 3;
+    }
+    String tileType = getTileAt(p).getTypeString();
+    if (tileType.equals(HILLS) || tileType.equals(FOREST)) {
+      terrainFactor = 2;
+    }
+
+    int adjacentUnitSupport = 0;
+    Iterator<Position> adjacentPositions = Utilities.getAdjacentPositions(p);
+    while (adjacentPositions.hasNext()) {
+      Position position = adjacentPositions.next();
+      Unit unit = getUnitAt(position);
+      // if a unit exists and belongs to the same owner as the unit in question
+      if (unit != null && unit.getOwner() == getUnitAt(p).getOwner()) {
+        adjacentUnitSupport++;
+      }
+    }
+    return (unitStrength + adjacentUnitSupport) * terrainFactor;
+  }
+
+  public Map<Position, City> getCities() {
+    return cityMap;
   }
 }

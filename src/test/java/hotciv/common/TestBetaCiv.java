@@ -3,10 +3,7 @@ package hotciv.common;
 import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
-import hotciv.variants.AlphaWorldLayoutStrategy;
-import hotciv.variants.CityDominationGameWinStrategy;
-import hotciv.variants.DoNothingUnitActionStrategy;
-import hotciv.variants.ProgressiveGameAgingStrategy;
+import hotciv.variants.*;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,7 +17,7 @@ public class TestBetaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new ProgressiveGameAgingStrategy(), new CityDominationGameWinStrategy(), new DoNothingUnitActionStrategy(), new AlphaWorldLayoutStrategy());
+        game = new GameImpl(new BetaGameFactory());
     }
 
     // No winner when cities have different owners.
@@ -43,7 +40,6 @@ public class TestBetaCiv {
     }
 
     // Time progresses as it should
-    // TODO: Maybe rewrite to make more sense? It was the best way of writing it I could think of
     @Test
     void timeProgressesAsItShould() {
         int previousGameAge;

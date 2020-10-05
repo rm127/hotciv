@@ -1,17 +1,22 @@
 package hotciv.variants;
 
+import hotciv.common.GameImpl;
 import hotciv.common.GameWinStrategy;
-import hotciv.framework.City;
 import hotciv.framework.Player;
-import hotciv.framework.Position;
-
-import java.util.HashMap;
 
 public class AlwaysRedWinStrategy implements GameWinStrategy {
-    public Player getWinner(int gameAge, HashMap<Position, City> cityMap) {
-        if (gameAge >= -3000) {
+    public Player getWinner(GameImpl game) {
+        if (game.getAge() >= -3000) {
             return Player.RED;
         }
         return null;
+    }
+
+    public void incrementBattleWon(Player p) {
+
+    }
+
+    public void incrementRoundNumber() {
+
     }
 }

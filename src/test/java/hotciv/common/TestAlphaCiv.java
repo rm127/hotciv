@@ -2,10 +2,7 @@ package hotciv.common;
 
 import hotciv.framework.*;
 
-import hotciv.variants.AlphaWorldLayoutStrategy;
-import hotciv.variants.AlwaysRedWinStrategy;
-import hotciv.variants.DoNothingUnitActionStrategy;
-import hotciv.variants.LinearGameAgingStrategy;
+import hotciv.variants.*;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 
@@ -50,8 +47,7 @@ public class TestAlphaCiv {
    */
   @BeforeEach
   public void setUp() {
-    game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new DoNothingUnitActionStrategy(), new AlphaWorldLayoutStrategy());
-    // remember to create the test world (like the one given at iteration-1 if we ever have a map that's not fixed with units, cities etc. at start
+    game = new GameImpl(new AlphaGameFactory());
   }
 
   // Red player starts the game

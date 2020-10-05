@@ -19,7 +19,7 @@ public class TestGammaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new LinearGameAgingStrategy(), new AlwaysRedWinStrategy(), new GammaUnitActionStrategy(), new AlphaWorldLayoutStrategy());
+        game = new GameImpl(new GammaGameFactory());
     }
 
     // Archer has defense of 3
