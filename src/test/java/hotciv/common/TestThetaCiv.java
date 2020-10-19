@@ -71,4 +71,6 @@ Test-list
 - Caravan unit costs 30
 - Caravan can move onto desert tiles
 - ONLY the caravan can move into desert tiles
+- When a caravan performs it's action in a city, the population increases by 2
+- A caravan doesn't do anything outside of a city owned by the same owner
  */
