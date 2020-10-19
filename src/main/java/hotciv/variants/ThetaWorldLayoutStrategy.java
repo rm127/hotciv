@@ -15,8 +15,8 @@ public class ThetaWorldLayoutStrategy implements WorldLayoutStrategy {
     }
 
     public void createCities() {
-        game.addCityAt(new Position(4,5), new CityImpl(Player.BLUE));
-        game.addCityAt(new Position(8,12), new CityImpl(Player.RED));
+        game.addCityAt(new Position(4,5), Player.BLUE);
+        game.addCityAt(new Position(8,12), Player.RED);
     }
 
     public void createUnits() {

@@ -15,8 +15,8 @@ public class UnitTestWorldLayoutStrategy implements WorldLayoutStrategy {
     }
 
     public void createCities() {
-        game.addCityAt(new Position(1,1), new CityImpl(Player.RED));
-        game.addCityAt(new Position(4,1), new CityImpl(Player.BLUE));
+        game.addCityAt(new Position(1,1), Player.RED);
+        game.addCityAt(new Position(4,1), Player.BLUE);
     }
 
     public void createUnits() {

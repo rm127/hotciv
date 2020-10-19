@@ -28,8 +28,7 @@ public class GammaUnitActionStrategy implements UnitActionStrategy {
             // If the unit is a settler
             case SETTLER:
                 // Add a new city to the game
-                City city = new CityImpl(game.getPlayerInTurn());
-                ((GameImpl) game).addCityAt(position, city);
+                ((GameImpl) game).addCityAt(position, game.getPlayerInTurn());
                 // Remove the unit
                 ((GameImpl) game).removeUnitAt(position);
             // If the unit is an archer

@@ -18,8 +18,8 @@ public class TestGammaCivAlphaWorldLayoutStrategy extends AlphaWorldLayoutStrate
     }
 
     public void createCities() {
-        game.addCityAt(new Position(1,1), new CityImpl(Player.RED));
-        game.addCityAt(new Position(4,1), new CityImpl(Player.BLUE));
-        game.addCityAt(new Position(15,15), new CityImpl(Player.RED));
+        game.addCityAt(new Position(1,1), Player.RED);
+        game.addCityAt(new Position(4,1), Player.BLUE);
+        game.addCityAt(new Position(15,15), Player.RED);
     }
 }

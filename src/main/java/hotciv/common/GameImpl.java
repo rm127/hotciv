@@ -210,8 +210,8 @@ public class GameImpl implements Game {
     unitActionStrategy.performAction(p, this);
   }
 
-  public void addCityAt(Position p, City city) {
-    cityMap.put(p, city);
+  public void addCityAt(Position p, Player owner) {
+    cityMap.put(p, new CityImpl(owner));
   }
 
   public void addUnitAt(Position position, Player owner, String unitType) {
