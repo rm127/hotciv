@@ -27,6 +27,7 @@ public class UnitTestWorldLayoutStrategy implements WorldLayoutStrategy {
         unitMap.put(new Position(0,1), new UnitImpl(Player.RED, ARCHER));
         unitMap.put(new Position(1,0), new UnitImpl(Player.RED, SETTLER));
         unitMap.put(new Position(2,1), new UnitImpl(Player.BLUE, ARCHER));
+        unitMap.put(new Position(2,2), new UnitImpl(Player.RED, SETTLER));
 
         unitMap.put(new Position(1,6), new UnitImpl(Player.BLUE, ARCHER));
         unitMap.put(new Position(1,5), new UnitImpl(Player.RED, LEGION));
@@ -35,6 +36,9 @@ public class UnitTestWorldLayoutStrategy implements WorldLayoutStrategy {
         unitMap.put(new Position(1,8), new UnitImpl(Player.RED, ARCHER));
 
         unitMap.put(new Position(4,0), new UnitImpl(Player.RED, ARCHER));
+
+        unitMap.put(new Position(8,8), new UnitImpl(Player.RED, LEGION));
+        unitMap.put(new Position(8,9), new UnitImpl(Player.BLUE, SETTLER));
 
         return unitMap;
     }

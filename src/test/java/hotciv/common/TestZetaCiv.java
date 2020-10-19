@@ -55,6 +55,18 @@ public class TestZetaCiv {
         assertThat(game.getWinner(), is(nullValue()));
     }
 
+    // Won battles before round 21 doesn't count towards a win
+    @Test
+    void wonBattlesBeforeRound21ShouldNotCountTowardsWin() {
+        game.moveUnit(new Position(8,8), new Position(8,9));
+        skipToRound21();
+        game.moveUnit(new Position(1,1), new Position(2,1));
+        game.moveUnit(new Position(1,5), new Position(1,6));
+        assertThat(game.getWinner(), is(nullValue()));
+        game.moveUnit(new Position(1,8), new Position(1,9));
+        assertThat(game.getWinner(), is(Player.RED));
+    }
+
     private void skipToRound21() {
         // skip to round 21
         for (int i = 0; i < 20; i++) {
