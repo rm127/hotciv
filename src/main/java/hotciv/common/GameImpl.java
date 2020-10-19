@@ -46,18 +46,23 @@ public class GameImpl implements Game {
   private final GameWinStrategy gameWinStrategy;
   private final UnitActionStrategy unitActionStrategy;
   private final BattleStrategy battleStrategy;
+  private final UnitStatStrategy unitStatStrategy;
 
   GameImpl(GameFactory gameFactory) {
     this.gameAgingStrategy = gameFactory.createGameAgingStrategy();
     this.gameWinStrategy = gameFactory.createGameWinStrategy();
     this.unitActionStrategy = gameFactory.createUnitActionStrategy();
     this.battleStrategy = gameFactory.createBattleStrategy();
+    this.unitStatStrategy = gameFactory.createUnitStatStrategy();
 
-    WorldLayoutStrategy worldLayoutStrategy = gameFactory.createWorldLayoutStrategy();
+    WorldLayoutStrategy worldLayoutStrategy = gameFactory.createWorldLayoutStrategy(this);
 
-    cityMap = worldLayoutStrategy.getCityMap();
-    unitMap = worldLayoutStrategy.getUnitMap();
     tileMap = worldLayoutStrategy.getTileMap();
+    unitMap = new HashMap<>();
+    cityMap = new HashMap<>();
+
+    worldLayoutStrategy.createCities();
+    worldLayoutStrategy.createUnits();
   }
 
   public Tile getTileAt( Position p ) {
@@ -175,7 +180,7 @@ public class GameImpl implements Game {
       Position newPosition = nextValidUnitPosition(position);
       // to avoid NullPointerException
       if (newPosition != null) {
-        unitMap.put(newPosition, new UnitImpl(currentPlayer, city.getProduction()));
+        unitMap.put(newPosition, new UnitImpl(unitStatStrategy, currentPlayer, city.getProduction()));
         ((CityImpl) city).decreaseTreasury();
       }
     }
@@ -207,6 +212,10 @@ public class GameImpl implements Game {
 
   public void addCityAt(Position p, City city) {
     cityMap.put(p, city);
+  }
+
+  public void addUnitAt(Position position, Player owner, String unitType) {
+    unitMap.put(position, new UnitImpl(unitStatStrategy, owner, unitType));
   }
 
   public void removeUnitAt(Position p) {

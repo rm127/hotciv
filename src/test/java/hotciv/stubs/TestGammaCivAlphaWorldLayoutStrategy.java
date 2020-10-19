@@ -1,7 +1,9 @@
 package hotciv.stubs;
 
 import hotciv.common.CityImpl;
+import hotciv.common.GameImpl;
 import hotciv.framework.City;
+import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.variants.AlphaWorldLayoutStrategy;
@@ -9,14 +11,15 @@ import hotciv.variants.AlphaWorldLayoutStrategy;
 import java.util.HashMap;
 
 public class TestGammaCivAlphaWorldLayoutStrategy extends AlphaWorldLayoutStrategy {
-    public HashMap<Position, City> getCityMap() {
-        final HashMap<Position, City> cityMap = new HashMap<>();
+    private final GameImpl game;
+    public TestGammaCivAlphaWorldLayoutStrategy(Game game) {
+        super(game);
+        this.game = (GameImpl) game;
+    }
 
-        cityMap.put(new Position(1,1), new CityImpl(Player.RED));
-        cityMap.put(new Position(4,1), new CityImpl(Player.BLUE));
-
-        cityMap.put(new Position(15,15), new CityImpl(Player.RED));
-
-        return cityMap;
+    public void createCities() {
+        game.addCityAt(new Position(1,1), new CityImpl(Player.RED));
+        game.addCityAt(new Position(4,1), new CityImpl(Player.BLUE));
+        game.addCityAt(new Position(15,15), new CityImpl(Player.RED));
     }
 }

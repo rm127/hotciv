@@ -3,7 +3,7 @@ package hotciv.variants;
 import hotciv.common.*;
 import hotciv.framework.Game;
 
-public class AlphaGameFactory implements GameFactory {
+public class ThetaGameFactory implements GameFactory {
     public GameAgingStrategy createGameAgingStrategy() {
         return new LinearGameAgingStrategy();
     }
@@ -13,11 +13,11 @@ public class AlphaGameFactory implements GameFactory {
     }
 
     public UnitActionStrategy createUnitActionStrategy() {
-        return new DoNothingUnitActionStrategy();
+        return new GammaUnitActionStrategy();
     }
 
     public WorldLayoutStrategy createWorldLayoutStrategy(Game game) {
-        return new AlphaWorldLayoutStrategy(game);
+        return new ThetaWorldLayoutStrategy(game);
     }
 
     public BattleStrategy createBattleStrategy() {

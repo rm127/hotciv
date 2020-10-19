@@ -1,9 +1,6 @@
 package hotciv.stubs;
 
-import hotciv.common.CityImpl;
-import hotciv.common.UnitImpl;
-import hotciv.common.Utilities;
-import hotciv.common.WorldLayoutStrategy;
+import hotciv.common.*;
 import hotciv.framework.*;
 
 import java.util.HashMap;
@@ -11,36 +8,34 @@ import java.util.HashMap;
 import static hotciv.framework.GameConstants.*;
 
 public class UnitTestWorldLayoutStrategy implements WorldLayoutStrategy {
-    public HashMap<Position, City> getCityMap() {
-        final HashMap<Position, City> cityMap = new HashMap<>();
+    private final GameImpl game;
 
-        cityMap.put(new Position(1,1), new CityImpl(Player.RED));
-        cityMap.put(new Position(4,1), new CityImpl(Player.BLUE));
-
-        return cityMap;
+    public UnitTestWorldLayoutStrategy(Game game) {
+        this.game = (GameImpl) game;
     }
 
-    public HashMap<Position, Unit> getUnitMap() {
-        final HashMap<Position, Unit> unitMap = new HashMap<>();
+    public void createCities() {
+        game.addCityAt(new Position(1,1), new CityImpl(Player.RED));
+        game.addCityAt(new Position(4,1), new CityImpl(Player.BLUE));
+    }
 
-        unitMap.put(new Position(1,1), new UnitImpl(Player.RED, LEGION));
-        unitMap.put(new Position(0,1), new UnitImpl(Player.RED, ARCHER));
-        unitMap.put(new Position(1,0), new UnitImpl(Player.RED, SETTLER));
-        unitMap.put(new Position(2,1), new UnitImpl(Player.BLUE, ARCHER));
-        unitMap.put(new Position(2,2), new UnitImpl(Player.RED, SETTLER));
+    public void createUnits() {
+        game.addUnitAt(new Position(1,1), Player.RED, LEGION);
+        game.addUnitAt(new Position(0,1), Player.RED, ARCHER);
+        game.addUnitAt(new Position(1,0), Player.RED, SETTLER);
+        game.addUnitAt(new Position(2,1), Player.BLUE, ARCHER);
+        game.addUnitAt(new Position(2,2), Player.RED, SETTLER);
 
-        unitMap.put(new Position(1,6), new UnitImpl(Player.BLUE, ARCHER));
-        unitMap.put(new Position(1,5), new UnitImpl(Player.RED, LEGION));
+        game.addUnitAt(new Position(1,6), Player.BLUE, ARCHER);
+        game.addUnitAt(new Position(1,5), Player.RED, LEGION);
 
-        unitMap.put(new Position(1,9), new UnitImpl(Player.BLUE, SETTLER));
-        unitMap.put(new Position(1,8), new UnitImpl(Player.RED, ARCHER));
+        game.addUnitAt(new Position(1,9), Player.BLUE, SETTLER);
+        game.addUnitAt(new Position(1,8), Player.RED, ARCHER);
 
-        unitMap.put(new Position(4,0), new UnitImpl(Player.RED, ARCHER));
+        game.addUnitAt(new Position(4,0), Player.RED, ARCHER);
 
-        unitMap.put(new Position(8,8), new UnitImpl(Player.RED, LEGION));
-        unitMap.put(new Position(8,9), new UnitImpl(Player.BLUE, SETTLER));
-
-        return unitMap;
+        game.addUnitAt(new Position(8,8), Player.RED, LEGION);
+        game.addUnitAt(new Position(8,9), Player.BLUE, SETTLER);
     }
 
     public HashMap<Position, Tile> getTileMap() {
