@@ -27,4 +27,8 @@ public class EpsilonGameFactory implements GameFactory {
     public UnitStatStrategy createUnitStatStrategy() {
         return new AlphaUnitStatStrategy();
     }
+
+    public TileValidatorStrategy createTileValidatorStrategy() {
+        return new AlphaTileValidator();
+    }
 }

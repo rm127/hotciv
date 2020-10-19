@@ -42,4 +42,10 @@ public interface GameFactory {
      * @return a UnitStatStrategy object.
      */
     UnitStatStrategy createUnitStatStrategy();
+
+    /**
+     * Creates the TileValidatorStrategy object.
+     * @return a TileValidatorStrategy object.
+     */
+    TileValidatorStrategy createTileValidatorStrategy();
 }

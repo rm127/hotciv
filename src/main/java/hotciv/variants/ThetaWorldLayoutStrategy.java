@@ -9,6 +9,7 @@ import static hotciv.framework.GameConstants.*;
 
 public class ThetaWorldLayoutStrategy implements WorldLayoutStrategy {
     private final GameImpl game;
+    private static final String CARAVAN = "caravan";
 
     public ThetaWorldLayoutStrategy(Game game) {
         this.game = (GameImpl) game;
@@ -22,7 +23,8 @@ public class ThetaWorldLayoutStrategy implements WorldLayoutStrategy {
     public void createUnits() {
         game.addUnitAt(new Position(4,4), Player.BLUE, LEGION);
         game.addUnitAt(new Position(3,8), Player.RED, ARCHER);
-        //game.addUnitAt(new Position(5,5), Player.RED, CARAVAN);
+        game.addUnitAt(new Position(5,5), Player.RED, SETTLER);
+        game.addUnitAt(new Position(9,6), Player.BLUE, CARAVAN);
     }
 
     public HashMap<Position, Tile> getTileMap() {

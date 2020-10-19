@@ -25,6 +25,10 @@ public class ThetaGameFactory implements GameFactory {
     }
 
     public UnitStatStrategy createUnitStatStrategy() {
-        return new AlphaUnitStatStrategy();
+        return new ThetaUnitStatStrategy();
+    }
+
+    public TileValidatorStrategy createTileValidatorStrategy() {
+        return new ThetaTileValidator();
     }
 }

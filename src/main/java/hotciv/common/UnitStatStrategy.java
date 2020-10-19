@@ -25,4 +25,11 @@ public interface UnitStatStrategy {
      * @return The move count for the unit.
      */
     int getMoveCount(String unitType);
+
+    /**
+     * returns the cost of the given unit.
+     * @param unitType The unit type of the unit.
+     * @return The cost of the unit.
+     */
+    int getCost(String unitType);
 }

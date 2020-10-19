@@ -6,11 +6,13 @@ import hotciv.framework.Player;
 import static hotciv.framework.GameConstants.*;
 
 public class CityImpl implements City {
+    private final UnitStatStrategy unitStatStrategy;
     private Player owner;
     private int treasury = 0;
     private String currentlyProducing = LEGION;
 
-    public CityImpl(Player owner) {
+    public CityImpl(UnitStatStrategy unitStatStrategy, Player owner) {
+        this.unitStatStrategy = unitStatStrategy;
         this.owner = owner;
     }
 
@@ -41,17 +43,7 @@ public class CityImpl implements City {
     }
 
     public int getProductionPrice() {
-        switch (currentlyProducing) {
-            case ARCHER:
-                return 10;
-            case LEGION:
-                return 15;
-            case SETTLER:
-                return 30;
-            // not used due to preconditions
-            default:
-                return 0;
-        }
+        return unitStatStrategy.getCost(currentlyProducing);
     }
 
     public void changeOwner(Player owner) {
