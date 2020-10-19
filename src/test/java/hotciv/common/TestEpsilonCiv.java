@@ -51,26 +51,26 @@ public class TestEpsilonCiv {
         assertThat(game.getWinner(), is(nullValue()));
     }
 
-    // A Legion in a city with two adjacent units results in (4 + 1 + 1) * 3 = 18 attack strength
-    @Test
-    void legionInCityWithFriendsShouldHaveAttackingStrengthOf18() {
-        int attackingStrength = ((GameImpl) game).calculateAttackingStrength(new Position(1,1));
-        assertThat(attackingStrength, is(18));
-    }
-
-    // An Archer in a forest with no adjacent units results in 3 * 2 = 6 defense strength
-    @Test
-    void archerInForestShouldHaveDefensiveStrengthOf6() {
-        int defensiveStrength = ((GameImpl) game).calculateDefensiveStrength(new Position(1,6));
-        assertThat(defensiveStrength, is(6));
-    }
-
-    // An Archer on a hill with no adjacent units results in 2 * 2 = 4 attack strength
-    @Test
-    void archerOnHillShouldHaveAttackingStrengthOf4() {
-        int attackingStrength = ((GameImpl) game).calculateAttackingStrength(new Position(2,1));
-        assertThat(attackingStrength, is(4));
-    }
+//    // A Legion in a city with two adjacent units results in (4 + 1 + 1) * 3 = 18 attack strength
+//    @Test
+//    void legionInCityWithFriendsShouldHaveAttackingStrengthOf18() {
+//        int attackingStrength = ((GameImpl) game).calculateAttackingStrength(new Position(1,1));
+//        assertThat(attackingStrength, is(18));
+//    }
+//
+//    // An Archer in a forest with no adjacent units results in 3 * 2 = 6 defense strength
+//    @Test
+//    void archerInForestShouldHaveDefensiveStrengthOf6() {
+//        int defensiveStrength = ((GameImpl) game).calculateDefensiveStrength(new Position(1,6));
+//        assertThat(defensiveStrength, is(6));
+//    }
+//
+//    // An Archer on a hill with no adjacent units results in 2 * 2 = 4 attack strength
+//    @Test
+//    void archerOnHillShouldHaveAttackingStrengthOf4() {
+//        int attackingStrength = ((GameImpl) game).calculateAttackingStrength(new Position(2,1));
+//        assertThat(attackingStrength, is(4));
+//    }
 
     // A Legion with attack strength of 4 * 2 = 8 wins over Archer with 3 * 2 = 6 defense strength
     @Test

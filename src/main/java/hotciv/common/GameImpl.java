@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import static hotciv.framework.GameConstants.*;
-import static hotciv.framework.GameConstants.FOREST;
 
 /** Skeleton implementation of HotCiv.
  
@@ -212,37 +211,6 @@ public class GameImpl implements Game {
 
   public void removeUnitAt(Position p) {
     unitMap.remove(p);
-  }
-
-  public int calculateAttackingStrength(Position p) {
-    return calculateUnitStrength(p, getUnitAt(p).getAttackingStrength());
-  }
-  public int calculateDefensiveStrength(Position p) {
-    return calculateUnitStrength(p, getUnitAt(p).getDefensiveStrength());
-  }
-
-
-  private int calculateUnitStrength(Position p, int unitStrength) {
-    int terrainFactor = 1;
-    if (getCityAt(p) != null) {
-      terrainFactor = 3;
-    }
-    String tileType = getTileAt(p).getTypeString();
-    if (tileType.equals(HILLS) || tileType.equals(FOREST)) {
-      terrainFactor = 2;
-    }
-
-    int adjacentUnitSupport = 0;
-    Iterator<Position> adjacentPositions = Utilities.getAdjacentPositions(p);
-    while (adjacentPositions.hasNext()) {
-      Position position = adjacentPositions.next();
-      Unit unit = getUnitAt(position);
-      // if a unit exists and belongs to the same owner as the unit in question
-      if (unit != null && unit.getOwner() == getUnitAt(p).getOwner()) {
-        adjacentUnitSupport++;
-      }
-    }
-    return (unitStrength + adjacentUnitSupport) * terrainFactor;
   }
 
   public Map<Position, City> getCities() {
