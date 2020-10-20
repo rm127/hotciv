@@ -4,7 +4,8 @@ import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.Unit;
-import hotciv.variants.*;
+import hotciv.stubs.TestGammaGameFactory;
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +20,7 @@ public class TestGammaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new GammaGameFactory());
+        game = new GameImpl(new TestGammaGameFactory());
     }
 
     // Archer has defense of 3
@@ -107,6 +108,34 @@ public class TestGammaCiv {
         game.performUnitActionAt(position);
         assertThat(((UnitImpl) archer).isFortified(), is(false));
     }
+
+    // Producing units in a city places them clockwise around the city. Shall not return positions outside the world.
+    // Cannot be tested with only 2 fixed cities.
+    @Test
+    void shouldOnlyProduceUnitsAtLegalPositions() {
+        // check all positions clockwise around the city
+        ProduceNewUnitAndCheckPosition(15, 15, notNullValue());
+        ProduceNewUnitAndCheckPosition(14, 15, notNullValue());
+        ProduceNewUnitAndCheckPosition(14, 16, nullValue());
+        ProduceNewUnitAndCheckPosition(15, 16, nullValue());
+        ProduceNewUnitAndCheckPosition(16, 16, nullValue());
+        ProduceNewUnitAndCheckPosition(16, 15, nullValue());
+        ProduceNewUnitAndCheckPosition(16, 14, nullValue());
+        ProduceNewUnitAndCheckPosition(15, 14, notNullValue());
+        ProduceNewUnitAndCheckPosition(14, 14, notNullValue());
+    }
+
+    private void ProduceNewUnitAndCheckPosition(int r, int c, Matcher<Object> test) {
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+        assertThat(game.getUnitAt(new Position(r, c)), is(test));
+    }
+
+    private void skipOtherPlayersTurn() {
+        game.endOfTurn();
+        game.endOfTurn();
+    }
 }
 
 
@@ -121,4 +150,5 @@ Test-list
 - Archers' cannot move while fortified (performing action)
 - If an archer fortifies while already fortified, it removes the fortification
 - Archers' defense doubles each round it is fortified
+- Producing units in a city places them clockwise around the city. Shall not return positions outside the world. Cannot be tested with only 2 fixed cities.
  */

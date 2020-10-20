@@ -1,9 +1,7 @@
 package hotciv.common;
 
-import hotciv.framework.City;
 import hotciv.framework.Position;
 import hotciv.framework.Tile;
-import hotciv.framework.Unit;
 
 import java.util.HashMap;
 
@@ -13,16 +11,14 @@ import java.util.HashMap;
  */
 public interface WorldLayoutStrategy {
     /**
-     * Returns a map of the cities in the world.
-     * @return a map of cities.
+     * Adds the cities in the world to the game.
      */
-    HashMap<Position, City> getCityMap();
+    void createCities();
 
     /**
-     * Returns a map of the units in the world.
-     * @return a map of units.
+     * Adds the units in the world to the game.
      */
-    HashMap<Position, Unit> getUnitMap();
+    void createUnits();
 
     /**
      * Returns a map of the tiles in the world.

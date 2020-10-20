@@ -2,10 +2,10 @@ package hotciv.stubs;
 
 import hotciv.common.WorldLayoutStrategy;
 import hotciv.framework.Game;
-import hotciv.variants.ZetaGameFactory;
+import hotciv.variants.GammaGameFactory;
 
-public class TestZetaGameFactory extends ZetaGameFactory {
+public class TestGammaGameFactory extends GammaGameFactory {
     public WorldLayoutStrategy createWorldLayoutStrategy(Game game) {
-        return new UnitTestWorldLayoutStrategy(game);
+        return new TestGammaCivAlphaWorldLayoutStrategy(game);
     }
 }

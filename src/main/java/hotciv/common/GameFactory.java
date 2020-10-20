@@ -1,5 +1,7 @@
 package hotciv.common;
 
+import hotciv.framework.Game;
+
 /**
  * The factory for all Civ variations.
  * Pattern used: Factory.
@@ -27,11 +29,23 @@ public interface GameFactory {
      * Creates the WorldLayoutStrategy object.
      * @return a WorldLayoutStrategy object.
      */
-    WorldLayoutStrategy createWorldLayoutStrategy();
+    WorldLayoutStrategy createWorldLayoutStrategy(Game game);
 
     /**
      * Creates the BattleStrategy object.
      * @return a BattleStrategy object.
      */
     BattleStrategy createBattleStrategy();
+
+    /**
+     * Creates the UnitStatStrategy object.
+     * @return a UnitStatStrategy object.
+     */
+    UnitStatStrategy createUnitStatStrategy();
+
+    /**
+     * Creates the TileValidatorStrategy object.
+     * @return a TileValidatorStrategy object.
+     */
+    TileValidatorStrategy createTileValidatorStrategy();
 }

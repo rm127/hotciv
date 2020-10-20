@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class Utilities {
+    private static final String DESERT = "desert";
+
     public static HashMap<Position, Tile> convertStringsToMap(String[] strings) {
         final HashMap<Position, Tile> tileMap = new HashMap<>();
 
@@ -23,6 +25,7 @@ public class Utilities {
                 if ( tileChar == 'M' ) { type = GameConstants.MOUNTAINS; }
                 if ( tileChar == 'f' ) { type = GameConstants.FOREST; }
                 if ( tileChar == 'h' ) { type = GameConstants.HILLS; }
+                if ( tileChar == 'd' ) { type = DESERT; }
                 tileMap.put(new Position(r,c), new TileImpl(type));
             }
         }
@@ -38,8 +41,12 @@ public class Utilities {
         int[] rows    = new int[] {-1, -1, 0, 1, 1, 1, 0, -1};
 
         for (int i = 0; i < 8; i++) {
-            Position newPosition = new Position(position.getRow() + rows[i], position.getColumn() + columns[i]);
-            list.add(newPosition);
+            int newRow = position.getRow() + rows[i];
+            int newColumn = position.getColumn() + columns[i];
+            if (newRow < 16 && newRow >= 0 && newColumn < 16 && newColumn >= 0) {
+                Position newPosition = new Position(newRow, newColumn);
+                list.add(newPosition);
+            }
         }
 
         return list.iterator();

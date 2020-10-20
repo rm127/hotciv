@@ -1,9 +1,6 @@
 package hotciv.variants;
 
-import hotciv.common.CityImpl;
-import hotciv.common.UnitImpl;
-import hotciv.common.Utilities;
-import hotciv.common.WorldLayoutStrategy;
+import hotciv.common.*;
 import hotciv.framework.*;
 
 import java.util.HashMap;
@@ -11,22 +8,20 @@ import java.util.HashMap;
 import static hotciv.framework.GameConstants.*;
 
 public class DeltaWorldLayoutStrategy implements WorldLayoutStrategy {
-    public HashMap<Position, City> getCityMap() {
-        final HashMap<Position, City> cityMap = new HashMap<>();
+    private final GameImpl game;
 
-        cityMap.put(new Position(4,5), new CityImpl(Player.BLUE));
-        cityMap.put(new Position(8,12), new CityImpl(Player.RED));
-
-        return cityMap;
+    public DeltaWorldLayoutStrategy(Game game) {
+        this.game = (GameImpl) game;
     }
 
-    public HashMap<Position, Unit> getUnitMap() {
-        final HashMap<Position, Unit> unitMap = new HashMap<>();
+    public void createCities() {
+        game.addCityAt(new Position(4,5), Player.BLUE);
+        game.addCityAt(new Position(8,12), Player.RED);
+    }
 
-        unitMap.put(new Position(3,8), new UnitImpl(Player.RED, ARCHER));
-        unitMap.put(new Position(4,4), new UnitImpl(Player.BLUE, LEGION));
-
-        return unitMap;
+    public void createUnits() {
+        game.addUnitAt(new Position(3,8), Player.RED, ARCHER);
+        game.addUnitAt(new Position(4,4), Player.BLUE, LEGION);
     }
 
     public HashMap<Position, Tile> getTileMap() {

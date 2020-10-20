@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static hotciv.framework.GameConstants.*;
-import static hotciv.framework.GameConstants.FOREST;
-
 /** Skeleton implementation of HotCiv.
  
    This source code is from the book 
@@ -47,18 +44,25 @@ public class GameImpl implements Game {
   private final GameWinStrategy gameWinStrategy;
   private final UnitActionStrategy unitActionStrategy;
   private final BattleStrategy battleStrategy;
+  private final UnitStatStrategy unitStatStrategy;
+  private final TileValidatorStrategy tileValidatorStrategy;
 
   GameImpl(GameFactory gameFactory) {
     this.gameAgingStrategy = gameFactory.createGameAgingStrategy();
     this.gameWinStrategy = gameFactory.createGameWinStrategy();
     this.unitActionStrategy = gameFactory.createUnitActionStrategy();
     this.battleStrategy = gameFactory.createBattleStrategy();
+    this.unitStatStrategy = gameFactory.createUnitStatStrategy();
+    this.tileValidatorStrategy = gameFactory.createTileValidatorStrategy();
 
-    WorldLayoutStrategy worldLayoutStrategy = gameFactory.createWorldLayoutStrategy();
+    WorldLayoutStrategy worldLayoutStrategy = gameFactory.createWorldLayoutStrategy(this);
 
-    cityMap = worldLayoutStrategy.getCityMap();
-    unitMap = worldLayoutStrategy.getUnitMap();
     tileMap = worldLayoutStrategy.getTileMap();
+    unitMap = new HashMap<>();
+    cityMap = new HashMap<>();
+
+    worldLayoutStrategy.createCities();
+    worldLayoutStrategy.createUnits();
   }
 
   public Tile getTileAt( Position p ) {
@@ -122,7 +126,7 @@ public class GameImpl implements Game {
     if (destinationHasUnitOfCurrentPlayer) return false;
 
     // trying to move to invalid tile (ocean or mountain)
-    if (isInvalidTile(to)) return false;
+    if (isInvalidTile(getTileAt(to).getTypeString(), unit.getTypeString())) return false;
 
     // trying to move more than moveCount allows
     boolean unitHasEnoughMovesLeft = unit.getMoveCount() >= distanceBetween(from, to);
@@ -134,9 +138,8 @@ public class GameImpl implements Game {
   }
 
   // validate if tile is ocean or mountain
-  private boolean isInvalidTile(Position position) {
-    String destinationTileType = this.getTileAt(position).getTypeString();
-    return destinationTileType.equals(OCEANS) || destinationTileType.equals(MOUNTAINS);
+  private boolean isInvalidTile(String tileType, String unitType) {
+    return !tileValidatorStrategy.canMoveHere(tileType, unitType);
   }
 
   private int distanceBetween(Position from, Position to) {
@@ -173,23 +176,23 @@ public class GameImpl implements Game {
     ((CityImpl) city).increaseTreasury();
     if (city.getTreasury() >= ((CityImpl) city).getProductionPrice()) {
 
-      Position newPosition = nextValidUnitPosition(position);
+      Position newPosition = nextValidUnitPosition(position, city.getProduction());
       // to avoid NullPointerException
       if (newPosition != null) {
-        unitMap.put(newPosition, new UnitImpl(currentPlayer, city.getProduction()));
+        unitMap.put(newPosition, new UnitImpl(unitStatStrategy, currentPlayer, city.getProduction()));
         ((CityImpl) city).decreaseTreasury();
       }
     }
   }
 
-  private Position nextValidUnitPosition(Position position) {
+  private Position nextValidUnitPosition(Position position, String unitType) {
     if (getUnitAt(position) == null) {
       return position;
     }
     Iterator<Position> adjacentPositions = Utilities.getAdjacentPositions(position);
     while (adjacentPositions.hasNext()) {
       Position newPosition = adjacentPositions.next();
-      if (getUnitAt(newPosition) == null && !isInvalidTile(newPosition)) {
+      if (getUnitAt(newPosition) == null && !isInvalidTile(getTileAt(newPosition).getTypeString(), unitType)) {
         return newPosition;
       }
     }
@@ -203,46 +206,21 @@ public class GameImpl implements Game {
   }
 
   public void performUnitActionAt( Position p ) {
+    // If the unit is not owned by the current player
+    if (getPlayerInTurn() != getUnitAt(p).getOwner()) return;
     unitActionStrategy.performAction(p, this);
   }
 
-  public void addCityAt(Position p, City city) {
-    cityMap.put(p, city);
+  public void addCityAt(Position p, Player owner) {
+    cityMap.put(p, new CityImpl(unitStatStrategy, owner));
+  }
+
+  public void addUnitAt(Position position, Player owner, String unitType) {
+    unitMap.put(position, new UnitImpl(unitStatStrategy, owner, unitType));
   }
 
   public void removeUnitAt(Position p) {
     unitMap.remove(p);
-  }
-
-  public int calculateAttackingStrength(Position p) {
-    return calculateUnitStrength(p, getUnitAt(p).getAttackingStrength());
-  }
-  public int calculateDefensiveStrength(Position p) {
-    return calculateUnitStrength(p, getUnitAt(p).getDefensiveStrength());
-  }
-
-
-  private int calculateUnitStrength(Position p, int unitStrength) {
-    int terrainFactor = 1;
-    if (getCityAt(p) != null) {
-      terrainFactor = 3;
-    }
-    String tileType = getTileAt(p).getTypeString();
-    if (tileType.equals(HILLS) || tileType.equals(FOREST)) {
-      terrainFactor = 2;
-    }
-
-    int adjacentUnitSupport = 0;
-    Iterator<Position> adjacentPositions = Utilities.getAdjacentPositions(p);
-    while (adjacentPositions.hasNext()) {
-      Position position = adjacentPositions.next();
-      Unit unit = getUnitAt(position);
-      // if a unit exists and belongs to the same owner as the unit in question
-      if (unit != null && unit.getOwner() == getUnitAt(p).getOwner()) {
-        adjacentUnitSupport++;
-      }
-    }
-    return (unitStrength + adjacentUnitSupport) * terrainFactor;
   }
 
   public Map<Position, City> getCities() {

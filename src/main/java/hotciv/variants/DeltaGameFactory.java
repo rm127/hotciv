@@ -1,6 +1,7 @@
 package hotciv.variants;
 
 import hotciv.common.*;
+import hotciv.framework.Game;
 
 public class DeltaGameFactory implements GameFactory {
     public GameAgingStrategy createGameAgingStrategy() {
@@ -15,11 +16,19 @@ public class DeltaGameFactory implements GameFactory {
         return new DoNothingUnitActionStrategy();
     }
 
-    public WorldLayoutStrategy createWorldLayoutStrategy() {
-        return new DeltaWorldLayoutStrategy();
+    public WorldLayoutStrategy createWorldLayoutStrategy(Game game) {
+        return new DeltaWorldLayoutStrategy(game);
     }
 
     public BattleStrategy createBattleStrategy() {
         return new AttackerWinsBattleStrategy();
+    }
+
+    public UnitStatStrategy createUnitStatStrategy() {
+        return new AlphaUnitStatStrategy();
+    }
+
+    public TileValidatorStrategy createTileValidatorStrategy() {
+        return new AlphaTileValidator();
     }
 }
