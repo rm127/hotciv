@@ -1,28 +1,18 @@
 package hotciv.variants;
 
-import hotciv.common.CityImpl;
 import hotciv.common.GameImpl;
 import hotciv.common.UnitActionStrategy;
 import hotciv.common.UnitImpl;
-import hotciv.framework.City;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
 import hotciv.framework.Unit;
-
-import java.util.Map;
 
 import static hotciv.framework.GameConstants.ARCHER;
 import static hotciv.framework.GameConstants.SETTLER;
 
 public class GammaUnitActionStrategy implements UnitActionStrategy {
     public void performAction(Position position, Game game) {
-        // The unit at the given position
         Unit unit = game.getUnitAt(position);
-
-        // If the unit is not owned by the current player
-        if (game.getPlayerInTurn() != unit.getOwner()) {
-            return;
-        }
 
         switch (unit.getTypeString()) {
             // If the unit is a settler

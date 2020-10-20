@@ -1,5 +1,6 @@
 package hotciv.common;
 
+import hotciv.framework.City;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
 import hotciv.variants.ThetaGameFactory;
@@ -60,6 +61,45 @@ public class TestThetaCiv {
     void shouldNotBeAbleToMoveSettlerOntoDesertTile() {
         boolean move = game.moveUnit(new Position(5,5), new Position(6, 5));
         assertThat(move, is(false));
+    }
+
+    // When a caravan performs it's action in a city, the population increases by 2 and the unit gets removed.
+    @Test
+    void shouldIncreaseCityPopulationBy2IfPerformingActionInCityAndRemoveItself() {
+        Position pos = new Position(8, 12);
+        City city = game.getCityAt(pos);
+
+        // produce a caravan in a city to avoid moving it across the map
+        ((CityImpl) city).setProduction(CARAVAN);
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+
+        int previousPopulation = city.getSize();
+        game.performUnitActionAt(pos);
+        int currentPopulation = city.getSize();
+
+        assertThat(currentPopulation, is(previousPopulation+2));
+        assertThat(game.getUnitAt(pos), is(nullValue()));
+    }
+
+    // A caravan doesn't do anything outside of a city
+    @Test
+    void shouldDoNothingWhenNotStandingInACity() {
+        // change to blue
+        game.endOfTurn();
+
+        Position pos = new Position(9, 6);
+        game.performUnitActionAt(pos);
+        // unit still exists after "performing" action, hence not performed it's action
+        assertThat(game.getUnitAt(pos), is(notNullValue()));
+    }
+
+    private void skipOtherPlayersTurn() {
+        game.endOfTurn();
+        game.endOfTurn();
     }
 }
 

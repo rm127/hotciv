@@ -13,7 +13,7 @@ public class ThetaGameFactory implements GameFactory {
     }
 
     public UnitActionStrategy createUnitActionStrategy() {
-        return new GammaUnitActionStrategy();
+        return new ThetaUnitActionStrategy();
     }
 
     public WorldLayoutStrategy createWorldLayoutStrategy(Game game) {

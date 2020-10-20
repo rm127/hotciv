@@ -206,6 +206,8 @@ public class GameImpl implements Game {
   }
 
   public void performUnitActionAt( Position p ) {
+    // If the unit is not owned by the current player
+    if (getPlayerInTurn() != getUnitAt(p).getOwner()) return;
     unitActionStrategy.performAction(p, this);
   }
 

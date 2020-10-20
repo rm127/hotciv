@@ -10,6 +10,7 @@ public class CityImpl implements City {
     private Player owner;
     private int treasury = 0;
     private String currentlyProducing = LEGION;
+    private int size = 1;
 
     public CityImpl(UnitStatStrategy unitStatStrategy, Player owner) {
         this.unitStatStrategy = unitStatStrategy;
@@ -21,7 +22,7 @@ public class CityImpl implements City {
     }
 
     public int getSize() {
-        return 1;
+        return size;
     }
 
     public int getTreasury() { return treasury; }
@@ -52,5 +53,9 @@ public class CityImpl implements City {
 
     public void decreaseTreasury() {
         treasury -= getProductionPrice();
+    }
+
+    public void increaseSize() {
+        size++;
     }
 }

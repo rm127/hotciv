@@ -2,7 +2,6 @@ package hotciv.common;
 
 import hotciv.framework.Game;
 import hotciv.framework.Position;
-import hotciv.framework.Unit;
 
 /**
  * The strategy for deciding unit actions.
