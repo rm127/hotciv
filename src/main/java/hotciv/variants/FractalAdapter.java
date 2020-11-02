@@ -23,8 +23,6 @@ public class FractalAdapter implements WorldLayoutStrategy {
 
     }
 
-    // TODO: Spørg om det er sådan her det skal laves? Skal det være en WorldLayoutStrategy eller skal det være en anden ting, der kaldes i WorldLayoutStrategie's getTileMap()?
-
     public HashMap<Position, Tile> getTileMap() {
         String[] map = new String[16];
         for (int r = 0; r < 16; r++) {
