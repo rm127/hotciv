@@ -1,11 +1,11 @@
 package hotciv.common;
 
-import hotciv.framework.City;
-import hotciv.framework.Game;
-import hotciv.framework.Position;
+import hotciv.framework.*;
 import hotciv.variants.ThetaGameFactory;
 import org.junit.jupiter.api.*;
 
+import static hotciv.framework.GameConstants.ARCHER;
+import static hotciv.framework.GameConstants.OCEANS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -13,6 +13,7 @@ public class TestThetaCiv {
     private Game game;
 
     private static final String CARAVAN = "caravan";
+    private static final String DESERT = "desert";
 
     /**
      * Fixture for BetaCiv testing.
@@ -97,6 +98,84 @@ public class TestThetaCiv {
         assertThat(game.getUnitAt(pos), is(notNullValue()));
     }
 
+    // A caravan can move two tiles each round
+    @Test
+    void shouldBeAbleToMoveTwoTiles() {
+        Position oldPosition = new Position(9,6);
+        Position newPosition = new Position(11,6);
+        // change to blue player
+        game.endOfTurn();
+
+        Unit unit = game.getUnitAt(oldPosition);
+        game.moveUnit(oldPosition, new Position(10, 6));
+        game.moveUnit(new Position(10, 6), newPosition);
+        assertThat(game.getUnitAt(newPosition), is(unit));
+    }
+
+    // A caravan can be produced
+    @Test
+    void shouldProduceACaravan() {
+        Position position = new Position(8,12);
+        ((CityImpl) game.getCityAt(position)).setProduction(CARAVAN);
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+        skipOtherPlayersTurn();
+        assertThat(game.getUnitAt(position).getTypeString(), is(CARAVAN));
+    }
+
+    // Blue city at 4, 5
+    @Test
+    void shouldHaveBlueCityAtPosition() {
+        assertThat(game.getCityAt(new Position(4, 5)), is(notNullValue()));
+        assertThat(game.getCityAt(new Position(4, 5)).getOwner(), is(Player.BLUE));
+    }
+
+    // Red city at 8, 12
+    @Test
+    void shouldHaveRedCityAtPosition() {
+        assertThat(game.getCityAt(new Position(8, 12)), is(notNullValue()));
+        assertThat(game.getCityAt(new Position(8, 12)).getOwner(), is(Player.RED));
+    }
+
+    // Blue caravan at 9, 6
+    @Test
+    void shouldBeBlueCaravanAtPosition() {
+        Unit unit = game.getUnitAt(new Position(9, 6));
+        assertThat(unit, is(notNullValue()));
+        assertThat(unit.getOwner(), is(Player.BLUE));
+        assertThat(unit.getTypeString(), is(CARAVAN));
+    }
+
+    // Red archer at 3, 8
+    @Test
+    void shouldBeRedArcherAtPosition() {
+        Unit unit = game.getUnitAt(new Position(3, 8));
+        assertThat(unit, is(notNullValue()));
+        assertThat(unit.getOwner(), is(Player.RED));
+        assertThat(unit.getTypeString(), is(ARCHER));
+    }
+
+    // Desert at 6, 4
+    @Test
+    void shouldBeDesert() {
+        assertThat(game.getTileAt(new Position(6, 4)).getTypeString(), is(DESERT));
+    }
+
+    // Desert at 10, 3
+    @Test
+    void shouldAlsoBeDesert() {
+        assertThat(game.getTileAt(new Position(10, 3)).getTypeString(), is(DESERT));
+    }
+
+    //Ocean at 14, 11
+    @Test
+    void shouldBeOcean() {
+        assertThat(game.getTileAt(new Position(14, 11)).getTypeString(), is(OCEANS));
+    }
+
+
     private void skipOtherPlayersTurn() {
         game.endOfTurn();
         game.endOfTurn();
@@ -113,4 +192,14 @@ Test-list
 - ONLY the caravan can move into desert tiles
 - When a caravan performs it's action in a city, the population increases by 2
 - A caravan doesn't do anything outside of a city owned by the same owner
+- A caravan can move two tiles each round
+- A caravan can be produced
+
+- Blue city at 4, 5
+- Red city at 8, 12
+- Blue caravan at 9, 6
+- Red archer at 3, 8
+- Desert at 6, 4
+- Desert at 10, 3
+- Ocean at 14, 11
  */

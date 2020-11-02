@@ -2,11 +2,17 @@ package hotciv.variants;
 
 import hotciv.common.CityImpl;
 import hotciv.common.GameImpl;
+import hotciv.common.UnitActionStrategy;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
 
-public class ThetaUnitActionStrategy extends GammaUnitActionStrategy {
+public class ThetaUnitActionStrategy implements UnitActionStrategy {
     private static final String CARAVAN = "caravan";
+    private static UnitActionStrategy baseStrategy;
+
+    public ThetaUnitActionStrategy() {
+        baseStrategy = new GammaUnitActionStrategy();
+    }
 
     public void performAction(Position position, Game game) {
         String unitType = game.getUnitAt(position).getTypeString();
@@ -21,6 +27,6 @@ public class ThetaUnitActionStrategy extends GammaUnitActionStrategy {
             ((GameImpl) game).removeUnitAt(position);
             return;
         }
-        super.performAction(position, game);
+        baseStrategy.performAction(position, game);
     }
 }
