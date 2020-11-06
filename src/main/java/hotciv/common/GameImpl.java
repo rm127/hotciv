@@ -211,6 +211,14 @@ public class GameImpl implements Game {
     unitActionStrategy.performAction(p, this);
   }
 
+  public void addObserver(GameObserver observer) {
+
+  }
+
+  public void setTileFocus(Position position) {
+
+  }
+
   public void addCityAt(Position p, Player owner) {
     cityMap.put(p, new CityImpl(unitStatStrategy, owner));
   }
