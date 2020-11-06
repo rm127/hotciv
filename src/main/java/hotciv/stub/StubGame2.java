@@ -143,7 +143,7 @@ public class StubGame2 implements Game {
 
 }
 
-class StubUnit implements  Unit {
+class StubUnit implements Unit {
   private String type;
   private Player owner;
   public StubUnit(String type, Player owner) {

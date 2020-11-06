@@ -171,9 +171,9 @@ public class CivDrawing
   }
 
   private void updateTurnShield(Player nextPlayer) {
-    String playername = "red";
-    if ( nextPlayer == Player.BLUE ) { playername = "blue"; }
-    turnShieldIcon.set( playername+"shield",
+    String playerName = "red";
+    if ( nextPlayer == Player.BLUE ) { playerName = "blue"; }
+    turnShieldIcon.set( playerName+"shield",
                         new Point( GfxConstants.TURN_SHIELD_X,
                                    GfxConstants.TURN_SHIELD_Y ) );
   }
