@@ -121,7 +121,7 @@ public class StubGame2 implements Game {
         world.put( p, new StubTile(GameConstants.PLAINS));
       }
     }
-    // Creaate a little area around the theta unit of special terrain
+    // Create a little area around the theta unit of special terrain
     world.put(new Position(6,4), new StubTile(ThetaConstants.DESERT));
     world.put(new Position(6,5), new StubTile(ThetaConstants.DESERT));
     world.put(new Position(7,4), new StubTile(ThetaConstants.DESERT));

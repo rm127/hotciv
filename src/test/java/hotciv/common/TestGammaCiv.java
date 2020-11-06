@@ -5,6 +5,7 @@ import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.Unit;
 import hotciv.stubs.TestGammaGameFactory;
+import hotciv.variants.SpyGameObserver;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 
@@ -131,6 +132,20 @@ public class TestGammaCiv {
         skipOtherPlayersTurn();
         assertThat(game.getUnitAt(new Position(r, c)), is(test));
     }
+
+    // updates observers when settler performs action
+    @Test
+    void shouldUpdateWorld() {
+        SpyGameObserver obs = new SpyGameObserver();
+        game.addObserver(obs);
+
+        Position position = new Position(4, 3);
+        game.performUnitActionAt(position);
+
+        assertThat(obs.getLastPosition(), is(position));
+        assertThat(obs.getWorldChangedCount(), is(2));
+    }
+
 
     private void skipOtherPlayersTurn() {
         game.endOfTurn();
