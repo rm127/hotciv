@@ -4,6 +4,8 @@ import hotciv.framework.*;
 
 import java.util.*;
 
+import static hotciv.framework.GameConstants.LEGION;
+
 /** Test stub for game for visual testing of
  * minidraw based graphics.
  *
@@ -37,11 +39,14 @@ public class StubGame2 implements Game {
 
   // === Unit handling ===
   private Position pos_archer_red;
-  private Position pos_legion_blue;
-  private Position pos_settler_red;
-  private Position pos_thetaciv_unit;
+  private final Position pos_legion_blue;
+  private final Position pos_settler_red;
+  private final Position pos_thetaciv_unit;
+  private final Position pos_city_red;
 
-  private Unit red_archer;
+  private final Unit red_archer;
+  private final City red_city;
+  private int age = -4000;
 
   public Unit getUnitAt(Position p) {
     if ( p.equals(pos_archer_red) ) {
@@ -51,7 +56,7 @@ public class StubGame2 implements Game {
       return new StubUnit( GameConstants.SETTLER, Player.RED );
     }
     if ( p.equals(pos_legion_blue) ) {
-      return new StubUnit( GameConstants.LEGION, Player.BLUE );
+      return new StubUnit( LEGION, Player.BLUE );
     }
     if ( p.equals(pos_thetaciv_unit) ) {
       return new StubUnit( ThetaConstants.CARAVAN, Player.RED );
@@ -78,8 +83,8 @@ public class StubGame2 implements Game {
     inTurn = (getPlayerInTurn() == Player.RED ?
               Player.BLUE : 
               Player.RED );
-    // no age increments
-    gameObserver.turnEnds(inTurn, -4000);
+    if (inTurn == Player.RED) age += 100;
+    gameObserver.turnEnds(inTurn, age);
   }
   public Player getPlayerInTurn() { return inTurn; }
   
@@ -98,9 +103,11 @@ public class StubGame2 implements Game {
     pos_legion_blue = new Position( 3, 2);
     pos_settler_red = new Position( 4, 3);
     pos_thetaciv_unit = new Position( 6, 4);
+    pos_city_red = new Position( 1, 1);
 
     // the only one I need to store for this stub
-    red_archer = new StubUnit( GameConstants.ARCHER, Player.RED );   
+    red_archer = new StubUnit( GameConstants.ARCHER, Player.RED );
+    red_city = new StubCity(Player.RED);
 
     inTurn = Player.RED;
   }
@@ -128,24 +135,28 @@ public class StubGame2 implements Game {
   }
 
   // TODO: Add more stub behaviour to test MiniDraw updating
-  public City getCityAt( Position p ) { return null; }
+  public City getCityAt( Position p ) {
+    if ( p.equals(pos_city_red) ) {
+      return red_city;
+    }
+    return null;
+  }
   public Player getWinner() { return null; }
-  public int getAge() { return 0; }  
+  public int getAge() { return age; }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) {}  
 
   public void setTileFocus(Position position) {
-    // TODO: setTileFocus implementation pending.
+    gameObserver.tileFocusChangedAt(position);
     System.out.println("-- StubGame2 / setTileFocus called.");
-    System.out.println(" *** IMPLEMENTATION PENDING ***");
   }
 
 }
 
 class StubUnit implements Unit {
-  private String type;
-  private Player owner;
+  private final String type;
+  private final Player owner;
   public StubUnit(String type, Player owner) {
     this.type = type;
     this.owner = owner;
@@ -155,4 +166,16 @@ class StubUnit implements Unit {
   public int getMoveCount() { return 1; }
   public int getDefensiveStrength() { return 0; }
   public int getAttackingStrength() { return 0; }
+}
+
+class StubCity implements City {
+  private final Player owner;
+  public StubCity(Player owner) {
+    this.owner = owner;
+  }
+  public Player getOwner() { return owner; }
+  public int getSize() { return 1; }
+  public int getTreasury() { return 0; }
+  public String getProduction() { return LEGION; }
+  public String getWorkforceFocus() { return "hammer"; }
 }
