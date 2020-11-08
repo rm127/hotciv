@@ -3,21 +3,22 @@ package hotciv.view.tool;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
 import minidraw.framework.DrawingEditor;
+import minidraw.standard.NullTool;
 import minidraw.standard.SelectionTool;
 
 import java.awt.event.MouseEvent;
 
 import static hotciv.view.GfxConstants.getPositionFromXY;
 
-public class UnitMoveTool extends SelectionTool {
+public class UnitMoveTool extends NullTool {
     private final DrawingEditor editor;
     private final Game game;
     private Position fromPosition;
 
-    public UnitMoveTool(DrawingEditor editor, Game game) {
-        super(editor);
+    public UnitMoveTool(DrawingEditor editor, Game game, Position position) {
         this.editor = editor;
         this.game = game;
+        this.fromPosition = position;
     }
 
     @Override

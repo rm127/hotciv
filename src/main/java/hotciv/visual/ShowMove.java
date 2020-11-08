@@ -38,6 +38,6 @@ public class ShowMove {
                                new HotCivFactory4(game) );
     editor.open();
     editor.showStatus("Move units to see Game's moveUnit method being called.");
-    editor.setTool( new UnitMoveTool(editor, game) );
+    editor.setTool( new UnitMoveTool(editor, game, null) );
   }
 }

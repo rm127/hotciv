@@ -134,7 +134,6 @@ public class StubGame2 implements Game {
     world.put(new Position(7,4), new StubTile(ThetaConstants.DESERT));
   }
 
-  // TODO: Add more stub behaviour to test MiniDraw updating
   public City getCityAt( Position p ) {
     if ( p.equals(pos_city_red) ) {
       return red_city;
