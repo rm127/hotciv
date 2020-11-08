@@ -10,12 +10,12 @@ import minidraw.standard.NullTool;
 import java.awt.event.MouseEvent;
 
 public class SetFocusTool extends NullTool {
-    private final Drawing model;
+    private final DrawingEditor editor;
     private final Game game;
     private Position downPosition;
 
     public SetFocusTool(DrawingEditor editor, Game game) {
-        this.model = editor.drawing();
+        this.editor = editor;
         this.game = game;
     }
 
