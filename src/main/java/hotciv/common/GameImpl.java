@@ -46,7 +46,7 @@ public class GameImpl implements Game {
   private final UnitStatStrategy unitStatStrategy;
   private final TileValidatorStrategy tileValidatorStrategy;
 
-  GameImpl(GameFactory gameFactory) {
+  public GameImpl(GameFactory gameFactory) {
     this.gameAgingStrategy = gameFactory.createGameAgingStrategy();
     this.gameWinStrategy = gameFactory.createGameWinStrategy();
     this.unitActionStrategy = gameFactory.createUnitActionStrategy();
@@ -223,7 +223,8 @@ public class GameImpl implements Game {
   }
 
   public void setTileFocus(Position position) {
-
+    // TODO: Skal man kun kunne inspect'e units og byer man selv ejer? Det er sådan det virker i Civ5
+    observers.forEach(observer -> observer.tileFocusChangedAt(position));
   }
 
   public void addCityAt(Position p, Player owner) {
