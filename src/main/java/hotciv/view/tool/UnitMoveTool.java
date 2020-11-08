@@ -2,14 +2,11 @@ package hotciv.view.tool;
 
 import hotciv.framework.Game;
 import hotciv.framework.Position;
-import minidraw.framework.Drawing;
 import minidraw.framework.DrawingEditor;
-import minidraw.standard.NullTool;
 import minidraw.standard.SelectionTool;
 
 import java.awt.event.MouseEvent;
 
-import static hotciv.view.GfxConstants.UNIT_TYPE_STRING;
 import static hotciv.view.GfxConstants.getPositionFromXY;
 
 public class UnitMoveTool extends SelectionTool {
