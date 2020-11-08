@@ -145,7 +145,9 @@ public class StubGame2 implements Game {
   public int getAge() { return age; }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) {}  
+  public void performUnitActionAt( Position p ) {
+    System.out.println("-- StubGame2 / performUnitActionAt called.");
+  }
 
   public void setTileFocus(Position position) {
     gameObserver.tileFocusChangedAt(position);
