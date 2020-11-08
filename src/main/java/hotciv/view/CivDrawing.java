@@ -315,8 +315,6 @@ public class CivDrawing
       prod = city.getProduction();
       bal = city.getWorkforceFocus();
     }
-    System.out.println(prod);
-    System.out.println(bal);
     cityShieldIcon.set(shield,
                     new Point( GfxConstants.CITY_SHIELD_X,
                             GfxConstants.CITY_SHIELD_Y ));
@@ -331,7 +329,6 @@ public class CivDrawing
   public void tileFocusChangedAt(Position position) {
     updateUnitInfo(game.getUnitAt(position));
     updateCityInfo(game.getCityAt(position));
-    System.out.println( "Fake it: tileFocusChangedAt "+position );
   }
 
   @Override
