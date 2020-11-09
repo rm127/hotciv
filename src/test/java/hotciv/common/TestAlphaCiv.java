@@ -454,9 +454,70 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(i, i2)), is(test));
   }
 
+  // player and age is passed correctly to observers
+  @Test
+  void shouldBeCorrectAge() {
+    SpyGameObserver obs = new SpyGameObserver();
+    game.addObserver(obs);
+    int previousAge = game.getAge();
 
+    game.endOfTurn();
+    assertThat(obs.getLastAge(), is(previousAge));
+    game.endOfTurn();
+    assertThat(obs.getLastAge(), is(previousAge + 100));
+  }
+  @Test
+  void shouldAlternatePlayers() {
+    SpyGameObserver obs = new SpyGameObserver();
+    game.addObserver(obs);
 
+    game.endOfTurn();
+    assertThat(obs.getLastPlayer(), is(Player.BLUE));
+    game.endOfTurn();
+    assertThat(obs.getLastPlayer(), is(Player.RED));
+  }
+  @Test
+  void shouldCallCorrectNumberOfTimes() {
+    SpyGameObserver obs = new SpyGameObserver();
+    game.addObserver(obs);
 
+    game.endOfTurn();
+    assertThat(obs.getTurnEndsCount(), is(1));
+    game.endOfTurn();
+    assertThat(obs.getTurnEndsCount(), is(2));
+  }
+
+  // updates observers when moving a unit
+  @Test
+  void shouldHandleUnitMoving() {
+    SpyGameObserver obs = new SpyGameObserver();
+    game.addObserver(obs);
+
+    Position toPosition = new Position(3, 0);
+    game.moveUnit(new Position(2, 0), toPosition);
+
+    assertThat(obs.getLastPosition(), is(toPosition));
+    assertThat(obs.getWorldChangedCount(), is(2));
+  }
+
+  // updates observers when city produces a unit
+  @Test
+  void shouldHandleCityProduction() {
+    SpyGameObserver obs = new SpyGameObserver();
+    game.addObserver(obs);
+
+    Position position = new Position(1, 1);
+    game.changeProductionInCityAt(position, ARCHER);
+    game.endOfTurn();
+    game.changeProductionInCityAt(new Position(4, 1), SETTLER);
+    game.endOfTurn();
+
+    int changes = obs.getWorldChangedCount();
+    skipOtherPlayersTurn();
+
+    assertThat(obs.getLastPosition(), is(position));
+    assertThat(obs.getWorldChangedCount(), is(changes+1));
+  }
 
 
   /*

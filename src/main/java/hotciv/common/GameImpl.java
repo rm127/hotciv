@@ -2,9 +2,7 @@ package hotciv.common;
 
 import hotciv.framework.*;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /** Skeleton implementation of HotCiv.
  
@@ -39,6 +37,7 @@ public class GameImpl implements Game {
   private final HashMap<Position, City> cityMap;
   private final HashMap<Position, Unit> unitMap;
   private final HashMap<Position, Tile> tileMap;
+  private final List<GameObserver> observers;
 
   private final GameAgingStrategy gameAgingStrategy;
   private final GameWinStrategy gameWinStrategy;
@@ -47,7 +46,7 @@ public class GameImpl implements Game {
   private final UnitStatStrategy unitStatStrategy;
   private final TileValidatorStrategy tileValidatorStrategy;
 
-  GameImpl(GameFactory gameFactory) {
+  public GameImpl(GameFactory gameFactory) {
     this.gameAgingStrategy = gameFactory.createGameAgingStrategy();
     this.gameWinStrategy = gameFactory.createGameWinStrategy();
     this.unitActionStrategy = gameFactory.createUnitActionStrategy();
@@ -60,6 +59,7 @@ public class GameImpl implements Game {
     tileMap = worldLayoutStrategy.getTileMap();
     unitMap = new HashMap<>();
     cityMap = new HashMap<>();
+    observers = new ArrayList<>();
 
     worldLayoutStrategy.createCities();
     worldLayoutStrategy.createUnits();
@@ -112,6 +112,7 @@ public class GameImpl implements Game {
     this.removeUnitAt(from);
     // decrease move count
     ((UnitImpl) unit).decreaseMoveCount();
+    worldChangedAt(to);
     return true;
   }
 
@@ -160,6 +161,12 @@ public class GameImpl implements Game {
       currentPlayer = Player.RED;
       this.endOfRound();
     }
+    observers.forEach(observer -> observer.turnEnds(currentPlayer, gameAge));
+  }
+
+
+  public void worldChangedAt(Position pos) {
+    observers.forEach(observer -> observer.worldChangedAt(pos));
   }
 
   private void endOfRound() {
@@ -179,7 +186,7 @@ public class GameImpl implements Game {
       Position newPosition = nextValidUnitPosition(position, city.getProduction());
       // to avoid NullPointerException
       if (newPosition != null) {
-        unitMap.put(newPosition, new UnitImpl(unitStatStrategy, currentPlayer, city.getProduction()));
+        addUnitAt(newPosition, currentPlayer, city.getProduction());
         ((CityImpl) city).decreaseTreasury();
       }
     }
@@ -211,16 +218,27 @@ public class GameImpl implements Game {
     unitActionStrategy.performAction(p, this);
   }
 
-  public void addCityAt(Position p, Player owner) {
-    cityMap.put(p, new CityImpl(unitStatStrategy, owner));
+  public void addObserver(GameObserver observer) {
+    observers.add(observer);
   }
 
-  public void addUnitAt(Position position, Player owner, String unitType) {
-    unitMap.put(position, new UnitImpl(unitStatStrategy, owner, unitType));
+  public void setTileFocus(Position position) {
+    observers.forEach(observer -> observer.tileFocusChangedAt(position));
+  }
+
+  public void addCityAt(Position p, Player owner) {
+    cityMap.put(p, new CityImpl(unitStatStrategy, owner));
+    worldChangedAt(p);
+  }
+
+  public void addUnitAt(Position p, Player owner, String unitType) {
+    unitMap.put(p, new UnitImpl(unitStatStrategy, owner, unitType));
+    worldChangedAt(p);
   }
 
   public void removeUnitAt(Position p) {
     unitMap.remove(p);
+    worldChangedAt(p);
   }
 
   public Map<Position, City> getCities() {

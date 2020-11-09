@@ -84,4 +84,12 @@ public class LoggingGame implements Game {
         );
         game.performUnitActionAt(p);
     }
+
+    public void addObserver(GameObserver observer) {
+        game.addObserver(observer);
+    }
+
+    public void setTileFocus(Position position) {
+        game.setTileFocus(position);
+    }
 }
