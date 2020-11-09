@@ -9,7 +9,6 @@ import minidraw.standard.NullTool;
 import java.awt.event.MouseEvent;
 
 public class SetFocusTool extends NullTool {
-    // TODO: Kan vi fjerne editor variablen når vi ikke bruger den? Gælder alle Tools
     private final DrawingEditor editor;
     private final Game game;
     private Position downPosition;

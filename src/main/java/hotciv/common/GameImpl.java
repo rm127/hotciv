@@ -223,7 +223,6 @@ public class GameImpl implements Game {
   }
 
   public void setTileFocus(Position position) {
-    // TODO: Skal man kun kunne inspect'e units og byer man selv ejer? Det er sådan det virker i Civ5
     observers.forEach(observer -> observer.tileFocusChangedAt(position));
   }
 

@@ -67,7 +67,6 @@ public class CompositionTool extends NullTool {
 
   @Override
   public void mouseDrag(MouseEvent e, int x, int y) {
-    // TODO: Siden vi skiftede hvordan denne aktiveres, så kan vi ikke få den til at "animere" trækning af unit'en. Kan det fikses?
     if (!startPosition.equals(GfxConstants.getPositionFromXY(x, y)) && !e.isShiftDown()) {
       state = new UnitMoveTool(editor, game, startPosition);
     }

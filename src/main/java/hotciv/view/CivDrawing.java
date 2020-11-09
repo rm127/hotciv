@@ -235,12 +235,12 @@ public class CivDrawing
             new HotCivFigure(GfxConstants.NOTHING,
                     new Point( GfxConstants.CITY_PRODUCTION_X,
                             GfxConstants.CITY_PRODUCTION_Y ),
-                    "city_production_toggle");
+                    GfxConstants.CITY_PRODUCTION_TYPE_STRING);
     cityBalIcon =
             new HotCivFigure(GfxConstants.NOTHING,
                     new Point( GfxConstants.WORKFORCEFOCUS_X,
                             GfxConstants.WORKFORCEFOCUS_Y ),
-                    "city_balance_toggle");
+                    GfxConstants.CITY_BALANCE_TYPE_STRING);
     updateCityInfo(null);
     delegate.add(cityShieldIcon);
     delegate.add(cityProdIcon);
@@ -264,9 +264,6 @@ public class CivDrawing
     // all known units and build up the entire set again
     defineUnitMap();
     defineCityMap();
-
-    // TODO: Update selected units when moving them. Add this to backlog
-    // selection().forEach(figure -> updateUnitInfo(figure));
   }
 
   public void turnEnds(Player nextPlayer, int age) {

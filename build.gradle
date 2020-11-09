@@ -123,7 +123,7 @@ task city(type: JavaExec) {
 
 task update(type: JavaExec) {
   group 'SWEA Mandatory'
-  description 'Test CivDrawing, FRAS 36.38 (partially solved)'
+  description 'Test CivDrawing, FRAS 36.38'
 
   main = 'hotciv.visual.ShowUpdating'
   classpath = sourceSets.main.runtimeClasspath
@@ -147,7 +147,7 @@ task setfocus(type: JavaExec) {
 
 task turn(type: JavaExec) {
   group 'SWEA Mandatory'
-  description 'Test EndOfTurnTool, FRS 36.42 (partially solved)'
+  description 'Test EndOfTurnTool, FRS 36.42'
 
   main = 'hotciv.visual.ShowEndOfTurn'
   classpath = sourceSets.main.runtimeClasspath
@@ -163,7 +163,7 @@ task action(type: JavaExec) {
 
 task comp(type: JavaExec) {
   group 'SWEA Mandatory'
-  description 'Test CompositionTool, FRS 36.44 (partially solved)'
+  description 'Test CompositionTool, FRS 36.44'
 
   main = 'hotciv.visual.ShowComposition'
   classpath = sourceSets.main.runtimeClasspath

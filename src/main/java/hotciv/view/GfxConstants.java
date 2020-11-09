@@ -79,8 +79,10 @@ public class GfxConstants {
   public static final String CITY_TYPE_STRING = "CITY_TYPE";
   public static final String TURN_SHIELD_TYPE_STRING = "TURNSHIELD_TYPE";
   public static final String UNIT_SHIELD_TYPE_STRING = "UNITSHIELD_TYPE";
+  public static final String CITY_PRODUCTION_TYPE_STRING = "CITY_PRODUCTION_TYPE";
+  public static final String CITY_BALANCE_TYPE_STRING = "CITY_BALANCE_TYPE";
 
-  /** return the x pixel position on the graphical display
+    /** return the x pixel position on the graphical display
    * for a tile's column position
    * @param column the position of the tile
    * @return the pixel x coordinate corresponding to column
