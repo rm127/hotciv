@@ -10,6 +10,8 @@ import minidraw.standard.NullTool;
 
 import java.awt.event.MouseEvent;
 
+import static hotciv.view.GfxConstants.REFRESH_BUTTON;
+
 /** Template for the CompositionTool exercise (FRS 36.44).
  * Composition tool is basically a State Pattern, similar
  * to MiniDraw's SelectionTool. That is, upon mouse-down
@@ -77,5 +79,8 @@ public class CompositionTool extends NullTool {
   @Override
   public void mouseUp(MouseEvent e, int x, int y) {
     state.mouseUp(e, x, y);
+    // check if user clicks the refresh button
+    HotCivFigure figureBelowClickPoint = (HotCivFigure) editor.drawing().findFigure(x, y);
+    if (figureBelowClickPoint != null && figureBelowClickPoint.getTypeString().equals(REFRESH_BUTTON)) editor.drawing().requestUpdate();
   }
 }
