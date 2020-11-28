@@ -5,14 +5,25 @@ import hotciv.framework.City;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
+import java.util.UUID;
+
 public class StubCity3 implements City, Servant {
+    Player owner;
+    int size;
+    String ObjectId = UUID.randomUUID().toString();
+
+
+    public StubCity3(Player owner, int size) {
+        this.owner = owner;
+        this.size = size;
+    }
 
     public Player getOwner() {
-        return Player.GREEN;
+        return owner;
     }
 
     public int getSize() {
-        return 2;
+        return size;
     }
 
     public int getTreasury() {
@@ -25,6 +36,10 @@ public class StubCity3 implements City, Servant {
 
     public String getWorkforceFocus() {
         return GameConstants.productionFocus;
+    }
+
+    public String getId() {
+        return ObjectId;
     }
 }
 

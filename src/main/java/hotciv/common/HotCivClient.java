@@ -6,6 +6,10 @@ import frds.broker.ipc.socket.SocketClientRequestHandler;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
+import hotciv.view.tool.CompositionTool;
+import hotciv.visual.HotCivFactory4;
+import minidraw.framework.DrawingEditor;
+import minidraw.standard.MiniDrawApplication;
 
 public class HotCivClient {
     Game game;
@@ -31,6 +35,10 @@ public class HotCivClient {
         Requestor requestor = new StandardJSONRequestor(crh);
 
         game = new GameProxy(requestor);
+
+//        DrawingEditor editor = new MiniDrawApplication( "Client", new HotCivFactory4(game));
+//        editor.open();
+//        editor.setTool( new CompositionTool(editor, game) );
     }
 
     private void basicTest() {

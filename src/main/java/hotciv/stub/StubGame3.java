@@ -4,6 +4,9 @@ import frds.broker.Servant;
 import hotciv.common.TileImpl;
 import hotciv.framework.*;
 
+import static hotciv.framework.GameConstants.ARCHER;
+import static hotciv.framework.GameConstants.LEGION;
+
 public class StubGame3 implements Game, Servant {
     private Player playerInTurn = Player.YELLOW;
     private String workforceFocus = GameConstants.productionFocus;
@@ -16,10 +19,14 @@ public class StubGame3 implements Game, Servant {
     }
 
     public Unit getUnitAt(Position p) {
+        if (p.getColumn() == 9 && p.getRow() == 8) return new StubUnit3(Player.YELLOW, LEGION);
+        if (p.getColumn() == 8 && p.getRow() == 7) return new StubUnit3(Player.RED, ARCHER);
         return null;
     }
 
     public City getCityAt(Position p) {
+        if (p.getColumn() == 9 && p.getRow() == 9) return new StubCity3(Player.BLUE, 3);
+        if (p.getColumn() == 8 && p.getRow() == 8) return new StubCity3(Player.GREEN, 2);
         return null;
     }
 
