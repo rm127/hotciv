@@ -186,7 +186,7 @@ public class GameImpl implements Game {
       Position newPosition = nextValidUnitPosition(position, city.getProduction());
       // to avoid NullPointerException
       if (newPosition != null) {
-        addUnitAt(newPosition, currentPlayer, city.getProduction());
+        addUnitAt(newPosition, city.getOwner(), city.getProduction());
         ((CityImpl) city).decreaseTreasury();
       }
     }

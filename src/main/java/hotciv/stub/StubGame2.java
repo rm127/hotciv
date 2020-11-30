@@ -167,6 +167,9 @@ class StubUnit implements Unit {
   public int getMoveCount() { return 1; }
   public int getDefensiveStrength() { return 0; }
   public int getAttackingStrength() { return 0; }
+  public String getId() {
+    return null;
+  }
 }
 
 class StubCity implements City {
@@ -179,4 +182,7 @@ class StubCity implements City {
   public int getTreasury() { return 0; }
   public String getProduction() { return LEGION; }
   public String getWorkforceFocus() { return "hammer"; }
+  public String getId() {
+    return null;
+  }
 }

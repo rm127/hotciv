@@ -3,6 +3,8 @@ package hotciv.common;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
+import java.util.UUID;
+
 import static hotciv.framework.GameConstants.*;
 
 public class UnitImpl implements Unit {
@@ -13,6 +15,7 @@ public class UnitImpl implements Unit {
     private int defensiveStrength;
     private final int attackingStrength;
     private int moveCount;
+    private final String objectId = UUID.randomUUID().toString();
 
     public UnitImpl(UnitStatStrategy unitStatStrategy, Player owner, String type) {
         this.unitStatStrategy = unitStatStrategy;
@@ -45,6 +48,10 @@ public class UnitImpl implements Unit {
 
     public int getAttackingStrength() {
         return attackingStrength;
+    }
+
+    public String getId() {
+        return objectId;
     }
 
     public void decreaseMoveCount() {

@@ -3,6 +3,7 @@ package hotciv.common;
 import frds.broker.*;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
+import hotciv.stub.StubGame3;
 import hotciv.stub.StubUnit3;
 import hotciv.variants.*;
 import org.junit.jupiter.api.*;
@@ -12,22 +13,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestUnitBroker {
     private Unit unit;
-    private StubUnit3 servant;
+    private StubGame3 servant;
 
     /**
      * Fixture for Broker testing.
      */
     @BeforeEach
     public void setUp() {
-        servant = new StubUnit3();
+        servant = new StubGame3();
 
-        Invoker invoker = new HotCivUnitInvoker(servant);
+        Invoker invoker = new HotCivGeneralInvoker(servant);
 
         ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 
         Requestor requestor = new StandardJSONRequestor(crh);
 
-        unit = new UnitProxy(requestor);
+        unit = new GameProxy(requestor).getUnitAt(new Position(8, 9));
     }
 
     @Test

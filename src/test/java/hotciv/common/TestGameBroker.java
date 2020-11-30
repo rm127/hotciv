@@ -7,6 +7,7 @@ import hotciv.stub.StubGame3;
 import hotciv.variants.*;
 import org.junit.jupiter.api.*;
 
+import static hotciv.framework.GameConstants.ARCHER;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -23,7 +24,7 @@ public class TestGameBroker {
         GameObserver nullObserver = new NullObserver();
         servant.addObserver(nullObserver);
 
-        Invoker invoker = new HotCivGameInvoker(servant);
+        Invoker invoker = new HotCivGeneralInvoker(servant);
 
         ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 
@@ -76,8 +77,8 @@ public class TestGameBroker {
     @Test
     void shouldChangeCityProduction() {
         assertThat(servant.getCityProduction(), is(GameConstants.SETTLER));
-        game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
-        assertThat(servant.getCityProduction(), is(GameConstants.ARCHER));
+        game.changeProductionInCityAt(new Position(1,1), ARCHER);
+        assertThat(servant.getCityProduction(), is(ARCHER));
     }
 
     @Test
@@ -85,5 +86,33 @@ public class TestGameBroker {
         assertThat(servant.isUnitActionPerformed(), is(false));
         game.performUnitActionAt(new Position(1,1));
         assertThat(servant.isUnitActionPerformed(), is(true));
+    }
+
+    @Test
+    void shouldReturnCity() {
+        City city = game.getCityAt(new Position(9, 9));
+        assertThat(city, is(notNullValue()));
+        assertThat(city.getOwner(), is(Player.BLUE));
+        assertThat(city.getSize(), is(3));
+    }
+
+    @Test
+    void shouldNotReturnCity() {
+        City city = game.getCityAt(new Position(4, 9));
+        assertThat(city, is(nullValue()));
+    }
+
+    @Test
+    void shouldReturnUnit() {
+        Unit unit = game.getUnitAt(new Position(7, 8));
+        assertThat(unit, is(notNullValue()));
+        assertThat(unit.getOwner(), is(Player.RED));
+        assertThat(unit.getTypeString(), is(ARCHER));
+    }
+
+    @Test
+    void shouldNotReturnUnit() {
+        Unit unit = game.getUnitAt(new Position(4, 8));
+        assertThat(unit, is(nullValue()));
     }
 }

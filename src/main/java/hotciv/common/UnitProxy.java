@@ -7,10 +7,11 @@ import hotciv.framework.Unit;
 
 public class UnitProxy implements Unit, ClientProxy {
     private final Requestor requestor;
-    private final String ObjectId = "SINGLETON";
+    private final String ObjectId;
 
-    public UnitProxy(Requestor requestor) {
+    public UnitProxy(Requestor requestor, String objectId) {
         this.requestor = requestor;
+        this.ObjectId = objectId;
     }
 
     public String getTypeString() {
@@ -31,5 +32,9 @@ public class UnitProxy implements Unit, ClientProxy {
 
     public int getAttackingStrength() {
         return requestor.sendRequestAndAwaitReply(ObjectId, OperationNames.UNIT_GET_ATTACKING_STRENGTH, Integer.class);
+    }
+
+    public String getId() {
+        return ObjectId;
     }
 }

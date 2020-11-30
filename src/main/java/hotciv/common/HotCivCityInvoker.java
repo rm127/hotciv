@@ -11,20 +11,21 @@ import hotciv.framework.City;
 import javax.servlet.http.HttpServletResponse;
 
 public class HotCivCityInvoker implements Invoker {
-    private final City servant;
     private final Gson gson;
-    JsonParser jsonParser = new JsonParser();
+    private final NameService nameService;
 
-    public HotCivCityInvoker(City servant) {
-        this.servant = servant;
-        this.gson = new Gson();
+    public HotCivCityInvoker(NameService nameService, Gson gson) {
+        this.gson = gson;
+        this.nameService = nameService;
     }
 
     public String handleRequest(String request) {
         RequestObject requestObject = gson.fromJson(request, RequestObject.class);
-        // JsonArray params = jsonParser.parse(requestObject.getPayload()).getAsJsonArray();
+        String objectId = requestObject.getObjectId();
 
         ReplyObject reply;
+
+        City servant = nameService.getCity(objectId);
 
         try {
             String operationName = requestObject.getOperationName();

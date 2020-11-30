@@ -15,7 +15,7 @@ public class HotCivServer {
     public HotCivServer() {
         Game servant = new GameImpl(new SemiGameFactory());
 
-        Invoker invoker = new HotCivGameInvoker(servant);
+        Invoker invoker = new HotCivGeneralInvoker(servant);
         ServerRequestHandler crh = new SocketServerRequestHandler();
 
         crh.setPortAndInvoker(1234, invoker);

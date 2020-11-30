@@ -7,10 +7,11 @@ import hotciv.framework.Player;
 
 public class CityProxy implements City, ClientProxy {
     private final Requestor requestor;
-    private final String ObjectId = "SINGLETON";
+    private final String ObjectId;
 
-    public CityProxy(Requestor requestor) {
+    public CityProxy(Requestor requestor, String objectId) {
         this.requestor = requestor;
+        this.ObjectId = objectId;
     }
 
     public Player getOwner() {
@@ -31,5 +32,9 @@ public class CityProxy implements City, ClientProxy {
 
     public String getWorkforceFocus() {
         return requestor.sendRequestAndAwaitReply(ObjectId, OperationNames.CITY_GET_WORKFORCE_FOCUS, String.class);
+    }
+
+    public String getId() {
+        return ObjectId;
     }
 }

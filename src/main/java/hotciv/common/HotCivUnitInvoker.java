@@ -1,31 +1,29 @@
 package hotciv.common;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
-import hotciv.framework.City;
 import hotciv.framework.Unit;
 
 import javax.servlet.http.HttpServletResponse;
 
 public class HotCivUnitInvoker implements Invoker {
-    private final Unit servant;
     private final Gson gson;
-    JsonParser jsonParser = new JsonParser();
+    private final NameService nameService;
 
-    public HotCivUnitInvoker(Unit servant) {
-        this.servant = servant;
-        this.gson = new Gson();
+    public HotCivUnitInvoker(NameService nameService, Gson gson) {
+        this.gson = gson;
+        this.nameService = nameService;
     }
 
     public String handleRequest(String request) {
         RequestObject requestObject = gson.fromJson(request, RequestObject.class);
-        // JsonArray params = jsonParser.parse(requestObject.getPayload()).getAsJsonArray();
+        String objectId = requestObject.getObjectId();
 
         ReplyObject reply;
+
+        Unit servant = nameService.getUnit(objectId);
 
         try {
             String operationName = requestObject.getOperationName();

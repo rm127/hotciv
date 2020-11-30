@@ -3,31 +3,33 @@ package hotciv.common;
 import frds.broker.*;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
-import hotciv.stub.StubCity3;
+import hotciv.stub.StubGame3;
 import hotciv.variants.*;
 import org.junit.jupiter.api.*;
+
+import javax.rmi.CORBA.Stub;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestCityBroker {
     private City city;
-    private StubCity3 servant;
+    private StubGame3 servant;
 
     /**
      * Fixture for Broker testing.
      */
     @BeforeEach
     public void setUp() {
-        servant = new StubCity3();
+        servant = new StubGame3();
 
-        Invoker invoker = new HotCivCityInvoker(servant);
+        Invoker invoker = new HotCivGeneralInvoker(servant);
 
         ClientRequestHandler crh = new LocalMethodClientRequestHandler(invoker);
 
         Requestor requestor = new StandardJSONRequestor(crh);
 
-        city = new CityProxy(requestor);
+        city = new GameProxy(requestor).getCityAt(new Position(8,8));
     }
 
     @Test
