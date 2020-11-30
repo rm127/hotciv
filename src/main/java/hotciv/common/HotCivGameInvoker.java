@@ -9,6 +9,7 @@ import frds.broker.RequestObject;
 import hotciv.framework.City;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
+import hotciv.framework.Unit;
 import hotciv.stub.StubCity3;
 import hotciv.stub.StubUnit3;
 import jdk.nashorn.internal.objects.AccessorPropertyDescriptor;
@@ -40,7 +41,7 @@ public class HotCivGameInvoker implements Invoker {
 
                 case OperationNames.GAME_GET_UNIT_AT:
                     Position pos5 = new Position(gson.fromJson(params.get(0), Integer.class), gson.fromJson(params.get(1), Integer.class));
-                    StubUnit3 unit = (StubUnit3) servant.getUnitAt(pos5);
+                    Unit unit = servant.getUnitAt(pos5);
                     String response = null;
                     if (unit != null) {
                         nameService.storeUnit(unit.getId(), unit);
@@ -51,7 +52,7 @@ public class HotCivGameInvoker implements Invoker {
 
                 case OperationNames.GAME_GET_CITY_AT:
                     Position pos4 = new Position(gson.fromJson(params.get(0), Integer.class), gson.fromJson(params.get(1), Integer.class));
-                    StubCity3 city = (StubCity3) servant.getCityAt(pos4);
+                    City city = servant.getCityAt(pos4);
                     String response1 = null;
                     if (city != null) {
                         nameService.storeCity(city.getId(), city);

@@ -62,4 +62,6 @@ public interface City {
    * for valid return values.
    */
   String getWorkforceFocus();
+
+  String getId();
 }

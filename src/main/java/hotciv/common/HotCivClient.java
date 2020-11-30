@@ -36,9 +36,9 @@ public class HotCivClient {
 
         game = new GameProxy(requestor);
 
-//        DrawingEditor editor = new MiniDrawApplication( "Client", new HotCivFactory4(game));
-//        editor.open();
-//        editor.setTool( new CompositionTool(editor, game) );
+        DrawingEditor editor = new MiniDrawApplication( "Client", new HotCivFactory4(game));
+        editor.open();
+        editor.setTool(new CompositionTool(editor, game));
     }
 
     private void basicTest() {

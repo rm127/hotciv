@@ -102,4 +102,7 @@ class CityStub implements City {
   public String getWorkforceFocus() {
     return null;
   }
+  public String getId() {
+    return null;
+  }
 }

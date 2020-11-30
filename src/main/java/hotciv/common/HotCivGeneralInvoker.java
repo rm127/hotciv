@@ -1,14 +1,12 @@
 package hotciv.common;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.RequestObject;
 import hotciv.framework.Game;
 import java.util.HashMap;
 
 public class HotCivGeneralInvoker implements Invoker {
-    JsonParser jsonParser = new JsonParser();
     private final Gson gson;
     private final Game game;
     private final NameService nameService;

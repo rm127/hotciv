@@ -247,6 +247,16 @@ public class CivDrawing
     delegate.add(cityBalIcon);
   }
 
+  private void removeIcons() {
+    delegate.remove(gameAgeText);
+    delegate.remove(turnShieldIcon);
+    delegate.remove(unitShieldIcon);
+    delegate.remove(unitMoveCountText);
+    delegate.remove(cityShieldIcon);
+    delegate.remove(cityProdIcon);
+    delegate.remove(cityBalIcon);
+  }
+
   protected ImageFigure refreshButton;
   protected void defineButtons() {
     refreshButton =
@@ -262,8 +272,8 @@ public class CivDrawing
   public void worldChangedAt(Position pos) {
     // this is a really brute-force algorithm: destroy
     // all known units and build up the entire set again
-    defineUnitMap();
     defineCityMap();
+    defineUnitMap();
   }
 
   public void turnEnds(Player nextPlayer, int age) {
@@ -333,8 +343,10 @@ public class CivDrawing
     // A request has been issued to repaint
     // everything. We simply rebuild the
     // entire Drawing.
-    defineUnitMap();
     defineCityMap();
+    defineUnitMap();
+
+    removeIcons();
     defineIcons();
     defineButtons();
   }

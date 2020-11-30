@@ -3,6 +3,8 @@ package hotciv.common;
 import hotciv.framework.City;
 import hotciv.framework.Player;
 
+import java.util.UUID;
+
 import static hotciv.framework.GameConstants.*;
 
 public class CityImpl implements City {
@@ -11,6 +13,7 @@ public class CityImpl implements City {
     private int treasury = 0;
     private String currentlyProducing = LEGION;
     private int size = 1;
+    private final String objectId = UUID.randomUUID().toString();
 
     public CityImpl(UnitStatStrategy unitStatStrategy, Player owner) {
         this.unitStatStrategy = unitStatStrategy;
@@ -33,6 +36,10 @@ public class CityImpl implements City {
 
     public String getWorkforceFocus() {
         return productionFocus;
+    }
+
+    public String getId() {
+        return objectId;
     }
 
     public void increaseTreasury() {
